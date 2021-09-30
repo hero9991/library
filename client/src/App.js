@@ -1,12 +1,16 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useEffect, useState} from 'react';
+import './App.css'
+import Navbar from './components/navbar/Navbar';
 
 function App() {
+  useEffect(() => {
+    fetch('', )
+  });
+  let [val, setVal] = useState(12345);
   return (
-    <div className="App">
-      <header className="App-header">
-        some info just confirm it from my side
-      </header>
+    <div className="App" onClick={() => setVal(++val)} >
+      <Navbar />
+
     </div>
   );
 }
