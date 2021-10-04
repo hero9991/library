@@ -1,0 +1,19 @@
+.homeBodyItem {
+}
+
+.content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.linkItem {
+    display:block;
+    width: 40%;
+    position: relative;
+}
+
+.imageItem {
+    width: 100%;
+    padding-top: 60px;
+
+}

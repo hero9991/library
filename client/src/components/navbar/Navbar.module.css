@@ -1,16 +1,4 @@
-body {
-    margin: 0;
-}
 
-img {
-    margin: 0;
-}
-
-.container {
-    max-width: 1170px;
-    margin: auto;
-    padding: 0 15px;
-}
 
 .mainBar {
     background: linear-gradient(90deg, #7293c6 20%, #647184 40%, #580502 100%);
@@ -34,7 +22,7 @@ img {
 
 .fa {
     border-radius: 10px;
-    width: 33%;
+    width: 29%;
     margin: 8px;
     text-align: center;
     text-decoration: none;
@@ -42,6 +30,7 @@ img {
     transition: all linear .3s;
 }
 .fa:hover {
+    width: 33%;
     opacity: .7;
     color: black;
 }
@@ -66,4 +55,45 @@ img {
 }
 .faTelegram:hover {
     color: #bb0000;
+}
+
+.bottomBar {
+    box-shadow: 0 0 10px rgb(110, 110, 110);
+    vertical-align: middle;
+    background-color: rgb(241, 241, 241);
+    transition: all linear .2s;
+}
+
+.tabsWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    padding: 10px;
+}
+
+.tabs {
+    max-width: 400px;
+    width: 100%;
+}
+
+.navItems {
+    display: flex;
+    justify-content: space-between;
+    max-width: 300px;
+    width: 100%;
+}
+
+.authorization {
+    display: flex;
+    justify-content: space-between;
+    max-width: 200px;
+    width: 100%;
+}
+
+.authorization a {
+    display: block;
+    border-radius: 5px;
+    padding: 10px 20px;
+    background-color: white;
 }

@@ -1,0 +1,24 @@
+.slider {
+    margin: auto 0;
+    background: linear-gradient(105deg, rgba(51,56,57,1) 0%, rgba(255,255,255,.2) 39%, #fff 96%) center center;
+    padding: 50px;
+}
+
+.topic {
+    font-size: 35px;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.books {
+    width: 700px;
+}
+
+.bookItem {
+    width: 260px;
+    height: 390px;
+}
+
+.swiper {
+    width: 800px;
+}

@@ -1,18 +1,15 @@
-import React, {useEffect, useState} from 'react';
 import './App.css'
-import Navbar from './components/navbar/Navbar';
+import Navbar from './components/navbar/Navbar'
+import HomeBody from './components/homeBody/HomeBody'
 
 function App() {
-  useEffect(() => {
-    fetch('', )
-  });
-  let [val, setVal] = useState(12345);
-  return (
-    <div className="App" onClick={() => setVal(++val)} >
-      <Navbar />
 
+  return (
+    <div className="App">
+      <Navbar />
+      <HomeBody />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
