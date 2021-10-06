@@ -1,6 +1,4 @@
-
-
-.mainBar {
+/* .mainBar {
     background: linear-gradient(90deg, #7293c6 20%, #647184 40%, #580502 100%);
 }
 
@@ -18,24 +16,57 @@
     width: 70%;
     display: flex;
     justify-content: space-around;
+} */
+
+
+
+.navbar {
+    box-shadow: 0 0 6px rgb(110, 110, 110);
+    transition: all linear .2s;
 }
 
-.fa {
-    border-radius: 10px;
-    width: 29%;
-    margin: 8px;
-    text-align: center;
-    text-decoration: none;
+.tabsWrapper {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
+    padding: 10px;
+}
+
+.menu {
+}
+
+.menu ul {
+    display: flex;
+}
+
+.menu ul li {
+    padding: 30px 15px;
+    font-weight: 700;
+    transition: all linear .3s;
+}
+.menu ul li :hover{
+    color: #C21818;
+}
+
+.menu ul .active {
+    color: #C21818;
+}
+
+.links {
+    margin-left: auto;
+    margin-right: 20px;
+}
+.fa {
+    border-radius: 333px;
+    padding: 7px;
+    margin: 8px;
     transition: all linear .3s;
 }
 .fa:hover {
-    width: 33%;
     opacity: .7;
     color: black;
 }
 .fa::before {
-    display: inline-block;
     position: relative;
     top: 50%;
     transform: translateY(-50%);
@@ -57,43 +88,11 @@
     color: #bb0000;
 }
 
-.bottomBar {
-    box-shadow: 0 0 10px rgb(110, 110, 110);
-    vertical-align: middle;
-    background-color: rgb(241, 241, 241);
-    transition: all linear .2s;
-}
-
-.tabsWrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 100%;
-    padding: 10px;
-}
-
-.tabs {
-    max-width: 400px;
-    width: 100%;
-}
-
-.navItems {
-    display: flex;
-    justify-content: space-between;
-    max-width: 300px;
-    width: 100%;
-}
 
 .authorization {
     display: flex;
     justify-content: space-between;
-    max-width: 200px;
-    width: 100%;
 }
-
 .authorization a {
-    display: block;
-    border-radius: 5px;
-    padding: 10px 20px;
-    background-color: white;
+    padding: 10px;
 }
