@@ -56,22 +56,14 @@ a {
   color: #000;
 }
 
-.swiper-slide img{
-  transform: scale(.7);
-  opacity: .5;
-  transition: all linear .4s;
-}
-.swiper-slide-next img{
-  transform: scale(1);
-  opacity: 1;
-  transition: all linear .4s;
+
+
+.swiper-container {
+  position: static !important;
 }
 
 
 
-.swiper-button-next::after {
-  content: f060 !important;
-}
 
 .container {
   padding: 0 15px;

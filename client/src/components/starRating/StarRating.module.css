@@ -1,0 +1,9 @@
+.starRating input {
+    display: none;
+}
+
+.starItem {
+    color: #ffd700;
+    margin: 1px;
+    margin-bottom: 8px;
+}

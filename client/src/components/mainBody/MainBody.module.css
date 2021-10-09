@@ -8,7 +8,7 @@
     bottom: 0;
     width: 100%;
     height: calc((100vh - 120px) / 2);
-    background-color: rgb(27, 27, 27);
+    background-color: #1b1b1b;
 }
 
 .mainBody img {
@@ -28,7 +28,7 @@
     top:50px;
     font-weight: 700;
     font-size: 55px;
-    color: rgb(31, 31, 31);
+    color: #1b1b1b;
     margin-left: auto;
     letter-spacing: -0.02px;
 }
@@ -49,7 +49,12 @@
     padding-bottom: 70px;
 }
 .whiteTextContent a {
-    color: white;
+    color: #fff;
     border: 1px solid #fff;
     padding: 10px 30px;
+    transition: all linear .3s;
+}
+.whiteTextContent a:hover {
+    background-color: #fff;
+    color: #1b1b1b;
 }

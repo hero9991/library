@@ -7,8 +7,8 @@ function HomeBody() {
     return (
         <section className={s.homeBody}>
             <MainBody />
-            <HomeBodyItem isBefore={false}/>
-            <HomeBodyItem isBefore={true}/>
+            <HomeBodyItem isWhiteBack={true}/>
+            <HomeBodyItem isWhiteBack={false}/>
         </section>
     )
 }
