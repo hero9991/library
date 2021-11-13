@@ -7,16 +7,23 @@ function MainBody() {
     return (
         <section className={s.mainBody}>
             <div className='container'>
-                <div className={s.content}>
-                    <img src={mainImage} alt=''/>
-                    <div className={s.textContent}>
+                <div className={s.topContent}>
+                    <div className={s.topText}>
                         <h1>ՊԱՏՄԱՀԱՅՐ</h1>
-                        <h2>History of our land</h2>
-                        <h2>Roots of our literature</h2>
-                        <div className={s.whiteTextContent}>
-                            <p>PDF Version is Available</p>
-                            <Link to='/catalog'>Read now</Link>
+                        <div>
+                            <h2>History of our land</h2>
+                            <h2>Roots of our literature</h2>
                         </div>
+
+                    </div>
+                </div>
+            </div>
+            <div className='container'>
+                <div className={s.bottomContent}>
+                    <img src={mainImage} alt='' />
+                    <div className={s.bottomText}>
+                        <p>PDF Version is Available</p>
+                        <Link to='/catalog'>Read now</Link>
                     </div>
                 </div>
             </div>

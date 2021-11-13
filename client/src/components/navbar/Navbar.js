@@ -1,35 +1,50 @@
-import React from 'react'
+import React, { useState } from 'react'
 import s from './Navbar.module.css'
 import { NavLink } from 'react-router-dom'
-import { FaYoutube, FaTelegram, FaVk } from 'react-icons/fa'
+import { FaYoutube, FaTelegram, FaVk, FaSignInAlt, FaSearchPlus, FaHome, FaBook, FaBookReader, FaGlobeEurope, FaRegFileAlt } from 'react-icons/fa'
 
-function Navbar() {
+function Navbar({setIsLoginModal, setIsSignUpModal, isBurgerActive, setIsBurgerActive}) {
+    const [isInputActive, setIsInputActive] = useState(true)
+
+    const toggleBurgerMenu = () => {
+        if (window.innerWidth < 768) {
+            isBurgerActive
+                ? document.body.classList.remove('overflow') 
+                : document.body.classList.add('overflow')
+            setIsBurgerActive(!isBurgerActive)
+        }
+    }
+
     return (
         <header>
             <nav className={s.navbar}>
                 <div className='container'>
                     <div className={s.tabsWrapper}>
-                        <div className={s.menu}>
+                        <div className={`${s.menu} ${isBurgerActive && s.dropDownMenu}`}>
                             <ul>
-                                <li><NavLink exact activeClassName={s.active} to="/">Home</NavLink></li>
-                                <li><NavLink exact activeClassName={s.active} to="/catalog">Literature</NavLink></li>
-                                <li><NavLink exact activeClassName={s.active} to="/history">History</NavLink></li>
-                                <li><NavLink exact activeClassName={s.active} to="/articles">Articles</NavLink></li>
-                                <li><NavLink exact activeClassName={s.active} to="/myBooks">My books</NavLink></li>
+                                <li><NavLink exact activeClassName={s.active} onClick={toggleBurgerMenu} to="/">{isBurgerActive && <FaHome className={s.menuIcon}/>}Home</NavLink></li>
+                                <li><NavLink exact activeClassName={s.active} onClick={toggleBurgerMenu} to="/catalog/literature">{isBurgerActive && <FaBook className={s.menuIcon}/>}Literature</NavLink></li>
+                                <li><NavLink exact activeClassName={s.active} onClick={toggleBurgerMenu} to="/catalog/history">{isBurgerActive && <FaGlobeEurope className={s.menuIcon}/>}History</NavLink></li>
+                                <li><NavLink exact activeClassName={s.active} onClick={toggleBurgerMenu} to="/catalog/articles">{isBurgerActive && <FaRegFileAlt className={s.menuIcon}/>}Articles</NavLink></li>
+                                <li><NavLink exact activeClassName={s.active} onClick={toggleBurgerMenu} to="/catalog/books">{isBurgerActive && <FaBookReader className={s.menuIcon}/>}My books</NavLink></li>
                             </ul>
+                            <button className={`${s.burger} ${isBurgerActive && s.burgerActive}`} onClick={toggleBurgerMenu}>
+                                <span></span>
+                            </button>
                         </div>
-                        <form onSubmit={e => {e.preventDefault(); alert(1)}}>
+                        <form className={`${s.form} ${isInputActive && s.activeForm}`} onSubmit={e => {e.preventDefault(); alert(1)}}>
                             <input type="text" placeholder="Author or title" />
                         </form>
                         <div className={s.links}>
                             <a href="https://vk.com/patmahayrr" className={`${s.fa} ${s.faVk}`}><FaVk /></a>
-                            <a href="https://tgstat.com/ru/channel/@patmahair" className={`${s.fa} ${s.faTelegram}`}><FaTelegram /></a>
                             <a href="https://www.youtube.com/channel/UC6vrmiSj7IzUTqk-qdoabfg" className={`${s.fa} ${s.faYoutube}`}><FaYoutube /></a>
+                            <a href="https://tgstat.com/ru/channel/@patmahair" className={`${s.fa} ${s.faTelegram}`}><FaTelegram /></a>
                         </div>
                         <div className={s.authorization}>
-                            <NavLink exact className={s.signup} to='/signup' >Sign Up</NavLink>
-                            <NavLink exact className={s.login} to='/login' >Login</NavLink>
+                            <button onClick={() => setIsSignUpModal(true)} className={s.singUp}>Sign Up</button>
+                            <button onClick={() => setIsLoginModal(true)} className={s.login}>Login</button>
                         </div>
+                        {isInputActive ? <FaSignInAlt onClick={() => setIsInputActive(!isInputActive)} className={s.search}/> : <FaSearchPlus onClick={() => setIsInputActive(!isInputActive)} className={s.search}/>}
                     </div>
                 </div>
             </nav>

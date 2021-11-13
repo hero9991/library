@@ -1,20 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
 import s from './BookItem.module.css'
 import StarRating from '../starRating/StarRating'
 import { Link } from 'react-router-dom'
+import { BsBookmarkCheckFill, BsFillBookmarkPlusFill, BsBookmark } from 'react-icons/bs'
 
-function BookItem({second, bookItem}) {
+function BookItem({ second, bookItem }) {
+    const [isAdded, setIsAdded] = useState(false);
+
     return (
-        <div className='container'>
-            <div className={`${s.item} ${second ? s.secondItem : s.firstItem}`}>
-                <img src={bookItem.cover} alt='' />
-                <div className={s.textContent}>
-                    <p className={s.title}>{bookItem.title}</p>
-                    <p className={s.author}>{bookItem.author}</p>
-                    <StarRating />
-                    <Link to='/thisbBok'>Read Now</Link >
-                    <p className={s.text}>{bookItem.description}</p>
-                </div>
+        <div className={`${s.item} ${second ? s.secondItem : s.firstItem}`}>
+            <img src={bookItem.cover} alt='' />
+            <div className={s.textContent}>
+                <p className={s.title}>{bookItem.title}</p>
+                <p className={s.author}>{bookItem.author}</p>
+                <StarRating />
+                <Link to='/book'>Read Now</Link >
+                <button onClick={() => setIsAdded(!isAdded)}>
+                    {isAdded ? <BsBookmarkCheckFill className={`${s.bookmark} ${isAdded && s.bookmarkAdded}`}/> : <BsBookmark className={s.bookmark}/>}
+                    {!isAdded && <BsFillBookmarkPlusFill className={s.bookmarkToAdd}/>}
+                </button>
+                <p className={s.text}>{bookItem.description}</p>
             </div>
         </div>
     )

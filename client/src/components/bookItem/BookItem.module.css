@@ -1,37 +1,36 @@
 .item {
     position: relative;
     display: flex;
-    width: 920px;
+    max-width: 920px;
     height: 220px;
-    background-color: #3E0000;
+    background-color: #3E0000; /*#747474;*/
     border: 8px solid #fff;
     color: #fff;
     box-shadow: 0 1px 3px rgb(110, 110, 110);
     border-radius: 33px;
     border-top-left-radius: 999px;
     position: relative;
-    margin: 50px auto;
+    margin: 0 auto 50px;
 }
 .secondItem {
-    background-color: #7D0000;
+    background-color: #7D0000; /*#2c2c2c;*/
 }
 
-.item img {
+.item > img {
     height: 190px;
     margin: 7px 0 0 10px;
     border: 1px solid #fff
 }
 
 .textContent {
-    margin: 20px;
+    padding: 20px;
     overflow: hidden;    
 }
 
-.textContent a {
+.textContent > a {
     position: absolute;
     top: 30px; 
-    right: 30px;
-
+    right: 77px;
     font-family: 'Tinos', serif;
     font-size: 16px;
     letter-spacing: 2px;
@@ -41,18 +40,50 @@
     padding: 10px 30px;
     transition: all linear .3s;
 }
-.textContent a:hover {
+.textContent > a:hover {
     background-color: #fff;
     color: #1b1b1b;
 }
+.textContent > button {
+    background: transparent;
+    position: absolute;
+    top: 30px; 
+    right: 20px;
+    cursor: pointer;
+}
+.textContent > button > svg {
+    color: #fff;
+    font-size: 30px;
+    transition: all linear .3s;
+}
+.textContent > button > svg:hover {
+    color:rgb(250, 203, 203)
+}
+.bookmark {
+    position: relative;
+}
+.bookmarkToAdd {
+    position: absolute;
+    left: 6px;
+    opacity: 0;
+}
+.bookmarkToAdd:hover {
+    opacity: 1;
+}
 
 .title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.2em;
+    max-width: 80%;
     font-size: 24px;
     font-weight: 700;
     letter-spacing: 1px;
 }
 
 .author{
+    max-width: 80%;
     font-size: 16px;
     color: #ADAA9A;
     letter-spacing: 1px;
@@ -64,4 +95,92 @@
     letter-spacing: 1.1px;
     line-height: 1.4;
     font-weight: 500;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;  
+    overflow: hidden;
+}
+
+@media (max-width: 767px) {
+    .textContent {
+        padding: 14px;
+    }
+    .textContent > a {
+        display: none;
+    }
+    .textContent > button {
+        top: 20px; 
+        right: 13px;
+    }
+    .item {
+        border-radius: 20px;
+    }
+    .item > img {
+        position: relative;
+        top: 50%;
+        margin-top: 0;
+        margin-left: 14px;
+        transform: translateY(-50%);
+    }
+    .text {
+        -webkit-line-clamp: 5;
+        line-height: 1.24;
+    }
+}
+@media (max-width: 684px) {
+    .title {
+        line-height: 0.9em;
+    }
+    .author{
+        margin: 7px 0;
+    }
+    .textContent > div {
+        height: 23px;
+    }
+    .text {
+        font-size: 15px;
+        line-height: 1.322;
+        -webkit-line-clamp: 6;
+    }
+}
+@media (max-width: 545px) {
+    .item {
+       height: 170px;
+       margin-bottom: 25px;
+    }
+    .item > img {
+        height: 150px;
+        margin-left: 10px;
+    }
+    .title {
+        font-size: 20px;
+    }
+    .author {
+        font-size: 14px;
+    }
+    .text {
+        font-size: 14px;
+        -webkit-line-clamp: 4;
+    }
+    .textContent {
+        padding-left: 12px;
+    }
+    .textContent > button > svg {
+        font-size: 27px;
+    }
+}
+@media (max-width: 478px) {
+    .item {
+        height: 160px;
+    }
+    .item > img {
+         height: 140px;
+         margin-left: 10px;
+    }
+    .textContent {
+        padding: 10px;
+    }
+    .text {
+        line-height: 1.29;
+    }
 }

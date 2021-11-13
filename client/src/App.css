@@ -1,3 +1,21 @@
 .App {
   color: black;
 }
+
+body.overflow{
+  overflow: hidden !important;
+  overflow-y: hidden !important;
+  overflow-x: hidden !important;
+}
+
+.blur{
+  -webkit-filter: blur(2px);
+  -moz-filter: blur(2px);
+  -o-filter: blur(2px);
+  -ms-filter: blur(2px);
+  filter: blur(2px);
+  pointer-events: none;
+  transition: all linear .3s;
+  overflow: hidden;
+  height: 100%;
+}

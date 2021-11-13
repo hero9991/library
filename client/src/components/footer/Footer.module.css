@@ -1,0 +1,10 @@
+.footer {
+    background-color: rgb(231, 231, 231);
+}
+
+.footerWrapper {
+    display: flex;
+    justify-content: space-between;
+    height: 70px;
+    align-items: center;
+}

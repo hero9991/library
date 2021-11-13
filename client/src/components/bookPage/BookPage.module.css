@@ -1,0 +1,95 @@
+.bookPage {
+    height: 90vh;
+    height: calc(100vh - 96px - 70px);
+    position: relative;
+}
+.bookPage:before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 220px;
+    background-color: #1b1b1b;
+    opacity: .88;
+    z-index: -1;
+}
+
+.content {
+    padding: 70px 70px;
+}
+
+.mainContent {
+    display: flex;
+    text-align: right;
+}
+
+.image {
+    width: 33%;
+}
+.image img {
+    width: 100%;
+}
+
+.text {
+    width: 67%;
+}
+.text > p {
+    padding-left: 50px;
+    padding-top: 50px;
+    font-size: 18px;
+    line-height: 1.3;
+}
+
+.blackBand {
+    height: 150px;
+    color: #fff;
+    font-weight: 500;
+    font-size: 37px;
+}
+
+.title {
+    font-weight: 700;
+    font-size: 55px;
+    margin-bottom: 20px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+}
+.buttons button {
+    font-family: 'Playfair Display';
+    font-weight: 500;
+    width: 33%;
+    font-size: 24px;
+    padding: 10px 0;
+    border: none;
+    transition: all linear .2s;
+    cursor: pointer;
+}
+.buttons button:first-child {
+    background-color: #000;
+    color: #fff;
+}
+.buttons button:first-child:hover {
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #000;
+}
+.buttons button:last-child {
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #000;
+}
+.buttons button:last-child:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+
+
+@media (max-width: 1500px) {
+    .bookPage {
+        height: calc(100vh - 76px - 70px);
+    }
+}

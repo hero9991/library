@@ -1,16 +1,25 @@
+header {
+    height: 96px;
+    filter: none;
+    transition: all linear .4s;
+}
 .navbar {
+    opacity: .95;
     box-shadow: 0 0 6px rgb(110, 110, 110);
-    transition: all linear .2s;
+    position: fixed;
+    width: 100%;
+    background-color: #fff;
+    z-index: 100;
 }
 
 .tabsWrapper {
+    height: 96px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
 }
 
-.tabsWrapper input {
+.form input {
     width: 300px;
     height: 2.5em;
     border-radius: 10px;
@@ -19,29 +28,86 @@
     font-size: 16px;
     font-weight: 700;
     text-align: center;
-    transition: all linear .2s;
+    transition: all linear .3s;
 }
-.tabsWrapper input:focus {
+.form input:focus {
     border-color: #C21818;
     outline: 0 none;
 }
 
-.menu ul {
+.search {
+    display: none;
+    font-size: 25px;
+}
+
+.menu > ul {
     display: flex;
 }
 
-.menu ul li {
-    padding: 30px 15px;
+.menu > ul li {
+    margin-left: 30px; 
 }
-.menu ul li:first-child{
-    padding-left: 0px;
+.menu > ul li:first-child{
+    margin-left: 0px;
 }
-.menu ul li a{
+.menu > ul li a{
     font-weight: 700;
+    padding-top: 30%;
+    padding-bottom: 30%;
     transition: all linear .3s;
 }
-.menu ul li :hover{
+.menu > ul li a:hover{
     color: #C21818;
+}
+
+.burger {
+    width: 36px;
+    height: 25px;
+    background-color: transparent;
+    position: relative;
+    cursor: pointer;
+    display: none;
+}
+.burger:before {
+    content: '';
+    position: absolute;
+    top: 0;    
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: #000;
+    transition: all linear .3s;
+}
+.burger:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: #000;
+    transition: all linear .3s;
+}
+.burger span {
+    width: 100%;
+    height: 3px;
+    position: absolute;
+    left: 0;
+    bottom: 44%;
+    background-color: #000;
+    transition: all linear .3s;
+}
+.burgerActive:before {
+    transform: rotate(45deg);
+    top: 45%;
+}
+.burgerActive:after {
+    transform: rotate(-45deg);
+    bottom: 45%;
+}
+.burgerActive span {
+    background-color: #fff;
+    left: -40px;
 }
 
 .active {
@@ -50,7 +116,7 @@
 
 .fa {
     display: inline-block;
-    border-radius: 33333333333px;
+    border-radius: 3333px;
     padding: 7px;
     margin: 5px;
     transition: all linear .3s;
@@ -59,7 +125,7 @@
     color: black;
     background-color: rgb(180, 180, 180);
 }
-.fa svg{
+.fa > svg{
     display: block;
 }
 
@@ -75,15 +141,164 @@
     background: #032c85;
     color: white;
 }
-.faTelegram:hover {
-    /* color: #bb0000; */
-}
-
 
 .authorization {
     display: flex;
     justify-content: space-between;
 }
-.authorization a {
-    padding: 10px;
+.authorization button {
+    background-color: transparent;
+    font-family: 'Tinos', serif;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all linear .2s;
+}
+.authorization button:hover {
+    color:rgb(172, 172, 172);
+}
+
+
+@media (max-width: 1500px) {
+    header {
+        height: 76px;
+    }
+    .tabsWrapper {
+        height: 76px;
+    }
+    .form input {
+        height: 2.2em;
+    }
+    .dropDownMenu > ul {
+        top: 76px;
+    }
+}
+
+@media (max-width: 1240px) {
+    .form input {
+        width: 250px;
+    }
+}
+
+@media (max-width: 1199px) {
+    .navbar {
+        font-size: 15px;
+    }
+    .menu > ul li {
+        margin-left: 25px; 
+    }
+    .menu > ul li:first-child{
+        margin-left: 0px;
+    }
+    .fa {
+        margin: 3px;
+    }
+    .authorization button {
+        padding: 7px;
+    }
+}
+
+@media (max-width: 991px) {
+    .form input {
+        width: 200px;
+    }
+    .links {
+        display: none;
+    }
+    .menu > ul li {
+        margin-left: 18px; 
+    }
+}
+
+@media (max-width: 767px) {
+    header {
+        height: 66px;
+    }
+    .tabsWrapper {
+        height: 66px;
+    }
+
+    .menu > ul {
+        box-shadow: 0 0 6px rgb(189 189 189);
+        width: 100%;
+        z-index: 1;
+        top: 66px;
+        position: absolute;
+        left: -100%;
+        top: 66px;
+        transition: all linear .1s;
+        display: inline-block;
+        overflow: scroll;
+        height: 100vh;
+        background-color: #fff;
+    }
+    .menu > ul li {
+        margin-left: 0; 
+        position: relative;
+    }
+    .menu > ul li a {
+        display: block;
+        border-bottom: 1px solid rgb(236, 236, 236);
+        font-size: 20px;
+        padding: 3vh 0;
+        padding-left: 58px;
+        background-color: rgb(253, 253, 253);
+    }
+    .menu > ul li:first-child a {
+        /* border-top: 1px solid black; */
+    }
+
+    .menuIcon {
+        position: absolute;
+        top: 50%;
+        left: 20px;
+        transform:translateY(-50%);
+        font-size: 20px;
+    }
+
+    .dropDownMenu > ul {   
+        left: 0;
+    }
+    .form {
+        flex-basis: 50%;
+    }
+    .form input {
+        width: 100%;
+        height: 34px;
+        flex-basis: 80%;
+    }
+    .burger {
+        display: block;
+    }
+
+    .authorization button {
+        font-size: 18px;
+    }   
+}
+
+@media (max-width: 478px) {
+    .search {
+        display: block;
+    }
+    .form {
+        position: absolute;
+        top: -80px;
+        left: 50%;
+        width: 60%;
+        transform: translateX(-50%);
+        transition: all linear .4s;
+    }
+    .activeForm {
+        top: 11px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60%;
+    }
+    .activeForm input {
+        /* background-color: rgb(255, 240, 240); */
+    }
+}
+
+@media (max-width: 374px) {
+    
 }

@@ -10,8 +10,8 @@
     font-size: 40px;
     font-weight: 700;
     text-align: center;
-    padding: 60px 0 20px;
-    margin-bottom: 60px;
+    padding: 50px 0 20px;
+    margin-bottom: 40px;
     position: relative;
 }
 .topic:after {
@@ -29,23 +29,68 @@
 }
 
 .books {
+    font-weight: 700;
+    line-height: 24px;
     border: 2px solid #000;
-    padding: 40px;
+    padding: 40px 40px 20px;
+    margin: 0 auto;
     position: relative;
+    text-align: center;
+}
+.books svg {
+    margin-bottom: 0;
+    font-size: 20px;
 }
 .whiteFont .books {
     border-color: #fff;
 }
 
-.bookItem {
-    cursor: pointer;
-    height: 450px;
-    width: 100%;
+.books li > div {
+    height: 20px;
 }
+.title {
+    line-height: 1.5em;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;  
+    overflow: hidden;
+}
+.author{
+    line-height: 1.4em;
+    font-size: 16px;
+    color: #ADAA9A;
+    letter-spacing: 1px;
+    margin: 0 0;
+}
+
+.bookItem {
+    display: block;
+    margin: 0 auto 6px;
+    z-index: 110;
+    cursor: pointer;
+    height: 373px;
+    width: 98%;
+    transition: all linear .2s;
+    border: 1px solid #000;
+}
+.bookItem:hover {
+    opacity: .8;
+}
+.whiteFont .bookItem {
+    border: 1px solid #fff;
+}
+
 
 .nextButton {
     right: -120px; 
+    transition: all linear .2s;
 }
+.nextButton:hover {
+    opacity: .3;
+ }
 .nextButton:after {
     font-size: 200px;
     color: black;
@@ -56,11 +101,258 @@
 
 .prevButton {
    left: -120px;
+   transition: all linear .2s;
 }
+.prevButton:hover {
+    opacity: .3;
+ }
 .prevButton:after {
     font-size: 200px;
     color: black;
 }
 .whiteFont .prevButton:after {
     color: #fff;
+}
+
+
+@media (max-width: 1600px) {
+    .title {
+        line-height: 1.4em;
+        font-size: 23px;
+    }
+    .author{
+        font-size: 15px;
+    }
+    .books {
+        width: 80%;
+    }
+    .bookItem {
+        height: 320px;
+    }
+}
+@media (max-width: 1400px) {
+    .title {
+        line-height: 1.3em;
+        font-size: 22px;
+    }
+    .author{
+        font-size: 14px;
+    }
+    .books {
+        width: 70%;
+    }
+    .bookItem {
+        height: 280px;
+        margin-bottom: 4px;
+    }
+    .prevButton:after {
+        font-size: 170px;
+    }
+    .nextButton:after {
+        font-size: 170px;
+    }
+}
+@media (max-width: 1270px) {
+    .books li > div > label > svg {
+        font-size: 18px;
+    }
+    .title {
+        line-height: 1.2em;
+        font-size: 20px;
+    }
+    .author{
+        font-size: 13px;
+    }
+    .topic {
+        padding: 40px 0 15px;
+    }
+    .slider {
+        padding-bottom: 40px;
+    }
+    .books {
+        width: 63%;
+    }
+    .bookItem {
+        height: 253px;
+    }
+}
+@media (max-width: 1199px) {
+    .books li > div > label > svg {
+        font-size: 17px;
+    }
+    .title {
+        font-size: 18px;
+    }
+    .author{
+        line-height: 1.4em;
+        font-size: 12px;
+    }
+    .topic {
+        font-size: 35px;
+    }
+    .books {
+        width: 70%;
+    }
+    .bookItem {
+        height: 235px;
+    }
+    .prevButton:after {
+        font-size: 150px;
+    }
+    .prevButton {
+        left: -100px; 
+    }
+    .nextButton:after {
+        font-size: 150px;
+    }
+    .nextButton {
+        right: -100px; 
+    }
+}
+@media (max-width: 1080px) {
+    .books {
+        width: 68%;
+        padding: 40px 25px 15px;
+    }
+    .bookItem {
+        height: 232px;
+    }
+}
+@media (max-width: 991px) {
+    .books li > div {
+        height: 16px;
+    }
+    .books li > div > label > svg {
+        top: 0;
+        font-size: 16px;
+    }
+    .title {
+        line-height: 1.7em;
+        font-size: 16px;
+    }
+    .author{
+        line-height: 1em;
+    }
+    .topic {
+        font-size: 30px;
+        padding-bottom: 10px;
+        margin-bottom: 28px;
+    }
+    .books {
+        width: 75%;
+    }
+    .bookItem {
+        height: 200px;
+        margin-bottom: 3px;
+    }
+    .prevButton:after {
+        font-size: 130px;
+    }
+    .prevButton {
+        left: -80px; 
+    }
+    .nextButton:after {
+        font-size: 130px;
+    }
+    .nextButton {
+        right: -80px; 
+    }
+}
+@media (max-width: 850px) {
+    .books {
+        padding: 30px 20px 12px;
+        width: 70%;
+    }
+    .bookItem {
+        height: 187px;
+    }
+    .prevButton:after {
+        font-size: 110px;
+    }
+    .prevButton {
+        left: -65px; 
+    }
+    .nextButton:after {
+        font-size: 110px;
+    }
+    .nextButton {
+        right: -65px; 
+    }
+}
+@media (max-width: 767px) {
+    .books {
+        box-sizing: border-box;
+        width: 100%;
+    }
+    .bookItem {
+        width: 129px;
+        height: 187px;
+    }
+    .prevButton {
+        display: none;
+    }
+    .nextButton {
+        display: none;
+    }
+}
+@media (max-width: 639px) {
+    .bookItem {
+        width: 153px;
+        height: 220px;
+    }
+}
+@media (max-width: 595px) {
+    .bookItem {
+        width: 142px;
+        height: 206px;
+    }
+}
+@media (max-width: 545px) {
+    .bookItem {
+        width: 129px;
+        height: 187px;
+    }
+}
+@media (max-width: 481px) {
+    .books {
+        padding: 30px 7px 17px;
+    }
+    .bookItem {
+        width: 116px;
+        height: 168px;
+    }
+}
+@media (max-width: 433px) {
+    .bookItem {
+        width: 104px;
+        height: 150px;
+    }
+}
+@media (max-width: 412px) {
+    .bookItem {
+        /* width: 142px;
+        height: 206px; */
+    }
+}
+@media (max-width: 380px) { 
+    .bookItem {
+        width: 94px;
+        height: 135px;
+        margin-bottom: 1px;
+    }
+    .books li > div > label > svg{
+        font-size: 14px;
+    }
+    .title {
+        font-size: 15px;
+    }
+    .author {
+        font-size: 11px;
+    }
+}
+@media (max-width: 340px) { 
+    .bookItem {
+        width: 86px;
+        height: 122px;
+    }
 }

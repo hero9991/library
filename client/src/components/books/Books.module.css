@@ -1,2 +1,70 @@
 .books {
+    padding-top: 30px;
+}
+.sortingWrapper {
+    align-items: center;
+    display: flex;
+    max-width: 500px;
+    margin: 0 auto 30px;
+    justify-content: space-between;
+}
+
+.sorting {
+    display: flex;
+}
+
+.sorting > a{
+    display: block;
+    font-weight: 700;
+    font-size: 15px;
+    border-radius: 5px;
+    text-align: center;
+    padding: 10px 0;
+    margin-left: 20px;
+    width: 130px;
+    transition: all linear .2s;
+}
+.sorting > a:hover {
+    background-color: rgb(226, 226, 226);
+}
+.active {
+    background-color: rgb(226, 226, 226);
+}
+
+.viewMoreButton {
+    display: block;
+    margin: 0 auto 50px;
+    width: 40%;
+    height: 50px;
+    cursor: pointer;
+    background-color: rgb(241, 241, 241);
+    font-family: 'Tinos', serif;
+    font-size: 20px;
+    letter-spacing: 2px;
+    border: none;
+    transition: all linear .2s;
+}
+.viewMoreButton:hover {
+    color: #fff;
+    background-color: rgb(168, 168, 168);
+    font-weight: 700;
+}
+
+
+@media (max-width: 767px) {
+    .sorting > a{
+        margin-left: 20px;
+        width: unset;
+        padding: 10px 20px;
+        max-width: 130px;
+    }
+}
+@media (max-width: 545px) {
+    .sortingWrapper {
+        justify-content: space-around;
+    }
+    .sortingWrapper > div > a {
+        font-size: 14px;
+        margin-left: 0;
+    }
 }
