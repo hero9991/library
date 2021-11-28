@@ -20,7 +20,7 @@ function Navbar({setIsLoginModal, setIsSignUpModal, isBurgerActive, setIsBurgerA
             <nav className={s.navbar}>
                 <div className='container'>
                     <div className={s.tabsWrapper}>
-                        <div className={`${s.menu} ${isBurgerActive && s.dropDownMenu}`}>
+                        <div className={`${s.menu} ${isBurgerActive ? s.dropDownMenu : undefined}`}>
                             <ul>
                                 <li><NavLink exact activeClassName={s.active} onClick={toggleBurgerMenu} to="/">{isBurgerActive && <FaHome className={s.menuIcon}/>}Home</NavLink></li>
                                 <li><NavLink exact activeClassName={s.active} onClick={toggleBurgerMenu} to="/catalog/literature">{isBurgerActive && <FaBook className={s.menuIcon}/>}Literature</NavLink></li>
@@ -28,11 +28,11 @@ function Navbar({setIsLoginModal, setIsSignUpModal, isBurgerActive, setIsBurgerA
                                 <li><NavLink exact activeClassName={s.active} onClick={toggleBurgerMenu} to="/catalog/articles">{isBurgerActive && <FaRegFileAlt className={s.menuIcon}/>}Articles</NavLink></li>
                                 <li><NavLink exact activeClassName={s.active} onClick={toggleBurgerMenu} to="/catalog/books">{isBurgerActive && <FaBookReader className={s.menuIcon}/>}My books</NavLink></li>
                             </ul>
-                            <button className={`${s.burger} ${isBurgerActive && s.burgerActive}`} onClick={toggleBurgerMenu}>
+                            <button className={`${s.burger} ${isBurgerActive ? s.burgerActive : undefined}`} onClick={toggleBurgerMenu}>
                                 <span></span>
                             </button>
                         </div>
-                        <form className={`${s.form} ${isInputActive && s.activeForm}`} onSubmit={e => {e.preventDefault(); alert(1)}}>
+                        <form className={`${s.form} ${isInputActive ? s.activeForm : undefined}`} onSubmit={e => {e.preventDefault(); alert(1)}}>
                             <input type="text" placeholder="Author or title" />
                         </form>
                         <div className={s.links}>

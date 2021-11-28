@@ -1,15 +1,27 @@
-import React, { useState } from 'react'
-import { covers } from '../../utility/BooksData'
+import React, { useEffect, useState } from 'react'
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation, Pagination, Autoplay } from 'swiper'
 import 'swiper/swiper-bundle.min.css'
 import s from './Slider.module.css'
 import StarRating from '../starRating/StarRating';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 SwiperCore.use([Navigation, Pagination, Autoplay])
 
 function Slider({ isBlackFont }) {
+    const [books, setBooks] = useState([])
+
+    useEffect(() => {
+        fetch('/books', {
+            headers : { 
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => setBooks(data))
+    }, [])
+
     const params = {
         loop: true,
         autoplay: {
@@ -88,8 +100,8 @@ function Slider({ isBlackFont }) {
             <h2 className={s.topic}>{isBlackFont ? 'Armenian history' : 'Armenian literature'}</h2>
             <div className={s.books}>
                 <Swiper id='main' wrapperTag="ul" className={s.swiper} {...params}>
-                    {covers.map(item => <SwiperSlide key={`test ${Math.random()}`} tag="li">
-                        <Link exact to="/book"><img className={s.bookItem} src={item.cover} alt="no img" /></Link>
+                    {books.map(item => <SwiperSlide key={`test ${Math.random()}`} tag="li">
+                        <NavLink exact to="/book"><img className={s.bookItem} src={require(`../../assets/booksCover/${item.cover}.jpeg`).default} alt="no img" /></NavLink>
                         <StarRating />
                         <p className={s.title}>{item.title}</p>
                         <p className={s.author}>{item.author}</p>

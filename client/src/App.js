@@ -21,7 +21,7 @@ function App() {
     <Router>
       <div className="App">
         <Navbar setIsLoginModal = {setIsLoginModal} setIsSignUpModal = {setIsSignUpModal} isBurgerActive={isBurgerActive} setIsBurgerActive={setIsBurgerActive}/>
-        <section className={isBurgerActive && 'blur'}> 
+        <section className={isBurgerActive ? 'blur' : undefined}> 
           <Switch>
             <Route path="/" exact>
               <HomeBody className='blur'/>

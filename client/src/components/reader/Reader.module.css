@@ -1,0 +1,72 @@
+.readerModal {
+    z-index: 100;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.2s;
+  }
+  .readerModal.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+  
+  .readerModalContent {
+    height: 80vh;
+    width: 80%;
+    position: relative;
+    transition: all linear 0.2s;
+    transform: scale(0);
+  }
+  .readerModalContent.active {
+    transform: scale(1);
+  }
+
+.some {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: black;
+}
+
+/* .readerModalContent > div > div{
+    background-color: #000 !important;
+}
+.readerModalContent > div > div > div > div{
+    inset: 50px 0 20px !important;
+}
+
+.readerModalContent > div > div > button{
+    z-index: 110 !important;
+    height: 45px !important;
+}
+.readerModalContent > div > div > button > span:first-child{
+    top:26% !important;
+}
+.readerModalContent > div > div > button > span:last-child{
+    bottom:25% !important;
+    top:unset !important;
+}
+.readerModalContent > div > div > button > span:last-child:after{
+    content: '';
+    width:100%;
+    height: 2px;
+    background-color: #ccc;
+    position: absolute;
+    top: -11px;
+    left: 0;
+}
+
+.readerModalContent > div > div > div{
+}
+.readerModalContent > div > div > div iframe{
+} */

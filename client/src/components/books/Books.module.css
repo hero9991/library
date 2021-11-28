@@ -1,39 +1,81 @@
 .books {
-    padding-top: 30px;
+    padding: 30px 0 50px;
+    background-color: #FFFFFF;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-340 0 1600 900'%3E%3Cpolygon fill='%23cc7373' points='957 450 539 900 1396 900'/%3E%3Cpolygon fill='%23bca8a8' points='957 450 872.9 900 1396 900'/%3E%3Cpolygon fill='%239e7577' points='-60 900 398 662 816 900'/%3E%3Cpolygon fill='%23b04249' points='337 900 398 662 816 900'/%3E%3Cpolygon fill='%23f7f0f1' points='1203 546 1552 900 876 900'/%3E%3Cpolygon fill='%23cbc9c9' points='1203 546 1552 900 1162 900'/%3E%3Cpolygon fill='%23d01f6e' points='641 695 886 900 367 900'/%3E%3Cpolygon fill='%23aa4d6d' points='587 900 641 695 886 900'/%3E%3Cpolygon fill='%23bc99ac' points='1710 900 1401 632 1096 900'/%3E%3Cpolygon fill='%23a85f89' points='1710 900 1401 632 1365 900'/%3E%3Cpolygon fill='%236e576e' points='1210 900 971 687 725 900'/%3E%3Cpolygon fill='%23d6d2d6' points='943 900 1210 900 971 687'/%3E%3C/svg%3E");
+    /* background by SVGBackgrounds.com */
+    background-attachment: fixed;
+    background-position: right bottom;
+    background-repeat: no-repeat;
 }
 .sortingWrapper {
+    border: 1px solid #eff2f5;
     align-items: center;
-    display: flex;
-    max-width: 500px;
     margin: 0 auto 30px;
+    background-color: #fbf8f9;
+    padding: 10px 0;
+    opacity: .9;
+}
+
+.sortingScroll {
+    display: flex;
     justify-content: space-between;
+    overflow-y: hidden;
+    overflow-x: auto;
+    white-space: nowrap;
 }
 
 .sorting {
     display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    padding-left: 4px;
+}
+.sorting:first-child {
+    padding-right: 4px;
 }
 
 .sorting > a{
+    white-space: nowrap;
     display: block;
+    color:#313131;
+    /* border: 1px solid #8a8989; */
     font-weight: 700;
     font-size: 15px;
-    border-radius: 5px;
+    border-radius: 7px;
     text-align: center;
-    padding: 10px 0;
-    margin-left: 20px;
-    width: 130px;
+    padding: 8px 12px;
+    margin: 3px 3px;
     transition: all linear .2s;
 }
-.sorting > a:hover {
-    background-color: rgb(226, 226, 226);
+.sorting:first-child > a:hover {
+    background-color: #7d0200;
+    color: #fff;
+    /* font-weight: 700; */
 }
-.active {
-    background-color: rgb(226, 226, 226);
+.sorting:last-child > a:hover {
+    background-color: #153a8c;
+    color: #fff;
+    /* font-weight: 700; */
+}
+
+.activeOrder {
+    background-color: #7d0200;
+    color: #fff !important;
+    font-weight: 700 !important; 
+    pointer-events: none;
+    opacity: .7;
+}
+.activeTopic {
+    background-color: #153a8c;
+    color: #fff !important;
+    font-weight: 700 !important;
+    pointer-events: none;
+    opacity: .7;
 }
 
 .viewMoreButton {
     display: block;
-    margin: 0 auto 50px;
+    margin: 0 auto;
     width: 40%;
     height: 50px;
     cursor: pointer;
@@ -50,21 +92,17 @@
     font-weight: 700;
 }
 
-
-@media (max-width: 767px) {
-    .sorting > a{
-        margin-left: 20px;
-        width: unset;
-        padding: 10px 20px;
-        max-width: 130px;
+@media (max-width: 1199px) {
+    .sortingScroll {
+        display: block;
+    }
+    .sorting {
+        justify-content: center;
     }
 }
+@media (max-width: 767px) {
+
+}
 @media (max-width: 545px) {
-    .sortingWrapper {
-        justify-content: space-around;
-    }
-    .sortingWrapper > div > a {
-        font-size: 14px;
-        margin-left: 0;
-    }
+
 }

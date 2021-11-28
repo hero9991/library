@@ -1,15 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import s from './BookPage.module.css'
-import { covers } from '../../utility/BooksData'
+import Reader from '../reader/Reader'
 
 function BookPage() {
+    const [isReaderModal, setIsReaderModal] = useState(false)
+
     return (
         <section className={s.bookPage}>
             <div className='container'>
                 <div className={s.content}>
                     <div className={s.mainContent}>
                     <div className={s.image}>
-                        <img src={covers[0].cover} alt=''></img>
+                        <img src={require('../../assets/booksCover/Gikor.jpeg').default} alt=''></img>
                     </div>
                     <div className={s.text}>
                         <div className={s.blackBand}>
@@ -22,9 +24,12 @@ function BookPage() {
 
                     <div className={s.buttons}>
                         <button>Download</button>
-                        <button>Read Now</button>
+                        <button onClick={() => setIsReaderModal(true)}>Read Now</button>
                     </div>
-                </div>
+                {/* <iframe title='book' src={book} width="100%" height="500px"></iframe> */}
+                {/* <embed src={book} type='application/pdf' position='absolute' width='100%' height='660px'></embed> */}
+                <Reader isReaderModal={isReaderModal} setIsReaderModal={setIsReaderModal}/>
+             </div>
 
             </div>
         </section>

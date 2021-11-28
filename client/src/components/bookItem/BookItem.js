@@ -9,14 +9,14 @@ function BookItem({ second, bookItem }) {
 
     return (
         <div className={`${s.item} ${second ? s.secondItem : s.firstItem}`}>
-            <img src={bookItem.cover} alt='' />
+            <img src={require(`../../assets/booksCover/${bookItem.cover}.jpeg`).default} alt='' />
             <div className={s.textContent}>
                 <p className={s.title}>{bookItem.title}</p>
-                <p className={s.author}>{bookItem.author}</p>
+                <p className={s.author}>{bookItem.author} {bookItem.yearsOfLife}</p>
                 <StarRating />
                 <Link to='/book'>Read Now</Link >
                 <button onClick={() => setIsAdded(!isAdded)}>
-                    {isAdded ? <BsBookmarkCheckFill className={`${s.bookmark} ${isAdded && s.bookmarkAdded}`}/> : <BsBookmark className={s.bookmark}/>}
+                    {isAdded ? <BsBookmarkCheckFill className={`${s.bookmark} ${isAdded ? s.bookmarkAdded : undefined}`}/> : <BsBookmark className={s.bookmark}/>}
                     {!isAdded && <BsFillBookmarkPlusFill className={s.bookmarkToAdd}/>}
                 </button>
                 <p className={s.text}>{bookItem.description}</p>

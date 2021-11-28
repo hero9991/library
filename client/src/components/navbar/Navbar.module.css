@@ -155,7 +155,8 @@ header {
     transition: all linear .2s;
 }
 .authorization button:hover {
-    color:rgb(172, 172, 172);
+    color:#c52728;
+    opacity: .3;
 }
 
 
@@ -289,7 +290,7 @@ header {
         transition: all linear .4s;
     }
     .activeForm {
-        top: 11px;
+        top: 14px;
         left: 50%;
         transform: translateX(-50%);
         width: 60%;

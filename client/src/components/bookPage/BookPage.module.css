@@ -1,6 +1,6 @@
 .bookPage {
-    height: 90vh;
-    height: calc(100vh - 96px - 70px);
+    /* height: 90vh; */
+    min-height: calc(100vh - 96px - 70px);
     position: relative;
 }
 .bookPage:before {
@@ -23,16 +23,18 @@
 }
 
 .image {
-    width: 33%;
+    width: 30%;
 }
 .image img {
     width: 100%;
+    border: 1px solid white;
 }
 
 .text {
-    width: 67%;
+    width: 70%;
 }
 .text > p {
+    font-family: 'Tinos';
     padding-left: 50px;
     padding-top: 50px;
     font-size: 18px;
@@ -60,7 +62,7 @@
 .buttons button {
     font-family: 'Playfair Display';
     font-weight: 500;
-    width: 33%;
+    width: 30%;
     font-size: 24px;
     padding: 10px 0;
     border: none;
@@ -89,7 +91,31 @@
 
 
 @media (max-width: 1500px) {
+    .content {
+        padding: 40px 100px;
+    }
     .bookPage {
-        height: calc(100vh - 76px - 70px);
+        min-height: calc(100vh - 66px - 70px);
+    }
+}
+@media (max-width: 1199px) {
+    .content {
+        padding: 40px 10px;
+    }
+}
+@media (max-width: 991px) {
+    .bookPage:before {
+        height: 190px;
+    }
+    .content {
+        padding: 40px 10px;
+    }
+    .text > p {
+        font-size: 16px;
+        padding-top: 30px;
+        padding-left: 30px;
+    }
+    .buttons button {
+        font-size: 20px;
     }
 }
