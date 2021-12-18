@@ -314,6 +314,9 @@
     }
 }
 @media (max-width: 481px) {
+    .topic {
+        font-size: 28px;
+    }
     .books {
         padding: 30px 7px 17px;
     }
@@ -323,15 +326,12 @@
     }
 }
 @media (max-width: 433px) {
+    .topic {
+        font-size: 26px;
+    }
     .bookItem {
         width: 104px;
         height: 150px;
-    }
-}
-@media (max-width: 412px) {
-    .bookItem {
-        /* width: 142px;
-        height: 206px; */
     }
 }
 @media (max-width: 380px) { 

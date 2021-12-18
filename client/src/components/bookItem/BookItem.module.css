@@ -118,6 +118,9 @@
         top: 20px; 
         right: 13px;
     }
+    .bookmarkToAdd {
+        display: none;
+    }
     .item {
         border-radius: 20px;
     }

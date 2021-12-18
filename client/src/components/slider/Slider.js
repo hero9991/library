@@ -5,21 +5,18 @@ import 'swiper/swiper-bundle.min.css'
 import s from './Slider.module.css'
 import StarRating from '../starRating/StarRating';
 import { NavLink } from 'react-router-dom';
+import { getBooks } from '../../utility/AxiosService';
 
 SwiperCore.use([Navigation, Pagination, Autoplay])
 
-function Slider({ isBlackFont }) {
+function Slider({ isBlackFont, isAuth }) {
     const [books, setBooks] = useState([])
 
     useEffect(() => {
-        fetch('/books', {
-            headers : { 
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-            }
-        })
-            .then(response => response.json())
-            .then(data => setBooks(data))
+        setTimeout(() => {
+            getBooks()
+                .then(data => setBooks(data.data))
+        }, 1000);
     }, [])
 
     const params = {

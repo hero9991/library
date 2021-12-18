@@ -10,21 +10,39 @@ import {
 import Books from './components/books/Books';
 import BookPage from './components/bookPage/BookPage';
 import AuthorizationModal from './components/authorizationModal/AuthorizationModal';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { checkAuth } from './utility/AxiosService';
 
 function App() {
+  const [isAuth, setIsAuth] = useState(false)
+  const [user, setUser] = useState(null)
   const [isLoginModal, setIsLoginModal] = useState(false)
   const [isSignUpModal, setIsSignUpModal] = useState(false)
   const [isBurgerActive, setIsBurgerActive] = useState(false)
 
+  useEffect(() => {
+    if (!localStorage.getItem('token')) return
+
+    (async function () {
+      try {
+        const response = await checkAuth()
+        localStorage.setItem('token', response.data.accessToken)
+        setIsAuth(true)
+        setUser(response.data.user)
+      } catch (error) {
+        console.log(error.response?.data?.message)
+      }
+    })()
+  }, [])
+
   return (
     <Router>
       <div className="App">
-        <Navbar setIsLoginModal = {setIsLoginModal} setIsSignUpModal = {setIsSignUpModal} isBurgerActive={isBurgerActive} setIsBurgerActive={setIsBurgerActive}/>
-        <section className={isBurgerActive ? 'blur' : undefined}> 
+        <Navbar isAuth={isAuth} setIsAuth={setIsAuth} setIsLoginModal={setIsLoginModal} setIsSignUpModal={setIsSignUpModal} isBurgerActive={isBurgerActive} setIsBurgerActive={setIsBurgerActive} />
+        <section className={isBurgerActive ? 'blur' : undefined}>
           <Switch>
             <Route path="/" exact>
-              <HomeBody className='blur'/>
+              <HomeBody className='blur' />
             </Route>
             <Route path="/catalog/literature">
               <Books />
@@ -39,7 +57,8 @@ function App() {
               <BookPage />
             </Route>
           </Switch>
-          <AuthorizationModal isLoginModal={isLoginModal} isSignUpModal={isSignUpModal} setIsLoginModal={setIsLoginModal} setIsSignUpModal={setIsSignUpModal}/>
+          <AuthorizationModal isLoginModal={isLoginModal} isSignUpModal={isSignUpModal} setIsLoginModal={setIsLoginModal} setIsSignUpModal={setIsSignUpModal}
+            setIsAuth={setIsAuth} />
           <Footer />
         </section>
       </div>

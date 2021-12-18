@@ -11,7 +11,7 @@ function StarRating() {
             {[...Array(5)].map((star, index) => {
                 const ratingValue = index + 1;
                 return (
-                    <label key={index} onMouseEnter={() => setHover(ratingValue)} onMouseLeave={() =>  setHover(null)}>
+                    <label key={index} onMouseEnter={() => setHover(ratingValue)} onMouseLeave={() => setHover(null)}>
                         <input type='radio' name='rating' value={ratingValue} onClick={() => setRating(ratingValue)} />
                         {ratingValue <= (hover || rating) ? <FaStar className={s.starItem} /> : <FaRegStar className={s.starItem} />}
                     </label>

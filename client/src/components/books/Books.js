@@ -2,19 +2,16 @@ import React, { useEffect, useState } from 'react'
 import BookItem from '../bookItem/BookItem'
 import s from './Books.module.css'
 import { NavLink } from 'react-router-dom'
+import { getBooks } from '../../utility/AxiosService'
 
 function Books() {
     const [books, setBooks] = useState([])
 
     useEffect(() => {
-        fetch('/books', {
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            }
-        })
-            .then(response => response.json())
-            .then(data => setBooks(data))
+        getBooks()
+            .then(data => {
+                setBooks(data.data)
+            })
     }, []) //temp changes
 
     useEffect(() => {
@@ -38,7 +35,7 @@ function Books() {
                         <NavLink exact activeClassName={s.activeOrder} to='/catalog1'>By rating</NavLink>
                         <NavLink exact activeClassName={s.activeOrder} to='/catalog2'>By alphabet</NavLink>
                     </div>
-                    <div className={s.sorting}>
+                    <div className={`${s.sorting} ${s.topics}`}>
                         <NavLink exact activeClassName={s.activeTopic} to='/catalog/literature'>All books</NavLink>
                         <NavLink exact activeClassName={s.activeTopic} to='/catalog/literature/1'>Prehistoric era</NavLink>
                         <NavLink exact activeClassName={s.activeTopic} to='/catalog1'>Urartu</NavLink>
