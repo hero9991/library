@@ -21,10 +21,14 @@
     background-color: #7D0000; /*#2c2c2c;*/
 }
 
-.item > img {
+.item > a > img {
+    transition: all linear .2s;
     height: 190px;
     margin: 7px 0 0 10px;
-    border: 1px solid #fff
+    border: 1px solid #fff;
+}
+.item > a > img:hover {
+    transform: scale(1.1);
 }
 
 .textContent {
@@ -86,6 +90,13 @@
     font-weight: 700;
     letter-spacing: 1px;
 }
+.title a {
+    color: #fff;
+    transition: all linear .2s;
+}
+.title a:hover {
+    opacity: .8;
+}
 
 .author{
     max-width: 80%;
@@ -93,6 +104,15 @@
     color: #ADAA9A;
     letter-spacing: 1px;
     margin: 10px 0;
+}
+
+.ratingWrapper {
+    display: flex;
+}
+.ratingWrapper > p {
+    margin-left: 10px;
+    font-size: 18px;
+    line-height: 13px;
 }
 
 .text {
@@ -124,11 +144,14 @@
     .item {
         border-radius: 20px;
     }
-    .item > img {
+    .item > a > img {
         position: relative;
         top: 50%;
         margin-top: 0;
         margin-left: 14px;
+        transform: translateY(-50%);
+    }
+    .item > a > img:hover {
         transform: translateY(-50%);
     }
     .text {
@@ -157,7 +180,7 @@
        height: 170px;
        margin-bottom: 25px;
     }
-    .item > img {
+    .item > a > img {
         height: 150px;
         margin-left: 10px;
     }
@@ -182,7 +205,7 @@
     .item {
         height: 160px;
     }
-    .item > img {
+    .item > a > img {
          height: 140px;
          margin-left: 10px;
     }

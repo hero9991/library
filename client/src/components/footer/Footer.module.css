@@ -1,10 +1,23 @@
 .footer {
-    background-color: rgb(231, 231, 231);
+    background-color: #fef1f3;
 }
 
 .footerWrapper {
     display: flex;
     justify-content: space-between;
+    font-weight: 800;
     height: 70px;
     align-items: center;
+}
+.footerWrapper > div:first-child {
+    cursor: pointer;
+}
+
+.countryIcons span {
+    cursor: pointer;
+    padding-left: 6px;
+    transition: all linear .2s;
+}
+.countryIcons span:hover {
+    transform: scale(1.1);
 }

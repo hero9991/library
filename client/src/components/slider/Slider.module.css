@@ -58,6 +58,16 @@
     -webkit-box-orient: vertical;  
     overflow: hidden;
 }
+.title > a {
+    transition: all linear .2s;
+}
+.title > a:hover {
+    opacity: .6;
+}
+.whiteFont .title > a {
+    color: #fff;
+}
+
 .author{
     line-height: 1.4em;
     font-size: 16px;
@@ -77,8 +87,10 @@
     border: 1px solid #000;
 }
 .bookItem:hover {
-    opacity: .8;
+    opacity: .9;
+    transform: scale(.98);
 }
+
 .whiteFont .bookItem {
     border: 1px solid #fff;
 }

@@ -19,11 +19,14 @@ header {
     align-items: center;
 }
 
+.form {
+    position: relative;
+}
+
 .form input {
     width: 300px;
-    height: 2.5em;
-    border-radius: 333px;
-    border: 1px solid rgb(172, 172, 172);
+    height: 2em;
+    border: 2px solid rgb(223, 223, 223);
     font-family: 'Tinos', serif;
     font-size: 16px;
     font-weight: 700;
@@ -33,6 +36,15 @@ header {
 .form input:focus {
     border-color: #C21818;
     outline: 0 none;
+}
+
+.form > svg {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: grey;
+    font-size: 18px;
 }
 
 .search {
@@ -153,10 +165,17 @@ header {
     font-size: 16px;
     cursor: pointer;
     transition: all linear .2s;
+    border: 2px solid #1c1c1c;
+    padding: 5px 15px;
+    border-radius: 10px;
 }
 .authorization button:hover {
-    color:#c52728;
-    opacity: .3;
+    color:#fff;
+    background-color: #1c1c1c;
+}
+
+.login {
+    margin-left: 3px;
 }
 
 
@@ -168,7 +187,7 @@ header {
         height: 76px;
     }
     .form input {
-        height: 2.2em;
+        height: 2em;
     }
     .dropDownMenu > ul {
         top: 76px;

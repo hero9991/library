@@ -5,10 +5,20 @@ const bookSchema = mongoose.Schema({
     author: String,
     description: String,
     date: Date,
+    ratingCount: {
+        type: Number,
+        default: 0
+    },
     rating: {
         type: Number,
         default: 0
     },
+    viewCount: {
+        type: Number,
+        default: 0
+    },
+    type: String,
+    topic: String,
     cover: String,
     link: String,
 })

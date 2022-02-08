@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import s from './MainBody.module.css'
 import mainImage from '../../assets/logo/main1.png'
 import { Link } from 'react-router-dom'
+import { UserContext } from '../../App'
+import { getButtonUpperText, getReadButtonText, getTitleFirst, getTitleSecond } from './translatedText/translatedText'
 
 function MainBody() {
+    const { language } = useContext(UserContext)
+
     return (
         <section className={s.mainBody}>
             <div className='container'>
@@ -11,10 +15,9 @@ function MainBody() {
                     <div className={s.topText}>
                         <h1>ՊԱՏՄԱՀԱՅՐ</h1>
                         <div>
-                            <h2>History of our land</h2>
-                            <h2>Roots of our literature</h2>
+                            <h2>{getTitleFirst(language)}</h2>
+                            <h2>{getTitleSecond(language)}</h2>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -22,8 +25,8 @@ function MainBody() {
                 <div className={s.bottomContent}>
                     <img src={mainImage} alt='' />
                     <div className={s.bottomText}>
-                        <p>PDF Version is Available</p>
-                        <Link to='/catalog'>Read now</Link>
+                        <p>{getButtonUpperText(language)}</p>
+                        <Link to='/catalog'>{getReadButtonText(language)}</Link>
                     </div>
                 </div>
             </div>

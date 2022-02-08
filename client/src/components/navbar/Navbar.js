@@ -1,30 +1,46 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import s from './Navbar.module.css'
-import { NavLink } from 'react-router-dom'
-import { FaYoutube, FaTelegram, FaVk, FaSignInAlt, FaSearchPlus, FaHome, FaBook, FaBookReader, FaGlobeEurope, FaRegFileAlt } from 'react-icons/fa'
-import { signOut } from '../../utility/AxiosService'
+import { NavLink, useHistory } from 'react-router-dom'
+import { FaYoutube, FaTelegram, FaVk, FaSignInAlt, FaSearchPlus, FaSearch, FaHome, FaBook, FaBookReader, FaGlobeEurope, FaRegFileAlt } from 'react-icons/fa'
+import { getBooksBySearch, signOut } from '../../utility/AxiosService'
+import { UserContext } from '../../App'
+import { toast } from 'react-toastify'
+import { postSignOut } from './NavbarService'
+import { getArticlesTab, getHistoryTab, getHomeTab, getLiteratureTab, getLogOutTab, getMyBooksTab, getSignUpTab, getLoginTab, getSearchPlaceholder } from './translatedText/translatedText'
 
-function Navbar({ isAuth, setIsAuth, setIsLoginModal, setIsSignUpModal, isBurgerActive, setIsBurgerActive }) {
+function Navbar({ setIsLoginModal, setIsSignUpModal }) {
     const [isInputActive, setIsInputActive] = useState(true)
+    const [isBurgerActive, setIsBurgerActive] = useState(false)
+    const [delay, setDelay] = useState(false)
+    const { user, setUser, language } = useContext(UserContext)
+    const history = useHistory()
 
     const toggleBurgerMenu = () => {
-        if (window.innerWidth < 768) {
-            isBurgerActive
-                ? document.body.classList.remove('overflow')
-                : document.body.classList.add('overflow')
-            setIsBurgerActive(!isBurgerActive)
-        }
+        window.scrollTo(0, 0)
+
+        if (window.innerWidth >= 768) return
+        setIsBurgerActive(!isBurgerActive)
     }
 
-    const logout = async () => {
-        try {
-            const response = await signOut()
-            console.log(response)
-            localStorage.removeItem('token')
-            setIsAuth(false)
-        } catch (e){
-            console.log(e.response?.data?.message)
-        } 
+    const toggleInput = () => setIsInputActive(!isInputActive)
+    const openLoginModal = () => setIsLoginModal(true)
+    const openSignUpModal = () => setIsSignUpModal(true)
+
+    const submitLogout = async () => {
+        await postSignOut
+
+        localStorage.removeItem('token')
+        setUser(null)
+    }
+
+    const searchBooks = e => {
+        clearTimeout(delay)
+
+        setDelay(
+            setTimeout(() => {
+                history.push(`/catalog/search?value=${e.target.value}`)
+            }, 1500)
+        )
     }
 
     return (
@@ -34,38 +50,41 @@ function Navbar({ isAuth, setIsAuth, setIsLoginModal, setIsSignUpModal, isBurger
                     <div className={s.tabsWrapper}>
                         <div className={`${s.menu} ${isBurgerActive ? s.dropDownMenu : undefined}`}>
                             <ul>
-                                <li><NavLink exact activeClassName={s.active} onClick={toggleBurgerMenu} to="/">{isBurgerActive && <FaHome className={s.menuIcon} />}Home</NavLink></li>
-                                <li><NavLink exact activeClassName={s.active} onClick={toggleBurgerMenu} to="/catalog/literature">{isBurgerActive && <FaBook className={s.menuIcon} />}Literature</NavLink></li>
-                                <li><NavLink exact activeClassName={s.active} onClick={toggleBurgerMenu} to="/catalog/history">{isBurgerActive && <FaGlobeEurope className={s.menuIcon} />}History</NavLink></li>
-                                <li><NavLink exact activeClassName={s.active} onClick={toggleBurgerMenu} to="/catalog/articles">{isBurgerActive && <FaRegFileAlt className={s.menuIcon} />}Articles</NavLink></li>
-                                <li><NavLink exact activeClassName={s.active} onClick={toggleBurgerMenu} to="/catalog/books">{isBurgerActive && <FaBookReader className={s.menuIcon} />}My books</NavLink></li>
+                                <li><NavLink exact activeClassName={s.active} onClick={toggleBurgerMenu} to="/">{isBurgerActive && <FaHome className={s.menuIcon} />}{getHomeTab(language)}</NavLink></li>
+                                <li><NavLink exact activeClassName={s.active} onClick={toggleBurgerMenu} to="/catalog/literature?sort=byPopularity&topic=all">{isBurgerActive && <FaBook className={s.menuIcon} />}{getLiteratureTab(language)}</NavLink></li>
+                                <li><NavLink exact activeClassName={s.active} onClick={toggleBurgerMenu} to="/catalog/history?sort=byPopularity&topic=all">{isBurgerActive && <FaGlobeEurope className={s.menuIcon} />}{getHistoryTab(language)}</NavLink></li>
+                                <li><NavLink exact activeClassName={s.active} onClick={toggleBurgerMenu} to="/catalog/articles">{isBurgerActive && <FaRegFileAlt className={s.menuIcon} />}{getArticlesTab(language)}</NavLink></li>
+                                <li><NavLink exact activeClassName={s.active} onClick={toggleBurgerMenu} to="/catalog/books">{isBurgerActive && <FaBookReader className={s.menuIcon} />}{getMyBooksTab(language)}</NavLink></li>
                             </ul>
                             <button className={`${s.burger} ${isBurgerActive ? s.burgerActive : undefined}`} onClick={toggleBurgerMenu}>
                                 <span></span>
                             </button>
                         </div>
-                        <form className={`${s.form} ${isInputActive ? s.activeForm : undefined}`} onSubmit={e => { e.preventDefault(); alert(1) }}>
-                            <input type="text" placeholder="Author or title" />
+
+                        <form className={`${s.form} ${isInputActive ? s.activeForm : undefined}`} onSubmit={e => e.preventDefault()}>
+                            <input onChange={e => searchBooks(e)} type="text" placeholder={getSearchPlaceholder(language)} />
+                            <FaSearch />
                         </form>
+
                         <div className={s.links}>
                             <a href="https://vk.com/patmahayrr" className={`${s.fa} ${s.faVk}`}><FaVk /></a>
                             <a href="https://www.youtube.com/channel/UC6vrmiSj7IzUTqk-qdoabfg" className={`${s.fa} ${s.faYoutube}`}><FaYoutube /></a>
                             <a href="https://tgstat.com/ru/channel/@patmahair" className={`${s.fa} ${s.faTelegram}`}><FaTelegram /></a>
                         </div>
 
-                        {isAuth ? (
-                            <div className={s.authorization}>
-                                {/* avatar */}
-                                <button onClick={logout} className={s.singUp}>Log out</button>
-                            </div>
-                        ) : (
-                            <div className={s.authorization}>
-                                <button onClick={() => setIsSignUpModal(true)} className={s.singUp}>Sign Up</button>
-                                <button onClick={() => setIsLoginModal(true)} className={s.login}>Login</button>
-                            </div>
-                        )}
+                        {user
+                            ? (<div className={`${s.authorization} ${s.logout}`}>
+                                <button onClick={submitLogout} className={s.singUp}>{getLogOutTab(language)}</button>
+ 
+                            </div>)
+                            : (<div className={s.authorization}>
+                                <button onClick={openSignUpModal} className={s.singUp}>{getSignUpTab(language)}</button>
+                                <button onClick={openLoginModal} className={s.login}>{getLoginTab(language)}</button>
+                            </div>)}
 
-                        {isInputActive ? <FaSignInAlt onClick={() => setIsInputActive(!isInputActive)} className={s.search} /> : <FaSearchPlus onClick={() => setIsInputActive(!isInputActive)} className={s.search} />}
+                        {isInputActive
+                            ? <FaSignInAlt onClick={toggleInput} className={s.search} />
+                            : <FaSearchPlus onClick={toggleInput} className={s.search} />}
                     </div>
                 </div>
             </nav>

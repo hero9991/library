@@ -8,7 +8,7 @@ import userRoutes from './routes/users.js'
 
 const app = express()
 
-app.use(cors({ credentials: true, origin: process.env.CLIENT_URL }))
+app.use(cors({ credentials: true, origin: [process.env.CLIENT_URL, 'http://192.168.1.145:3000'] }))
 app.use(express.json())
 app.use(cookieParser())
 

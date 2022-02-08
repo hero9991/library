@@ -2,8 +2,20 @@
     display: none;
 }
 
+.starRating > label {
+    width: 18px;
+    height: 21px;
+    cursor:pointer
+}
+
 .starItem {
-    color: #ffd700;
+    color: rgb(209, 208, 208);
     margin: 1px;
     margin-bottom: 8px;
+}
+.starItem.active {
+    color: #ffd700;
+}
+.starItem.inactive {
+    display: none;
 }

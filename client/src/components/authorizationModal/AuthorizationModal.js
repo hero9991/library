@@ -1,54 +1,78 @@
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
 import s from './AuthorizationModal.module.css'
 import { TiSocialGooglePlus } from 'react-icons/ti'
 import { GoogleLogin } from 'react-google-login'
-import { authorizeGoogle, signIn, signUp } from '../../utility/AxiosService'
+import { useForm } from 'react-hook-form';
+import { UserContext } from '../../App';
+import { toast } from 'react-toastify'
+import { fetchUserRatings, postGoogleAccount, postSignIn, postSignUp } from './AuthorizationService';
+import { setClientSideError, setServerSideError } from '../../utility/ErrorHelper';
 
-const AuthorizationModal = ({ isLoginModal, isSignUpModal, setIsLoginModal, setIsSignUpModal, setIsAuth }) => {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [confirmPassword, setConfirmPassword] = useState('')
-    const [name, setName] = useState('')
-    const [lastname, setLastname] = useState('')
+const AuthorizationModal = ({ isLoginModal, isSignUpModal, setIsLoginModal, setIsSignUpModal }) => {
+    const { setUser } = useContext(UserContext)
+    const {
+        register,
+        handleSubmit,
+        reset,
+        clearErrors,
+        setError,
+        formState: { errors }
+    } = useForm()
 
-    const login = async () => {
+    const submitLogin = async data => {
         try {
-            const response = await signIn(email, password)
-            console.log(response) //
+            clearErrors('common')
+
+            const response = await postSignIn(data)
+            const userIdToRating = await fetchUserRatings(response.data.user._id)
+
             localStorage.setItem('token', response.data.accessToken)
-            setIsAuth(true)
+            setUser({ ...response.data.user, bookRatings: { ...userIdToRating.data.bookIdToRating } })
+
             setIsLoginModal(false)
-        } catch (e) {
-            console.log(e.response?.data?.message)
+        } catch (error) {
+            setServerSideError(setError, error.response?.data?.message[0]?.msg || error.response?.data?.message)
         }
     }
-    const register = async () => {
+    const submitRegister = async data => {
         try {
-            const response = await signUp(email, password, confirmPassword, name, lastname)
-            console.log(response) //
+            if (data.password !== data.confirmPassword) return setClientSideError(setError, 'Passwords do not match')
+
+            const response = await postSignUp(data)
+
             localStorage.setItem('token', response.data.accessToken)
-            setIsAuth(true)
+            setUser({ ...response.data.user })
+
             setIsSignUpModal(false)
-        } catch (e) {
-            console.log(e.response?.data?.message)
+        } catch (error) {
+            setServerSideError(setError, error.response?.data?.message[0]?.msg || error.response?.data?.message)
         }
     }
 
-    const googleSuccess = async res => {
-        const response = await authorizeGoogle(res?.tokenId)
-        console.log(response) //
-        localStorage.setItem('profile', JSON.stringify({ ...res?.profileObj }))
+    const googleSuccess = async data => {
+        const response = await postGoogleAccount(data)
+        const userIdToRating = await fetchUserRatings(response.data.user._id)
+
         localStorage.setItem('token', response.data.accessToken)
-        setIsAuth(true)
+        setUser({ ...response.data.user, bookRatings: { ...userIdToRating.data.bookIdToRating } })
+
         setIsSignUpModal(false)
         setIsLoginModal(false)
     }
     const googleFailure = error => {
-        console.log('Google Sign in was unseccessful. Try again later' + JSON.stringify(error))
+        console.log(error)
+        if (error?.error === 'popup_closed_by_user') return
+        toast.error(`Authorization has failed. Error: ${error?.error}`)
+    }
+
+    const hidePopup = () => {
+        setIsLoginModal(false)
+        setIsSignUpModal(false)
+        reset()
     }
 
     return (
-        <div onClick={() => { setIsLoginModal(false); setIsSignUpModal(false) }} className={isLoginModal || isSignUpModal ? `${s.authorizationModal} ${s.active}` : s.authorizationModal}>
+        <div onClick={hidePopup} className={isLoginModal || isSignUpModal ? `${s.authorizationModal} ${s.active}` : s.authorizationModal}>
             <div onClick={e => e.stopPropagation()} className={isLoginModal || isSignUpModal ? `${s.authorizationModalContent} ${s.active}` : s.authorizationModalContent}>
 
                 <div className={s.signUpModalContent}>
@@ -56,39 +80,41 @@ const AuthorizationModal = ({ isLoginModal, isSignUpModal, setIsLoginModal, setI
                         {isLoginModal && 'LOGIN'}
                     </div>
                     <form>
-                        {isSignUpModal &&
-                            <label className={s.name}>
-                                <p>Name:</p>
-                                <input onChange={e => setName(e.target.value)} value={name} type='text' placeholder='Serob' />
-                            </label>}
-                        {isSignUpModal &&
-                            <label className={s.lastname}>
-                                <p>Lastname:</p>
-                                <input onChange={e => setLastname(e.target.value)} value={lastname} type='text' placeholder='Mataryan' />
-                            </label>}
-                        <label className={s.email}>
-                            <p>{isSignUpModal && 'Your Email:'}
-                                {isLoginModal && 'Email:'}</p>
-                            <input onChange={e => setEmail(e.target.value)} value={email} type='email' placeholder='example@some.com'
-                            />
-                        </label>
-                        <label className={s.password}>
-                            <p>{isSignUpModal && 'Create a new password:'}
-                                {isLoginModal && 'Password:'}</p>
-                            <input onChange={e => setPassword(e.target.value)} value={password} type='password' placeholder='*' />
-                        </label>
-                        {isSignUpModal && <label className={s.password}>
-                            <p>{isSignUpModal && 'Confirm password:'}
-                                {isLoginModal && 'Password:'}</p>
-                            <input onChange={e => setConfirmPassword(e.target.value)} value={confirmPassword} type='password' placeholder='*' />
-                        </label>}
+                        <div className={s.nameWrapper}>
+                            {isSignUpModal && <div>
+                                <input className={errors.firstName ? `${s.input} ${s.invalidInput}` : s.input} type='text' placeholder='First Name'
+                                    {...register('firstName', { required: true })} />
+                                {errors.firstName && <p>First name is required.</p>}
+                            </div>}
+                            {isSignUpModal && <div>
+                                <input className={errors.lastName ? `${s.input} ${s.invalidInput}` : s.input} type='text' placeholder='Last Name'
+                                    {...register('lastName', { required: true })} />
+                                {errors.lastName && <p>Last name is required.</p>}
+                            </div>}
+                        </div>
+                        <input className={errors.email ? `${s.input} ${s.invalidInput}` : s.input} type='email' placeholder='Email'
+                            {...register('email', { onChange: () => clearErrors('common'), required: true, pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ })} />
+                        {errors.email && <p>Email is not valid</p>}
+                        <div className={s.passwordWrapper}>
+                            <div>
+                                <input className={errors.password ? `${s.input} ${s.invalidInput}` : s.input} type='password' placeholder='Password'
+                                    {...register('password', { onChange: () => clearErrors('common'), required: true, minLength: 6 })} />
+                                {errors.password && <p>Password is required.</p>}
+                            </div>
+                            {isSignUpModal && <div>
+                                <input className={errors.confirmPassword ? `${s.input} ${s.invalidInput}` : s.input} type='password' placeholder='Confirm password'
+                                    {...register('confirmPassword', { onChange: () => clearErrors('common'), required: true })} />
+                                {errors.confirmPassword && <p>Passwordd confirmation is required.</p>}
+                            </div>}
+                        </div>
+                        {errors.common && <p>{errors.common.message}</p>}
                     </form>
                 </div>
 
-                {isLoginModal && <button onClick={login} type='submit' className={s.button}>
+                {isLoginModal && <button onClick={handleSubmit(submitLogin)} type='submit' className={s.button}>
                     <span className={s.text}>Login</span>
                 </button>}
-                {isSignUpModal && <button onClick={register} type='submit' className={s.button}>
+                {isSignUpModal && <button onClick={handleSubmit(submitRegister)} type='submit' className={s.button}>
                     <span className={s.text}>Register</span>
                 </button>}
 
@@ -104,7 +130,7 @@ const AuthorizationModal = ({ isLoginModal, isSignUpModal, setIsLoginModal, setI
                     onFailure={googleFailure}
                     cookiePolicy='single_host_origin'
                 />
-
+                {errors.google && <p>{errors.google.message}</p>}
             </div>
         </div>
     )

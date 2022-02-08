@@ -20,36 +20,21 @@
 
 .authorizationModalContent {
   max-width: 320px;
-  max-height: 340px;
+  max-height: 80vh;
   width: 100%;
-  height: 100%;
   padding: 24px;
   border-radius: 12px;
   background-color: #fff;
   transition: all linear 0.2s;
   transform: scale(0);
   text-align: left;
-  font-family: "Tinos", serif;
 }
 .authorizationModalContent.active {
   transform: scale(1);
 }
-.authorizationModalContent input {
-  width: 100%;
-  height: 2em;
-  border-radius: 10px;
-  border: 1px solid rgb(172, 172, 172);
-  font-family: "Tinos", serif;
-  font-size: 16px;
-  font-weight: 700;
-  text-align: center;
-  transition: all linear 0.3s;
-  padding: 0;
-  margin-top: 5px;
-}
+
 .authorizationModalContent input:focus {
   display: inline-block;
-
   border-color: #c21818;
   outline: 0 none;
 }
@@ -57,47 +42,70 @@
 .title {
   font-size: 30px;
   font-weight: 700;
+  margin-bottom: 10px;
 }
 
-.name {
-  margin-top:20px;
-  width: 45%;
-  display: inline-block;
+.nameWrapper {
+  display: flex;
+  justify-content: space-between;
 }
-.lastname {
-  margin-left: 8%;
-  widtH: 45%;
-  display: inline-block;
+.nameWrapper div:last-child {
+  margin-left: 10px;
 }
-.email {
-  display: inline-block;
-  font-size: 18px;
-  margin: 20px 0;
+.passwordWrapper {
+  display: flex;
+  justify-content: space-between;
+}
+.passwordWrapper div:last-child {
+  margin-left: 10px;
   width: 100%;
 }
-.password {
-  font-size: 18px;
+.passwordWrapper div:first-child {
+  margin-left: 0;
+  width: 100%;
+}
+
+.input {
+  width: 100%;
+  height: 2em;
+  border-radius: 5px;
+  border: 1px solid rgb(172, 172, 172);
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  transition: all linear 0.3s;
+  padding: 0;
+  margin-top: 5px;
+}
+.invalidInput {
+  border: 2px solid rgb(255, 0, 0);
 }
 
 .button {
-    cursor: pointer;
-    display: block;
-    border-radius: 5px;
-    margin: 35px auto 15px;
-    background-color: #666;
-    color: white;
-    padding: 6px 25px;
-    font-size: 18px; 
-    font-weight: 600;
-    font-size: 16px;
-    text-align: left;
-    width: 100%;
-    height: 50px;
-    transition: all linear .2s;
+  cursor: pointer;
+  display: block;
+  border-radius: 5px;
+  margin: 20px auto 15px;
+  background-color: #666;
+  background-color: #000000;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 130 1600 800'%3E%3Cg %3E%3Cpolygon fill='%23220000' points='1600 160 0 460 0 350 1600 50'/%3E%3Cpolygon fill='%23440000' points='1600 260 0 560 0 450 1600 150'/%3E%3Cpolygon fill='%23660000' points='1600 360 0 660 0 550 1600 250'/%3E%3Cpolygon fill='%23880000' points='1600 460 0 760 0 650 1600 350'/%3E%3Cpolygon fill='%23A00' points='1600 800 0 800 0 750 1600 450'/%3E%3C/g%3E%3C/svg%3E");
+  background-attachment: absolute;
+  background-size: cover;
+  /* background by SVGBackgrounds.com */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 300 1600 800'%3E%3Cg %3E%3Cpolygon fill='%2301091b' points='1600 160 0 460 0 350 1600 50'/%3E%3Cpolygon fill='%23011235' points='1600 260 0 560 0 450 1600 150'/%3E%3Cpolygon fill='%23021a50' points='1600 360 0 660 0 550 1600 250'/%3E%3Cpolygon fill='%2302236a' points='1600 460 0 760 0 650 1600 350'/%3E%3Cpolygon fill='%23032C85' points='1600 800 0 800 0 750 1600 450'/%3E%3C/g%3E%3C/svg%3E");
+  color: white;
+  padding: 6px 25px;
+  font-size: 18px;
+  font-weight: 600;
+  font-size: 16px;
+  text-align: left;
+  width: 100%;
+  height: 50px;
+  transition: all linear 0.2s;
 }
 .button:hover {
-    opacity: .7;
- }
+  opacity: 0.7;
+}
 
 .icon {
   font-size: 26px;
@@ -114,14 +122,13 @@
   height: 50px;
   padding: 6px 25px;
   line-height: 36px;
-  margin-bottom: 20px;
   text-align: left;
   border-radius: 5px;
   font-size: 16px;
   text-decoration: none;
   vertical-align: middle;
   cursor: pointer;
-  transition: all linear .2s;
+  transition: all linear 0.2s;
 }
 .googltButton:hover {
   background: #bd4033;

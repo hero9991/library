@@ -1,21 +1,32 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import BookItem from '../bookItem/BookItem'
 import s from './Books.module.css'
-import { NavLink } from 'react-router-dom'
-import { getBooks } from '../../utility/AxiosService'
+import { useLocation } from 'react-router-dom'
+import { getBooks, getBooksBySearch, getMyBooks } from '../../utility/AxiosService'
+import { UserContext } from '../../App'
+import { toast } from 'react-toastify'
+import { Triangle } from 'react-loader-spinner'
+import SortingLiterature from './Sorting/SortingLiterature'
+import SortingHistory from './Sorting/SortingHistory'
+import { getEmptyMyBooksText, getUnauthorizedMyBooksText, getViewMoreText } from './translatedText/translatedText'
 
 function Books() {
     const [books, setBooks] = useState([])
+    const [currentChunk, setCurrentChunk] = useState(1)
+    const [numberOfChunk, setNumberOfChunk] = useState(1)
+    const [isReversed, setIsReversed] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
 
-    useEffect(() => {
-        getBooks()
-            .then(data => {
-                setBooks(data.data)
-            })
-    }, []) //temp changes
+    const { user, language } = useContext(UserContext)
+    const location = useLocation()
+    const currentRoute = location.pathname.split('/').pop()
+    const currentSort = new URLSearchParams(location.search).get('sort');
+    const currentTopic = new URLSearchParams(location.search).get('topic');
+    const value = new URLSearchParams(location.search).get('value');
 
     useEffect(() => {
         const stickBackground = () => {
+            if (!document.querySelector(('.' + s.books))) return
             if (document.body.offsetHeight - window.innerHeight - window.scrollY <= 70) {
                 document.querySelector(('.' + s.books)).style.backgroundPosition = 'right 0 bottom ' + (window.innerHeight + window.scrollY + 70 - document.body.offsetHeight) + 'px'
             } else if (document.querySelector(('.' + s.books)).style.backgroundPosition !== 'right bottom') {
@@ -24,33 +35,102 @@ function Books() {
         }
         window.addEventListener('scroll', stickBackground)
         return () => window.removeEventListener('scroll', stickBackground)
-    }, []);
+    }, [])
+
+    useEffect(() => {
+        console.log(books)
+        console.log('entered in')
+        setCurrentChunk(1);
+        // setNumberOfChunk(1)
+        (async function () {
+            try {
+                switch (currentRoute) {
+                    case 'literature':
+                        setBooks([])
+                        setIsLoading(true)
+                        console.log(12366)
+                        // if (books.length > 0) return//there is a problem without  обновляется стар ржйтинг
+                        await requestBooks(1, true)
+                        break
+                    case 'history':
+                        setBooks([])
+                        setIsLoading(true)
+                        console.log(12366)
+                        // if (books.length > 0) return//there is a problem without  обновляется стар ржйтинг
+                        await requestBooks(1, true)
+                        break
+                    case 'search':
+                        setBooks([])
+                        setIsLoading(true)
+                        // if (books.length > 0) return//there is a problem without  обновляется стар ржйтинг
+                        // requestBooks(1, true)
+                        await getBooksBySearch(value).then(data => {
+                            console.log(data.data.books)
+                            setBooks(data.data.books)
+                        })
+                        break
+                    case 'books':
+                        setBooks([])
+                        if (!user?._id) return
+                        setIsLoading(true)
+                        await getMyBooks(user._id)
+                            .then(data => {
+                                setBooks(data.data)
+                            })
+                        break
+                    default:
+                        break
+                }
+            } catch (e) {
+                toast.error('temp error')
+            } finally {
+                setIsLoading(false)
+            }
+        })()
+
+
+        // return () => setBooks([])
+
+    }, [user?._id, user?.books, currentRoute, currentTopic, currentSort, value, isReversed]) //temp changes
+
+    const getBookChunk = async () => {
+        const error = await requestBooks(currentChunk + 1, false)
+        if (error) return
+
+        document.querySelector(('.' + s.books)).style.backgroundPosition = 'right bottom'
+    }
+
+    const requestBooks = async (chunk, isFirstChunk) => {
+        let id
+        try {
+            id = toast.loading("Please wait...")
+
+            const response = await getBooks(currentRoute, chunk, currentSort, currentTopic, isReversed)
+
+            isFirstChunk ? setBooks([...response.data.books]) : setBooks([...books, ...response.data.books])
+            setCurrentChunk(response.data.currentChunk)
+            setNumberOfChunk(response.data.numberOfChunk)
+            console.log(response.data.numberOfChunk)
+            return false
+        } catch (error) {
+            return toast.error(error.message)
+        } finally {
+            toast.dismiss(id);
+        }
+    }
 
     return (
         <section className={s.books}>
-            <div className={s.sortingWrapper}>
-                <div className={`${s.sortingScroll} container`}>
-                    <div className={s.sorting}>
-                        <NavLink exact activeClassName={s.activeOrder} to='/catalog/literature'>By popularity</NavLink>
-                        <NavLink exact activeClassName={s.activeOrder} to='/catalog1'>By rating</NavLink>
-                        <NavLink exact activeClassName={s.activeOrder} to='/catalog2'>By alphabet</NavLink>
-                    </div>
-                    <div className={`${s.sorting} ${s.topics}`}>
-                        <NavLink exact activeClassName={s.activeTopic} to='/catalog/literature'>All books</NavLink>
-                        <NavLink exact activeClassName={s.activeTopic} to='/catalog/literature/1'>Prehistoric era</NavLink>
-                        <NavLink exact activeClassName={s.activeTopic} to='/catalog1'>Urartu</NavLink>
-                        <NavLink exact activeClassName={s.activeTopic} to='/catalog2'>Ancient Armenia</NavLink>
-                        <NavLink exact activeClassName={s.activeTopic} to='/catalog2'>Meideval Armenia</NavLink>
-                        <NavLink exact activeClassName={s.activeTopic} to='/catalog2'>National movement</NavLink>
-                    </div>
-                </div>
-            </div>
+            {currentRoute === 'literature' && <SortingLiterature currentSort={currentSort} currentTopic={currentTopic} language={language} isReversed={isReversed} setIsReversed={setIsReversed} />}
+            {currentRoute === 'history' && <SortingHistory currentSort={currentSort} currentTopic={currentTopic} language={language} isReversed={isReversed} setIsReversed={setIsReversed} />}
             <div className='container'>
+                {user && currentRoute === 'books' && books.length === 0 && <p className={s.emptyBooks}>{getEmptyMyBooksText(language)}</p>}
+                {!user && currentRoute === 'books' && <p className={s.emptyBooks}>{getUnauthorizedMyBooksText(language)}</p>}
                 {books.map((item, index) => index % 2
-                    ? <BookItem second={true} bookItem={item} key={index} />
-                    : <BookItem second={false} bookItem={item} key={index} />
-                )}
-                <button className={s.viewMoreButton}>View more</button>
+                    ? <BookItem second={true} bookItem={item} key={index} books={books} setBooks={setBooks} />
+                    : <BookItem second={false} bookItem={item} key={index} books={books} setBooks={setBooks} />)}
+                {currentChunk < numberOfChunk && currentRoute !== 'books' && <button onClick={getBookChunk} className={s.viewMoreButton}>{getViewMoreText(language)}</button>}
+                {isLoading && <div className={s.loader}><Triangle height={380} width={300} color='#1c1c1c' /></ div>}
             </div>
         </section>
     )
