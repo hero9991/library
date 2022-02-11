@@ -4,6 +4,7 @@ import ReactCountryFlag from "react-country-flag"
 import { UserContext } from '../../App'
 import { getChooseLanguageText, getSupportText, getRulesText } from './translatedText/translatedText'
 import Rules from './Rules/Rules.js'
+import { AM, CONTAINER, EN, RU } from '../../utility/Constants'
 
 
 function Footer({ setlanguage }) {
@@ -16,14 +17,14 @@ function Footer({ setlanguage }) {
         <section className={s.footer}>
             <Rules isRulesModal={isRulesModal} setIsRulesModal={setIsRulesModal}/>
 
-            <div className={`container ${s.footerWrapper}`}>
+            <div className={`${CONTAINER} ${s.footerWrapper}`}>
                 <div onClick={openPopup}>{getRulesText(language)}</div>
                 <div>{getSupportText(language)} vanyakubarin@mail.ru</div>
                 <div className={s.countryIcons}>
                     {getChooseLanguageText(language)}
-                    <ReactCountryFlag onClick={() => setlanguage('AM')} countryCode="AM" style={{ fontSize: '2.5em' }} />
-                    <ReactCountryFlag onClick={() => setlanguage('RU')} countryCode="RU" style={{ fontSize: '2.5em' }} />
-                    <ReactCountryFlag onClick={() => setlanguage('EN')} countryCode="GB" style={{ fontSize: '2.5em' }} />
+                    <ReactCountryFlag onClick={() => setlanguage(AM)} countryCode={AM} style={{ fontSize: '2.5em' }} />
+                    <ReactCountryFlag onClick={() => setlanguage(RU)} countryCode={RU} style={{ fontSize: '2.5em' }} />
+                    <ReactCountryFlag onClick={() => setlanguage(EN)} countryCode='GB' style={{ fontSize: '2.5em' }} />
                 </div>
             </div>
         </section>

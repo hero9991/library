@@ -1,7 +1,8 @@
 import axios from 'axios'
+import { PROTOCOL_HOSTNAME_PORT } from './Constants'
 
 // const API_URL = 'http://192.168.1.145:5000/api'
-const API_URL = 'http://localhost:5000/api'
+const API_URL = `${PROTOCOL_HOSTNAME_PORT}/api`
 
 const $api = axios.create({
     withCredentials: true,

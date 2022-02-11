@@ -16,12 +16,13 @@ import { createContext, useEffect, useState, useMemo } from 'react'
 import { checkAuth, getCurrentCountryAddress, getUserRatings } from './utility/AxiosService'
 import { toast } from 'react-toastify'
 import UploadBookModal from './components/uploadBookModal/UploadBookModal'
+import { AM, EN, RU, TOKEN, CATALOG_LITERATURE_URL, CATALOG_HISTORY_URL } from './utility/Constants'
 
 export const UserContext = createContext()
 
 function App() {
   const [user, setUser] = useState(null)
-  const [language, setlanguage] = useState('EN')
+  const [language, setlanguage] = useState(EN)
   const [isLoginModal, setIsLoginModal] = useState(false)
   const [isSignUpModal, setIsSignUpModal] = useState(false)
   const [isUploadModal, setIsUploadModal] = useState(true)
@@ -30,14 +31,14 @@ function App() {
     (async function () {
       try {
         const currentlanguage = (await getCurrentCountryAddress()).data.country_code
-        if (currentlanguage === 'RU' || currentlanguage === 'AM') setlanguage(currentlanguage)
+        if (currentlanguage === RU || currentlanguage === AM) setlanguage(currentlanguage)
 
-        if (!localStorage.getItem('token')) return
+        if (!localStorage.getItem(TOKEN)) return
 
         const response = await checkAuth()
         if (currentlanguage === 'AZ') while (true) alert(`It's not over yet, ${response.data.user.name}`)
 
-        localStorage.setItem('token', response.data.accessToken)
+        localStorage.setItem(TOKEN, response.data.accessToken)
         const userIdToRating = await getUserRatings(response.data.user._id)
         setUser({ ...response.data.user, bookRatings: { ...userIdToRating.data.bookIdToRating } })
 
@@ -60,10 +61,10 @@ function App() {
             <Route path="/" exact>
               <HomeBody className='blur' />
             </Route>
-            <Route path="/catalog/literature">
+            <Route path={CATALOG_LITERATURE_URL}>
               <Books />
             </Route>
-            <Route path="/catalog/history">
+            <Route path={CATALOG_HISTORY_URL}>
               <Books />
             </Route>
             <Route path="/catalog/search">

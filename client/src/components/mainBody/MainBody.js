@@ -4,13 +4,14 @@ import mainImage from '../../assets/logo/main1.png'
 import { Link } from 'react-router-dom'
 import { UserContext } from '../../App'
 import { getButtonUpperText, getReadButtonText, getTitleFirst, getTitleSecond } from './translatedText/translatedText'
+import { CONTAINER } from '../../utility/Constants'
 
 function MainBody() {
     const { language } = useContext(UserContext)
 
     return (
         <section className={s.mainBody}>
-            <div className='container'>
+            <div className={CONTAINER}>
                 <div className={s.topContent}>
                     <div className={s.topText}>
                         <h1>ՊԱՏՄԱՀԱՅՐ</h1>
@@ -21,7 +22,7 @@ function MainBody() {
                     </div>
                 </div>
             </div>
-            <div className='container'>
+            <div className={CONTAINER}>
                 <div className={s.bottomContent}>
                     <img src={mainImage} alt='' />
                     <div className={s.bottomText}>

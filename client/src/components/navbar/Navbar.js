@@ -7,6 +7,7 @@ import { UserContext } from '../../App'
 import { toast } from 'react-toastify'
 import { postSignOut } from './NavbarService'
 import { getArticlesTab, getHistoryTab, getHomeTab, getLiteratureTab, getLogOutTab, getMyBooksTab, getSignUpTab, getLoginTab, getSearchPlaceholder } from './translatedText/translatedText'
+import { CATALOG_HISTORY_URL, CATALOG_LITERATURE_URL, CONTAINER, SORT_PARAMETER, TEXT, TOPIC_PARAMETER } from '../../utility/Constants'
 
 function Navbar({ setIsLoginModal, setIsSignUpModal }) {
     const [isInputActive, setIsInputActive] = useState(true)
@@ -46,13 +47,13 @@ function Navbar({ setIsLoginModal, setIsSignUpModal }) {
     return (
         <header>
             <nav className={s.navbar}>
-                <div className='container'>
+                <div className={CONTAINER}>
                     <div className={s.tabsWrapper}>
                         <div className={`${s.menu} ${isBurgerActive ? s.dropDownMenu : undefined}`}>
                             <ul>
                                 <li><NavLink exact activeClassName={s.active} onClick={toggleBurgerMenu} to="/">{isBurgerActive && <FaHome className={s.menuIcon} />}{getHomeTab(language)}</NavLink></li>
-                                <li><NavLink exact activeClassName={s.active} onClick={toggleBurgerMenu} to="/catalog/literature?sort=byPopularity&topic=all">{isBurgerActive && <FaBook className={s.menuIcon} />}{getLiteratureTab(language)}</NavLink></li>
-                                <li><NavLink exact activeClassName={s.active} onClick={toggleBurgerMenu} to="/catalog/history?sort=byPopularity&topic=all">{isBurgerActive && <FaGlobeEurope className={s.menuIcon} />}{getHistoryTab(language)}</NavLink></li>
+                                <li><NavLink exact activeClassName={s.active} onClick={toggleBurgerMenu} to={`${CATALOG_LITERATURE_URL}?${SORT_PARAMETER}byPopularity&${TOPIC_PARAMETER}all`}>{isBurgerActive && <FaBook className={s.menuIcon} />}{getLiteratureTab(language)}</NavLink></li>
+                                <li><NavLink exact activeClassName={s.active} onClick={toggleBurgerMenu} to={`${CATALOG_HISTORY_URL}?${SORT_PARAMETER}byPopularity&${TOPIC_PARAMETER}all`}>{isBurgerActive && <FaGlobeEurope className={s.menuIcon} />}{getHistoryTab(language)}</NavLink></li>
                                 <li><NavLink exact activeClassName={s.active} onClick={toggleBurgerMenu} to="/catalog/articles">{isBurgerActive && <FaRegFileAlt className={s.menuIcon} />}{getArticlesTab(language)}</NavLink></li>
                                 <li><NavLink exact activeClassName={s.active} onClick={toggleBurgerMenu} to="/catalog/books">{isBurgerActive && <FaBookReader className={s.menuIcon} />}{getMyBooksTab(language)}</NavLink></li>
                             </ul>
@@ -62,7 +63,7 @@ function Navbar({ setIsLoginModal, setIsSignUpModal }) {
                         </div>
 
                         <form className={`${s.form} ${isInputActive ? s.activeForm : undefined}`} onSubmit={e => e.preventDefault()}>
-                            <input onChange={e => searchBooks(e)} type="text" placeholder={getSearchPlaceholder(language)} />
+                            <input onChange={e => searchBooks(e)} type={TEXT} placeholder={getSearchPlaceholder(language)} />
                             <FaSearch />
                         </form>
 

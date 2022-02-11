@@ -1,53 +1,55 @@
-export const getHomeTab = language => language === 'EN'
+import { EN, RU } from "../../../utility/Constants"
+
+export const getHomeTab = language => language === EN
     ? 'Home'
-    : language === 'RU'
+    : language === RU
         ? 'Главная'
         : 'Տուն'
 
-export const getLiteratureTab = language => language === 'EN'
+export const getLiteratureTab = language => language === EN
     ? 'Literature'
-    : language === 'RU'
+    : language === RU
         ? 'Литература'
         : 'Գրականություն'
 
-export const getHistoryTab = language => language === 'EN'
+export const getHistoryTab = language => language === EN
     ? 'History'
-    : language === 'RU'
+    : language === RU
         ? 'История'
         : 'Պատմություն'
 
-export const getArticlesTab = language => language === 'EN'
+export const getArticlesTab = language => language === EN
     ? 'Articles'
-    : language === 'RU'
+    : language === RU
         ? 'Статьи'
         : 'Հոդվածներ'
 
-export const getMyBooksTab = language => language === 'EN'
+export const getMyBooksTab = language => language === EN
     ? 'My books'
-    : language === 'RU'
+    : language === RU
         ? 'Мои книги'
         : 'Իմ'
 
-export const getLoginTab = language => language === 'EN'
+export const getLoginTab = language => language === EN
     ? ' Login'
-    : language === 'RU'
+    : language === RU
         ? 'Войти'
         : 'Մուտք'
 
-export const getSignUpTab = language => language === 'EN'
+export const getSignUpTab = language => language === EN
     ? 'Sign up'
-    : language === 'RU'
+    : language === RU
         ? 'Регистрация'
         : 'Գրանցում'
 
-export const getLogOutTab = language => language === 'EN'
+export const getLogOutTab = language => language === EN
     ? 'Log out'
-    : language === 'RU'
+    : language === RU
         ? 'Выйти'
         : 'Դուրս գալ'
 
-export const getSearchPlaceholder = language => language === 'EN'
+export const getSearchPlaceholder = language => language === EN
     ? 'Author or title'
-    : language === 'RU'
+    : language === RU
         ? 'Автор или название'
         : 'Հեղինակ / վերնագիր'

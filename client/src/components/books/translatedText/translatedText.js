@@ -1,89 +1,91 @@
-export const getEmptyMyBooksText = language => language === 'EN'
+import { EN, RU } from "../../../utility/Constants"
+
+export const getEmptyMyBooksText = language => language === EN
     ? 'Add some boooks to keep your results'
-    : language === 'RU'
+    : language === RU
         ? 'Добавьте книги, чтобы сохранить результат'
         : 'Ավելացրեք գրքեր՝ արդյունքը պահպանելու համար'
 
-export const getUnauthorizedMyBooksText = language => language === 'EN'
+export const getUnauthorizedMyBooksText = language => language === EN
     ? 'Firstly you need to login to save some books'
-    : language === 'RU'
+    : language === RU
         ? 'Сперва вам необходимо войти в систему, чтобы сохранить книги'
         : 'Ձեր գրքերը պահելու համար նախ պետք է մուտք գործեք'
 
-export const getViewMoreText = language => language === 'EN'
+export const getViewMoreText = language => language === EN
     ? 'View more'
-    : language === 'RU'
+    : language === RU
         ? 'Показать еще'
         : 'Դիտել ավելին'
 
-export const getByPopularityText = language => language === 'EN'
+export const getByPopularityText = language => language === EN
     ? 'By popularity'
-    : language === 'RU'
+    : language === RU
         ? 'По популярности'
         : 'Հանրաճանաչություն'
 
-export const getByRatingText = language => language === 'EN'
+export const getByRatingText = language => language === EN
     ? 'By rating'
-    : language === 'RU'
+    : language === RU
         ? 'По рейтингу'
         : 'Ըստ վարկանիշի'
 
-export const getByAlphabetText = language => language === 'EN'
+export const getByAlphabetText = language => language === EN
     ? 'By alphabet'
-    : language === 'RU'
+    : language === RU
         ? 'По алфавиту'
         : 'Այբբենական'
 
-export const getAllBooksText = language => language === 'EN'
+export const getAllBooksText = language => language === EN
     ? 'All books'
-    : language === 'RU'
+    : language === RU
         ? 'Все книги'
         : 'Բոլոր գրքերը'
 
-export const getPrehistoricEraText = language => language === 'EN'
+export const getPrehistoricEraText = language => language === EN
     ? 'Prehistoric era'
-    : language === 'RU'
+    : language === RU
         ? 'Доисторический период'
         : 'Նախապատմական'
 
-export const getUrartuText = language => language === 'EN'
+export const getUrartuText = language => language === EN
     ? 'Urartu'
-    : language === 'RU'
+    : language === RU
         ? 'Урарту'
         : 'Ուրարտու'
 
-export const getAncientText = language => language === 'EN'
+export const getAncientText = language => language === EN
     ? 'Ancient Armenia'
-    : language === 'RU'
+    : language === RU
         ? 'Древняя Армения'
         : 'Հին Հայաստան'
 
-export const getMeidevalText = language => language === 'EN'
+export const getMeidevalText = language => language === EN
     ? 'Meideval Armenia'
-    : language === 'RU'
+    : language === RU
         ? 'Древняя Армения'
         : 'Միջնադարյան Հայաստան'
 
-export const getNationalMovementText = language => language === 'EN'
+export const getNationalMovementText = language => language === EN
     ? 'National movement'
-    : language === 'RU'
+    : language === RU
         ? 'Национальное движение'
         : 'Ազգային շարժում'
 
-export const getSovietText = language => language === 'EN'
+export const getSovietText = language => language === EN
     ? 'Soviet Union Period'
-    : language === 'RU'
+    : language === RU
         ? 'Советский период'
         : 'Խորհրդային ժամանակաշրջան'
 
-export const getModernText = language => language === 'EN'
+export const getModernText = language => language === EN
     ? 'Modern'
-    : language === 'RU'
+    : language === RU
         ? 'Современное'
         : 'Ժամանակակից'
 
-export const get19CenturyText = language => language === 'EN'
+export const get19CenturyText = language => language === EN
     ? '19 century'
-    : language === 'RU'
+    : language === RU
         ? '19 век'
         : '19 դար'

@@ -19,7 +19,6 @@ const Reader = ({ isReaderModal, setIsReaderModal, currentBook }) => {
     const [max, setMax] = useState(false)
 
     useEffect(() => {
-        console.log(max)
         const iframe = document.querySelector('[id^="epubjs-view"]');
         if (iframe) iframe.src = iframe.src;
         // iframe.src = iframe.src;
@@ -42,13 +41,13 @@ const Reader = ({ isReaderModal, setIsReaderModal, currentBook }) => {
     return (
         <div onClick={() => setIsReaderModal(false)} className={isReaderModal ? `${s.readerModal} ${s.active}` : s.readerModal}>
             <div onClick={e => e.stopPropagation()} className={isReaderModal ? `${s.readerModalContent} ${s.active}` : s.readerModalContent} style={max ? { width: '100vw', height: '100vh' } : {}}>
-                {false && currentBook && <ReactReader //adfsoeawffadsfasdf
+                {currentBook && <ReactReader
                     title='Samvel'
                     location={location}
                     locationChanged={locationChanged}
                     tocChanged={tocChanged}
                     // swipeable={true}
-                    url={require(`../../assets/booksItem/${currentBook.cover}.epub`).default}
+                    url={currentBook.epubRU} ////////////////// neeeeeed to correct the language here
                     // styles={ownStyles}
                     // epubOptions={{
                     //     flow: "scrolled",

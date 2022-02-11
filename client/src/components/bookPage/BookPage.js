@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import s from './BookPage.module.css'
 import Reader from '../reader/Reader'
 import { useLocation } from 'react-router'
 import { toast } from 'react-toastify'
 import { Triangle } from 'react-loader-spinner'
 import { getBook, incrementBookView } from '../../utility/AxiosService'
+import { AUTHOR, CONTAINER, DESCRIPTION, PROTOCOL_HOSTNAME_PORT, TITLE } from '../../utility/Constants'
+import { UserContext } from '../../App'
 
 function BookPage() {
+    const { language } = useContext(UserContext)
     const [currentBook, setCurrentBook] = useState(null)
     const [isReaderModal, setIsReaderModal] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
@@ -28,20 +31,20 @@ function BookPage() {
 
     return (
         <section className={s.bookPage}>
-            <div className='container'>
+            <div className={CONTAINER}>
                 <div className={s.content}>
-                    <div className={s.mainContent}>
+                    {currentBook && <div className={s.mainContent}>
                         <div className={s.image}>
-                            {currentBook && <img src={require(`../../assets/booksCover/${currentBook.cover}.jpeg`).default} alt=''></img>}
+                            <img src={PROTOCOL_HOSTNAME_PORT + currentBook.linkImage} alt=''></img>
                         </div>
                         <div className={s.text}>
                             <div className={s.blackBand}>
-                                <p className={s.title}>{currentBook?.title}</p>
-                                <p className={s.author}>{currentBook?.author}</p>
+                                <p className={s.title}>{currentBook[TITLE + language]}</p>
+                                <p className={s.author}>{currentBook[AUTHOR + language]}</p>
                             </div>
-                            <p>{currentBook?.description}</p>
+                            <p>{currentBook[DESCRIPTION + language]}</p>
                         </div>
-                    </div>
+                    </div>}
 
                     <div className={s.buttons}>
                         <button>Download</button>

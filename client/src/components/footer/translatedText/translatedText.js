@@ -1,18 +1,19 @@
+import { EN, RU } from "../../../utility/Constants"
 
-export const getRulesText = language => language === 'EN'
+export const getRulesText = language => language === EN
     ? 'Rules'
-    : language === 'RU'
+    : language === RU
         ? 'Правила'
         : 'Կանոններ'
 
-export const getSupportText = language => language === 'EN'
+export const getSupportText = language => language === EN
     ? 'Support: '
-    : language === 'RU'
+    : language === RU
         ? 'Поддержка: '
         : 'Աջակցություն․ '
 
-export const getChooseLanguageText = language => language === 'EN'
+export const getChooseLanguageText = language => language === EN
     ? 'Choose language: '
-    : language === 'RU'
+    : language === RU
         ? 'Выберите язык: '
         : 'Ընտրեք լեզուն․ '

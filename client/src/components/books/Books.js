@@ -9,6 +9,7 @@ import { Triangle } from 'react-loader-spinner'
 import SortingLiterature from './Sorting/SortingLiterature'
 import SortingHistory from './Sorting/SortingHistory'
 import { getEmptyMyBooksText, getUnauthorizedMyBooksText, getViewMoreText } from './translatedText/translatedText'
+import { BOOKS, CONTAINER, HISTORY, LITERATURE } from '../../utility/Constants'
 
 function Books() {
     const [books, setBooks] = useState([])
@@ -38,24 +39,20 @@ function Books() {
     }, [])
 
     useEffect(() => {
-        console.log(books)
-        console.log('entered in')
         setCurrentChunk(1);
         // setNumberOfChunk(1)
         (async function () {
             try {
                 switch (currentRoute) {
-                    case 'literature':
+                    case LITERATURE:
                         setBooks([])
                         setIsLoading(true)
-                        console.log(12366)
                         // if (books.length > 0) return//there is a problem without  обновляется стар ржйтинг
                         await requestBooks(1, true)
                         break
-                    case 'history':
+                    case HISTORY:
                         setBooks([])
                         setIsLoading(true)
-                        console.log(12366)
                         // if (books.length > 0) return//there is a problem without  обновляется стар ржйтинг
                         await requestBooks(1, true)
                         break
@@ -65,11 +62,10 @@ function Books() {
                         // if (books.length > 0) return//there is a problem without  обновляется стар ржйтинг
                         // requestBooks(1, true)
                         await getBooksBySearch(value).then(data => {
-                            console.log(data.data.books)
                             setBooks(data.data.books)
                         })
                         break
-                    case 'books':
+                    case BOOKS:
                         setBooks([])
                         if (!user?._id) return
                         setIsLoading(true)
@@ -110,7 +106,6 @@ function Books() {
             isFirstChunk ? setBooks([...response.data.books]) : setBooks([...books, ...response.data.books])
             setCurrentChunk(response.data.currentChunk)
             setNumberOfChunk(response.data.numberOfChunk)
-            console.log(response.data.numberOfChunk)
             return false
         } catch (error) {
             return toast.error(error.message)
@@ -121,15 +116,15 @@ function Books() {
 
     return (
         <section className={s.books}>
-            {currentRoute === 'literature' && <SortingLiterature currentSort={currentSort} currentTopic={currentTopic} language={language} isReversed={isReversed} setIsReversed={setIsReversed} />}
-            {currentRoute === 'history' && <SortingHistory currentSort={currentSort} currentTopic={currentTopic} language={language} isReversed={isReversed} setIsReversed={setIsReversed} />}
-            <div className='container'>
-                {user && currentRoute === 'books' && books.length === 0 && <p className={s.emptyBooks}>{getEmptyMyBooksText(language)}</p>}
-                {!user && currentRoute === 'books' && <p className={s.emptyBooks}>{getUnauthorizedMyBooksText(language)}</p>}
+            {currentRoute === LITERATURE && <SortingLiterature currentSort={currentSort} currentTopic={currentTopic} language={language} isReversed={isReversed} setIsReversed={setIsReversed} />}
+            {currentRoute === HISTORY && <SortingHistory currentSort={currentSort} currentTopic={currentTopic} language={language} isReversed={isReversed} setIsReversed={setIsReversed} />}
+            <div className={CONTAINER}>
+                {user && currentRoute === BOOKS && books.length === 0 && <p className={s.emptyBooks}>{getEmptyMyBooksText(language)}</p>}
+                {!user && currentRoute === BOOKS && <p className={s.emptyBooks}>{getUnauthorizedMyBooksText(language)}</p>}
                 {books.map((item, index) => index % 2
                     ? <BookItem second={true} bookItem={item} key={index} books={books} setBooks={setBooks} />
                     : <BookItem second={false} bookItem={item} key={index} books={books} setBooks={setBooks} />)}
-                {currentChunk < numberOfChunk && currentRoute !== 'books' && <button onClick={getBookChunk} className={s.viewMoreButton}>{getViewMoreText(language)}</button>}
+                {currentChunk < numberOfChunk && currentRoute !== BOOKS && <button onClick={getBookChunk} className={s.viewMoreButton}>{getViewMoreText(language)}</button>}
                 {isLoading && <div className={s.loader}><Triangle height={380} width={300} color='#1c1c1c' /></ div>}
             </div>
         </section>

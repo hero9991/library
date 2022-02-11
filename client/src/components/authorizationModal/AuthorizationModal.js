@@ -7,6 +7,7 @@ import { UserContext } from '../../App';
 import { toast } from 'react-toastify'
 import { fetchUserRatings, postGoogleAccount, postSignIn, postSignUp } from './AuthorizationService';
 import { setClientSideError, setServerSideError } from '../../utility/ErrorHelper';
+import { COMMON, EMAIL, PASSWORD, SUBMIT, TEXT, TOKEN } from '../../utility/Constants';
 
 const AuthorizationModal = ({ isLoginModal, isSignUpModal, setIsLoginModal, setIsSignUpModal }) => {
     const { setUser } = useContext(UserContext)
@@ -21,12 +22,12 @@ const AuthorizationModal = ({ isLoginModal, isSignUpModal, setIsLoginModal, setI
 
     const submitLogin = async data => {
         try {
-            clearErrors('common')
+            clearErrors(COMMON)
 
             const response = await postSignIn(data)
             const userIdToRating = await fetchUserRatings(response.data.user._id)
 
-            localStorage.setItem('token', response.data.accessToken)
+            localStorage.setItem(TOKEN, response.data.accessToken)
             setUser({ ...response.data.user, bookRatings: { ...userIdToRating.data.bookIdToRating } })
 
             setIsLoginModal(false)
@@ -40,7 +41,7 @@ const AuthorizationModal = ({ isLoginModal, isSignUpModal, setIsLoginModal, setI
 
             const response = await postSignUp(data)
 
-            localStorage.setItem('token', response.data.accessToken)
+            localStorage.setItem(TOKEN, response.data.accessToken)
             setUser({ ...response.data.user })
 
             setIsSignUpModal(false)
@@ -53,14 +54,13 @@ const AuthorizationModal = ({ isLoginModal, isSignUpModal, setIsLoginModal, setI
         const response = await postGoogleAccount(data)
         const userIdToRating = await fetchUserRatings(response.data.user._id)
 
-        localStorage.setItem('token', response.data.accessToken)
+        localStorage.setItem(TOKEN, response.data.accessToken)
         setUser({ ...response.data.user, bookRatings: { ...userIdToRating.data.bookIdToRating } })
 
         setIsSignUpModal(false)
         setIsLoginModal(false)
     }
     const googleFailure = error => {
-        console.log(error)
         if (error?.error === 'popup_closed_by_user') return
         toast.error(`Authorization has failed. Error: ${error?.error}`)
     }
@@ -82,28 +82,28 @@ const AuthorizationModal = ({ isLoginModal, isSignUpModal, setIsLoginModal, setI
                     <form>
                         <div className={s.nameWrapper}>
                             {isSignUpModal && <div>
-                                <input className={errors.firstName ? `${s.input} ${s.invalidInput}` : s.input} type='text' placeholder='First Name'
+                                <input className={errors.firstName ? `${s.input} ${s.invalidInput}` : s.input} type={TEXT} placeholder='First Name'
                                     {...register('firstName', { required: true })} />
                                 {errors.firstName && <p>First name is required.</p>}
                             </div>}
                             {isSignUpModal && <div>
-                                <input className={errors.lastName ? `${s.input} ${s.invalidInput}` : s.input} type='text' placeholder='Last Name'
+                                <input className={errors.lastName ? `${s.input} ${s.invalidInput}` : s.input} type={TEXT} placeholder='Last Name'
                                     {...register('lastName', { required: true })} />
                                 {errors.lastName && <p>Last name is required.</p>}
                             </div>}
                         </div>
-                        <input className={errors.email ? `${s.input} ${s.invalidInput}` : s.input} type='email' placeholder='Email'
-                            {...register('email', { onChange: () => clearErrors('common'), required: true, pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ })} />
+                        <input className={errors.email ? `${s.input} ${s.invalidInput}` : s.input} type={EMAIL} placeholder={EMAIL}
+                            {...register(EMAIL, { onChange: () => clearErrors(COMMON), required: true, pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ })} />
                         {errors.email && <p>Email is not valid</p>}
                         <div className={s.passwordWrapper}>
                             <div>
-                                <input className={errors.password ? `${s.input} ${s.invalidInput}` : s.input} type='password' placeholder='Password'
-                                    {...register('password', { onChange: () => clearErrors('common'), required: true, minLength: 6 })} />
+                                <input className={errors.password ? `${s.input} ${s.invalidInput}` : s.input} type={PASSWORD} placeholder={PASSWORD}
+                                    {...register(PASSWORD, { onChange: () => clearErrors(COMMON), required: true, minLength: 6 })} />
                                 {errors.password && <p>Password is required.</p>}
                             </div>
                             {isSignUpModal && <div>
-                                <input className={errors.confirmPassword ? `${s.input} ${s.invalidInput}` : s.input} type='password' placeholder='Confirm password'
-                                    {...register('confirmPassword', { onChange: () => clearErrors('common'), required: true })} />
+                                <input className={errors.confirmPassword ? `${s.input} ${s.invalidInput}` : s.input} type={PASSWORD} placeholder='Confirm password'
+                                    {...register('confirmPassword', { onChange: () => clearErrors(COMMON), required: true })} />
                                 {errors.confirmPassword && <p>Passwordd confirmation is required.</p>}
                             </div>}
                         </div>
@@ -111,10 +111,10 @@ const AuthorizationModal = ({ isLoginModal, isSignUpModal, setIsLoginModal, setI
                     </form>
                 </div>
 
-                {isLoginModal && <button onClick={handleSubmit(submitLogin)} type='submit' className={s.button}>
+                {isLoginModal && <button onClick={handleSubmit(submitLogin)} type={SUBMIT} className={s.button}>
                     <span className={s.text}>Login</span>
                 </button>}
-                {isSignUpModal && <button onClick={handleSubmit(submitRegister)} type='submit' className={s.button}>
+                {isSignUpModal && <button onClick={handleSubmit(submitRegister)} type={SUBMIT} className={s.button}>
                     <span className={s.text}>Register</span>
                 </button>}
 

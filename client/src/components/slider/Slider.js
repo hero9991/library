@@ -9,6 +9,7 @@ import { getSliderBooks } from '../../utility/AxiosService'
 import { toast } from 'react-toastify'
 import { getHistoryTitle, getLiteratureTitle } from './translatedText/translatedText'
 import { UserContext } from '../../App'
+import { AUTHOR, PROTOCOL_HOSTNAME_PORT, TITLE } from '../../utility/Constants'
 
 SwiperCore.use([Navigation, Pagination, Autoplay])
 
@@ -20,14 +21,11 @@ function Slider({ isBlackFont }) {
     useEffect(() => {
         (async function() {
             try {
-                console.log(333)
                 const currentBlockName = isBlackFont ? 'history' : 'literature'
                 const response = await getSliderBooks(currentBlockName)
-                console.log(222)
 
                 setBooks(response.data.books)
             } catch (error) {
-                console.log(error)
                 toast.error(`Error ${error}`)
             }
         })()
@@ -100,11 +98,11 @@ function Slider({ isBlackFont }) {
                 <Swiper id='main' wrapperTag="ul" className={s.swiper} {...params}>
                     {books.map(book => <SwiperSlide key={book._id} tag="li">
                         <NavLink exact to={`/book/${book._id}`}>
-                            {book.cover ? <img className={s.bookItem} src={require(`../../assets/booksCover/${book.cover}.jpeg`).default} alt="no img" /> : <div className={s.bookItem}></div>}
+                            {book.linkImage ? <img className={s.bookItem} src={PROTOCOL_HOSTNAME_PORT + book.linkImage} alt="no img" /> : <div className={s.bookItem}></div>}
                         </NavLink>
                         <StarRating book={book} books={books} setBooks={setBooks} />
-                        <p className={s.title}><NavLink exact to={`/book/${book._id}`}>{book.title}</NavLink></p>
-                        <p className={s.author}>{book.author}</p>
+                        <p className={s.title}><NavLink exact to={`/book/${book._id}`}>{book[TITLE + language]}</NavLink></p>
+                        <p className={s.author}>{book[AUTHOR + language]}</p>
                     </SwiperSlide>
                     )}
                     <div className={`swiper-button-prev ${s.prevButton}`}></div>

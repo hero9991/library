@@ -103,3 +103,26 @@ export const addBook = async (req, res) => {
         res.status(500).json({ message: error })
     }
 }
+
+export const uploadBook = async (req, res) => {
+    console.log(JSON.stringify(req.files))
+    const { titleRU, titleEN, titleAM, descriptionRU, descriptionEN, descriptionAM, authorRU, authorEN, authorAM, date, topic, type } = req.body
+
+    try {
+        console.log(req.files.image[0]?.filename)
+        const filePath = '/uploads/'
+        const createdBook = await Book.create({ titleRU, titleEN, titleAM, descriptionRU, descriptionEN, descriptionAM, authorRU, authorEN, authorAM, date, topic, type,
+            linkImage: `${filePath}${req.files.image[0]?.filename}`,
+            linkPdfRU: req.files.pdfRU ? `${filePath}${req.files.pdfRU[0].filename}` : '',
+            linkPdfEN: req.files.pdfEN ? `${filePath}${req.files.pdfEN[0].filename}` : '',
+            linkPdfAM: req.files.pdfAM ? `${filePath}${req.files.pdfAM[0].filename}` : '',
+            linkEpubRU: req.files.epubRU ? `${filePath}${req.files.epubRU[0].filename}` : '',
+            linkEpubEN: req.files.epubEN ? `${filePath}${req.files.epubEN[0].filename}` : '',
+            linkEpubAM: req.files.epubAM ? `${filePath}${req.files.epubAM[0].filename}` : ''})
+        res.status(201).json({ createdBook })
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ message: error || 'signUp catch block' })
+    }
+}
+
