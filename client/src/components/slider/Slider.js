@@ -7,7 +7,7 @@ import StarRating from '../starRating/StarRating'
 import { NavLink } from 'react-router-dom'
 import { getSliderBooks } from '../../utility/AxiosService'
 import { toast } from 'react-toastify'
-import { getHistoryTitle, getLiteratureTitle } from './translatedText/translatedText'
+import { getHistoryTitleText, getLiteratureTitleText } from './translatedText/translatedText'
 import { UserContext } from '../../App'
 import { AUTHOR, PROTOCOL_HOSTNAME_PORT, TITLE } from '../../utility/Constants'
 
@@ -93,7 +93,7 @@ function Slider({ isBlackFont }) {
 
     return (
         <div className={`${s.slider} ${isBlackFont ? s.blackFont : s.whiteFont + ' whiteFont'}`}>
-            <h2 className={s.topic}>{isBlackFont ? getHistoryTitle(language) : getLiteratureTitle(language)}</h2>
+            <h2 className={s.topic}>{isBlackFont ? getHistoryTitleText(language) : getLiteratureTitleText(language)}</h2>
             <div className={s.books}>
                 <Swiper id='main' wrapperTag="ul" className={s.swiper} {...params}>
                     {books.map(book => <SwiperSlide key={book._id} tag="li">

@@ -1,12 +1,12 @@
 import { EN, RU } from "../../../utility/Constants"
 
-export const getTitleFirst = language => language === EN
+export const getTitleFirstText = language => language === EN
     ? 'History of our land'
     : language === RU
         ? 'История земли'
         : 'Մեր երկրի պատմությունը'
 
-export const getTitleSecond = language => language === EN
+export const getTitleSecondText = language => language === EN
     ? 'Roots of our literature'
     : language === RU
         ? 'Корни литературы'

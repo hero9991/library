@@ -176,6 +176,14 @@
   .books {
     padding-top: 0;
   }
+  .viewMoreButton {
+    background-color: #d9a4ac;
+  }
 }
-@media (max-width: 545px) {
+@media (max-width: 478px) {
+  .viewMoreButton {
+    font-size: 17px;
+    width: 80%;
+    height: 45px;
+  }
 }

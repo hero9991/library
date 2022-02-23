@@ -9,6 +9,7 @@ export const SUBMIT = 'submit'
 export const LITERATURE = 'literature'
 export const HISTORY = 'history'
 export const BOOKS = 'books'
+export const SEARCH = 'search'
 
 export const AUTHOR = 'author'
 export const TITLE = 'title'
@@ -22,6 +23,7 @@ export const TOPIC_PARAMETER = 'topic='
 
 export const AM = 'AM'
 export const EN = 'EN'
+export const GB = 'GB'
 export const RU = 'RU'
 
 export const CONTAINER = 'container'

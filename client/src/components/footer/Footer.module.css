@@ -17,7 +17,35 @@
     cursor: pointer;
     padding-left: 6px;
     transition: all linear .2s;
+    vertical-align: middle;
 }
 .countryIcons span:hover {
     transform: scale(1.1);
+}
+
+@media (max-width: 991px) {
+    .footer.AM {
+       font-size: 13px;
+    }
+    .footer.RU {
+        font-size: 14.5px;
+     }
+}
+@media (max-width: 666px) {
+    .footerWrapper {
+        display: block;
+        margin: 0 auto;
+        text-align: center;
+        font-size: 14px;
+        height: 96px;
+    }
+    .footerWrapper > div {
+        padding: 3px 0;
+    }
+    .footerWrapper > div:last-child {
+        padding: 0px;
+    }
+    .footerWrapper > div:first-child {
+        padding: 12px 0px 7px;
+    }
 }

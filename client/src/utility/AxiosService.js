@@ -42,7 +42,7 @@ export const authorizeGoogleAccount = token => $api.post('/authorizegoogleaccoun
 export const checkAuth = () => axios.get(`${API_URL}/refresh`, { withCredentials: true })
 
 // Books
-export const getBooks = (type, chunkNumber, sort, topic, isReversed) => $api.get('/books', { params: { type, chunkNumber, sort, topic, isReversed } })
+export const getBooks = (type, chunkNumber, sort, topic, isReversed, language) => $api.get('/books', { params: { type, chunkNumber, sort, topic, isReversed, language } })
 export const getSliderBooks = type => $api.get('/sliderBooks', { params: { type } })
 export const getBooksBySearch = searchQuery => $api.get('/books/search', { params: { searchQuery } })
 export const getMyBooks = id => $api.get('/myBooks', { params: { id } })

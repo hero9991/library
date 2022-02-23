@@ -8,61 +8,49 @@ import { toast } from 'react-toastify'
 import { fetchUserRatings, postGoogleAccount, postSignIn, postSignUp } from './AuthorizationService';
 import { setClientSideError, setServerSideError } from '../../utility/ErrorHelper';
 import { COMMON, EMAIL, PASSWORD, SUBMIT, TEXT, TOKEN } from '../../utility/Constants';
+import { getConfirmPasswordErrorText, getConfirmPasswordText, getEmailErrorText, getEmailText, getFirstNameErrorText, getFirstNameText, getLastNameErrorText, getLastNameText, getPasswordErrorText, getPasswordText } from './translatedText/translatedText';
 
 const AuthorizationModal = ({ isLoginModal, isSignUpModal, setIsLoginModal, setIsSignUpModal }) => {
-    const { setUser } = useContext(UserContext)
-    const {
-        register,
-        handleSubmit,
-        reset,
-        clearErrors,
-        setError,
-        formState: { errors }
-    } = useForm()
+    const { setUser, language } = useContext(UserContext)
+    const { register, handleSubmit, reset, clearErrors, setError, formState: { errors } } = useForm()
 
     const submitLogin = async data => {
         try {
             clearErrors(COMMON)
 
-            const response = await postSignIn(data)
-            const userIdToRating = await fetchUserRatings(response.data.user._id)
-
-            localStorage.setItem(TOKEN, response.data.accessToken)
-            setUser({ ...response.data.user, bookRatings: { ...userIdToRating.data.bookIdToRating } })
-
-            setIsLoginModal(false)
+            enterUser(true, postSignIn, data)
         } catch (error) {
             setServerSideError(setError, error.response?.data?.message[0]?.msg || error.response?.data?.message)
         }
     }
     const submitRegister = async data => {
         try {
-            if (data.password !== data.confirmPassword) return setClientSideError(setError, 'Passwords do not match')
+            if (data.password !== data.confirmPassword) return setClientSideError(setError, getConfirmPasswordErrorText(language))
 
-            const response = await postSignUp(data)
-
-            localStorage.setItem(TOKEN, response.data.accessToken)
-            setUser({ ...response.data.user })
-
-            setIsSignUpModal(false)
+            enterUser(false, postSignUp, data)
         } catch (error) {
             setServerSideError(setError, error.response?.data?.message[0]?.msg || error.response?.data?.message)
         }
     }
 
     const googleSuccess = async data => {
-        const response = await postGoogleAccount(data)
-        const userIdToRating = await fetchUserRatings(response.data.user._id)
-
-        localStorage.setItem(TOKEN, response.data.accessToken)
-        setUser({ ...response.data.user, bookRatings: { ...userIdToRating.data.bookIdToRating } })
-
-        setIsSignUpModal(false)
-        setIsLoginModal(false)
+        enterUser(true, postGoogleAccount, data)
     }
     const googleFailure = error => {
         if (error?.error === 'popup_closed_by_user') return
         toast.error(`Authorization has failed. Error: ${error?.error}`)
+    }
+
+    const enterUser = async (isLogin, signUser, data) => {
+        const response = await signUser(data)
+        const userRatingResponse = isLogin && await fetchUserRatings(response.data.user._id)
+
+        localStorage.setItem(TOKEN, response.data.accessToken)
+        isLogin
+            ? setUser({ ...response.data.user, bookRatings: { ...userRatingResponse.data.bookIdToRating } })
+            : setUser({ ...response.data.user })
+
+        hidePopup()
     }
 
     const hidePopup = () => {
@@ -82,29 +70,29 @@ const AuthorizationModal = ({ isLoginModal, isSignUpModal, setIsLoginModal, setI
                     <form>
                         <div className={s.nameWrapper}>
                             {isSignUpModal && <div>
-                                <input className={errors.firstName ? `${s.input} ${s.invalidInput}` : s.input} type={TEXT} placeholder='First Name'
+                                <input className={errors.firstName ? `${s.input} ${s.invalidInput}` : s.input} type={TEXT} placeholder={getFirstNameText(language)}
                                     {...register('firstName', { required: true })} />
-                                {errors.firstName && <p>First name is required.</p>}
+                                {errors.firstName && <p>{getFirstNameErrorText(language)}</p>}
                             </div>}
                             {isSignUpModal && <div>
-                                <input className={errors.lastName ? `${s.input} ${s.invalidInput}` : s.input} type={TEXT} placeholder='Last Name'
+                                <input className={errors.lastName ? `${s.input} ${s.invalidInput}` : s.input} type={TEXT} placeholder={getLastNameText(language)}
                                     {...register('lastName', { required: true })} />
-                                {errors.lastName && <p>Last name is required.</p>}
+                                {errors.lastName && <p>{getLastNameErrorText(language)}</p>}
                             </div>}
                         </div>
-                        <input className={errors.email ? `${s.input} ${s.invalidInput}` : s.input} type={EMAIL} placeholder={EMAIL}
+                        <input className={errors.email ? `${s.input} ${s.invalidInput}` : s.input} type={EMAIL} placeholder={getEmailText(language)}
                             {...register(EMAIL, { onChange: () => clearErrors(COMMON), required: true, pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ })} />
-                        {errors.email && <p>Email is not valid</p>}
+                        {errors.email && <p>{getEmailErrorText(language)}</p>}
                         <div className={s.passwordWrapper}>
                             <div>
-                                <input className={errors.password ? `${s.input} ${s.invalidInput}` : s.input} type={PASSWORD} placeholder={PASSWORD}
+                                <input className={errors.password ? `${s.input} ${s.invalidInput}` : s.input} type={PASSWORD} placeholder={getPasswordText(language)}
                                     {...register(PASSWORD, { onChange: () => clearErrors(COMMON), required: true, minLength: 6 })} />
-                                {errors.password && <p>Password is required.</p>}
+                                {errors.password && <p>{getPasswordErrorText(language)}</p>}
                             </div>
                             {isSignUpModal && <div>
-                                <input className={errors.confirmPassword ? `${s.input} ${s.invalidInput}` : s.input} type={PASSWORD} placeholder='Confirm password'
+                                <input className={errors.confirmPassword ? `${s.input} ${s.invalidInput}` : s.input} type={PASSWORD} placeholder={getConfirmPasswordText(language)}
                                     {...register('confirmPassword', { onChange: () => clearErrors(COMMON), required: true })} />
-                                {errors.confirmPassword && <p>Passwordd confirmation is required.</p>}
+                                {errors.confirmPassword && <p>{getConfirmPasswordErrorText(language)}</p>}
                             </div>}
                         </div>
                         {errors.common && <p>{errors.common.message}</p>}

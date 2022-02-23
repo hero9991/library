@@ -2,7 +2,7 @@ import Book from '../models/book.js'
 import User from '../models/user.js'
 
 export const getBooks = async (req, res) => {
-    const { type, chunkNumber, sort, topic, isReversed } = req.query
+    const { type, chunkNumber, sort, topic, isReversed, language} = req.query
 
     try {
         const LIMIT = 3
@@ -11,17 +11,18 @@ export const getBooks = async (req, res) => {
             ? await Book.countDocuments({ type })
             : await Book.countDocuments({ type, topic })
 
+        const title = 'title' + language
         const sortBy = sort === 'byPopularity'
             ? 'viewCount'
             : sort === 'byRating'
                 ? 'rating'
-                : 'title'
-        let sortDirection = sortBy === 'title' ? 1 : -1
+                : title
+        let sortDirection = sortBy === title ? 1 : -1
         sortDirection = isReversed === 'true' ?  -sortDirection : sortDirection
 
         const bookData = topic === 'all'
-            ? await Book.find({ type }).sort({ [sortBy]: sortDirection }).limit(LIMIT).skip(countToSkip)
-            : await Book.find({ type, topic }).sort({ [sortBy]: sortDirection }).limit(LIMIT).skip(countToSkip) //sorting 
+            ? await Book.find({ type }).sort({ [sortBy]: sortDirection, _id: -1 }).limit(LIMIT).skip(countToSkip)
+            : await Book.find({ type, topic }).sort({ [sortBy]: sortDirection, _id: -1 }).limit(LIMIT).skip(countToSkip)
 
         res.status(200).json({ books: bookData, currentChunk: Number(chunkNumber), numberOfChunk: Math.ceil(total / LIMIT) })
     } catch (error) {
@@ -48,7 +49,7 @@ export const getBooksBySearch = async (req, res) => {
     try {
         const searchText = new RegExp(searchQuery, 'i')
 
-        const bookData = await Book.find({ $or: [{ title: searchText }, { author: searchText }] })
+        const bookData = await Book.find({ $or: [{ titleRU: searchText }, { titleEN: searchText }, { titleAM: searchText }, { authorRU: searchText }, { authorEN: searchText }, { authorAM: searchText }] })
 
         res.status(200).json({ books: bookData })
     } catch (error) {
@@ -105,11 +106,9 @@ export const addBook = async (req, res) => {
 }
 
 export const uploadBook = async (req, res) => {
-    console.log(JSON.stringify(req.files))
     const { titleRU, titleEN, titleAM, descriptionRU, descriptionEN, descriptionAM, authorRU, authorEN, authorAM, date, topic, type } = req.body
 
     try {
-        console.log(req.files.image[0]?.filename)
         const filePath = '/uploads/'
         const createdBook = await Book.create({ titleRU, titleEN, titleAM, descriptionRU, descriptionEN, descriptionAM, authorRU, authorEN, authorAM, date, topic, type,
             linkImage: `${filePath}${req.files.image[0]?.filename}`,

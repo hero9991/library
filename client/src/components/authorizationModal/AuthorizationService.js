@@ -6,7 +6,7 @@ export const postSignIn = async data => await toast.promise(
     signIn(data.email, data.password),
     {
         pending: 'Authorization',
-        success: 'Hello, ms ... Please enjoy reading 👌',
+        success: { render({ data }) { return `Hello, ${data.data.user.name}. Please enjoy reading 👌` } },
         error: {
             render({ data }) { return `${data.message} 🤯` }
         }

@@ -9,21 +9,24 @@ import { Triangle } from 'react-loader-spinner'
 import SortingLiterature from './Sorting/SortingLiterature'
 import SortingHistory from './Sorting/SortingHistory'
 import { getEmptyMyBooksText, getUnauthorizedMyBooksText, getViewMoreText } from './translatedText/translatedText'
-import { BOOKS, CONTAINER, HISTORY, LITERATURE } from '../../utility/Constants'
+import { BOOKS, CONTAINER, HISTORY, LITERATURE, SEARCH } from '../../utility/Constants'
 
 function Books() {
+    const { user, language } = useContext(UserContext)
+
     const [books, setBooks] = useState([])
     const [currentChunk, setCurrentChunk] = useState(1)
     const [numberOfChunk, setNumberOfChunk] = useState(1)
     const [isReversed, setIsReversed] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+    const [userBookCount, setUserBookCount] = useState(user?.books.length)
 
-    const { user, language } = useContext(UserContext)
     const location = useLocation()
+
     const currentRoute = location.pathname.split('/').pop()
-    const currentSort = new URLSearchParams(location.search).get('sort');
-    const currentTopic = new URLSearchParams(location.search).get('topic');
-    const value = new URLSearchParams(location.search).get('value');
+    const currentSort = new URLSearchParams(location.search).get('sort')
+    const currentTopic = new URLSearchParams(location.search).get('topic')
+    const value = new URLSearchParams(location.search).get('value')
 
     useEffect(() => {
         const stickBackground = () => {
@@ -39,35 +42,26 @@ function Books() {
     }, [])
 
     useEffect(() => {
-        setCurrentChunk(1);
-        // setNumberOfChunk(1)
         (async function () {
             try {
+                if (user?.books.length && user?.books.length !== userBookCount && currentRoute !== BOOKS) return
                 switch (currentRoute) {
                     case LITERATURE:
-                        setBooks([])
                         setIsLoading(true)
-                        // if (books.length > 0) return//there is a problem without  обновляется стар ржйтинг
                         await requestBooks(1, true)
                         break
                     case HISTORY:
-                        setBooks([])
                         setIsLoading(true)
-                        // if (books.length > 0) return//there is a problem without  обновляется стар ржйтинг
                         await requestBooks(1, true)
                         break
-                    case 'search':
-                        setBooks([])
+                    case SEARCH:
                         setIsLoading(true)
-                        // if (books.length > 0) return//there is a problem without  обновляется стар ржйтинг
-                        // requestBooks(1, true)
                         await getBooksBySearch(value).then(data => {
                             setBooks(data.data.books)
                         })
                         break
                     case BOOKS:
-                        setBooks([])
-                        if (!user?._id) return
+                        if (!user?._id) return setBooks([])
                         setIsLoading(true)
                         await getMyBooks(user._id)
                             .then(data => {
@@ -80,14 +74,12 @@ function Books() {
             } catch (e) {
                 toast.error('temp error')
             } finally {
+                if (user?.books) setUserBookCount(user.books?.length)
                 setIsLoading(false)
             }
         })()
-
-
-        // return () => setBooks([])
-
-    }, [user?._id, user?.books, currentRoute, currentTopic, currentSort, value, isReversed]) //temp changes
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [user?._id, user?.books, userBookCount, currentRoute, currentTopic, currentSort, value, isReversed])
 
     const getBookChunk = async () => {
         const error = await requestBooks(currentChunk + 1, false)
@@ -101,9 +93,10 @@ function Books() {
         try {
             id = toast.loading("Please wait...")
 
-            const response = await getBooks(currentRoute, chunk, currentSort, currentTopic, isReversed)
+            const response = await getBooks(currentRoute, chunk, currentSort, currentTopic, isReversed, language)
 
             isFirstChunk ? setBooks([...response.data.books]) : setBooks([...books, ...response.data.books])
+            console.log(response.data.currentChunk) 
             setCurrentChunk(response.data.currentChunk)
             setNumberOfChunk(response.data.numberOfChunk)
             return false
@@ -124,7 +117,8 @@ function Books() {
                 {books.map((item, index) => index % 2
                     ? <BookItem second={true} bookItem={item} key={index} books={books} setBooks={setBooks} />
                     : <BookItem second={false} bookItem={item} key={index} books={books} setBooks={setBooks} />)}
-                {currentChunk < numberOfChunk && currentRoute !== BOOKS && <button onClick={getBookChunk} className={s.viewMoreButton}>{getViewMoreText(language)}</button>}
+                {currentChunk < numberOfChunk && currentRoute !== BOOKS && currentRoute !== SEARCH && <button onClick={getBookChunk} className={s.viewMoreButton}>{getViewMoreText(language)}</button>}
+
                 {isLoading && <div className={s.loader}><Triangle height={380} width={300} color='#1c1c1c' /></ div>}
             </div>
         </section>

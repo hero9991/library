@@ -1,13 +1,13 @@
 import React, { useContext, useState } from 'react'
 import s from './Navbar.module.css'
 import { NavLink, useHistory } from 'react-router-dom'
-import { FaYoutube, FaTelegram, FaVk, FaSignInAlt, FaSearchPlus, FaSearch, FaHome, FaBook, FaBookReader, FaGlobeEurope, FaRegFileAlt } from 'react-icons/fa'
+import { FaYoutube, FaTelegramPlane, FaVk, FaFacebookF, FaSignInAlt, FaSearchPlus, FaSearch, FaHome, FaBook, FaBookReader, FaGlobeEurope, FaRegFileAlt } from 'react-icons/fa'
 import { getBooksBySearch, signOut } from '../../utility/AxiosService'
 import { UserContext } from '../../App'
 import { toast } from 'react-toastify'
 import { postSignOut } from './NavbarService'
-import { getArticlesTab, getHistoryTab, getHomeTab, getLiteratureTab, getLogOutTab, getMyBooksTab, getSignUpTab, getLoginTab, getSearchPlaceholder } from './translatedText/translatedText'
-import { CATALOG_HISTORY_URL, CATALOG_LITERATURE_URL, CONTAINER, SORT_PARAMETER, TEXT, TOPIC_PARAMETER } from '../../utility/Constants'
+import { getArticlesTabText, getHistoryTabText, getHomeTabText, getLiteratureTabText, getLogOutTabText, getMyBooksTabText, getSignUpTabText, getLoginTabText, getSearchPlaceholderText, getArticleDisabledText } from './translatedText/translatedText'
+import { AM, CATALOG_HISTORY_URL, CATALOG_LITERATURE_URL, CONTAINER, RU, SORT_PARAMETER, TEXT, TOPIC_PARAMETER } from '../../utility/Constants'
 
 function Navbar({ setIsLoginModal, setIsSignUpModal }) {
     const [isInputActive, setIsInputActive] = useState(true)
@@ -44,18 +44,27 @@ function Navbar({ setIsLoginModal, setIsSignUpModal }) {
         )
     }
 
+    const disableArticleTab = e => {
+        toast.warning(getArticleDisabledText(language))
+        e.preventDefault()
+    }
+
     return (
         <header>
             <nav className={s.navbar}>
                 <div className={CONTAINER}>
-                    <div className={s.tabsWrapper}>
+                    <div className={language === AM
+                        ? `${s.tabsWrapper} ${s.AM}`
+                        : language === RU
+                            ? `${s.tabsWrapper} ${s.RU}`
+                            : s.tabsWrapper}>
                         <div className={`${s.menu} ${isBurgerActive ? s.dropDownMenu : undefined}`}>
                             <ul>
-                                <li><NavLink exact activeClassName={s.active} onClick={toggleBurgerMenu} to="/">{isBurgerActive && <FaHome className={s.menuIcon} />}{getHomeTab(language)}</NavLink></li>
-                                <li><NavLink exact activeClassName={s.active} onClick={toggleBurgerMenu} to={`${CATALOG_LITERATURE_URL}?${SORT_PARAMETER}byPopularity&${TOPIC_PARAMETER}all`}>{isBurgerActive && <FaBook className={s.menuIcon} />}{getLiteratureTab(language)}</NavLink></li>
-                                <li><NavLink exact activeClassName={s.active} onClick={toggleBurgerMenu} to={`${CATALOG_HISTORY_URL}?${SORT_PARAMETER}byPopularity&${TOPIC_PARAMETER}all`}>{isBurgerActive && <FaGlobeEurope className={s.menuIcon} />}{getHistoryTab(language)}</NavLink></li>
-                                <li><NavLink exact activeClassName={s.active} onClick={toggleBurgerMenu} to="/catalog/articles">{isBurgerActive && <FaRegFileAlt className={s.menuIcon} />}{getArticlesTab(language)}</NavLink></li>
-                                <li><NavLink exact activeClassName={s.active} onClick={toggleBurgerMenu} to="/catalog/books">{isBurgerActive && <FaBookReader className={s.menuIcon} />}{getMyBooksTab(language)}</NavLink></li>
+                                <li><NavLink exact activeClassName={s.active} onClick={toggleBurgerMenu} to="/">{isBurgerActive && <FaHome className={s.menuIcon} />}{getHomeTabText(language)}</NavLink></li>
+                                <li><NavLink exact activeClassName={s.active} onClick={toggleBurgerMenu} to={`${CATALOG_LITERATURE_URL}?${SORT_PARAMETER}byPopularity&${TOPIC_PARAMETER}all`}>{isBurgerActive && <FaBook className={s.menuIcon} />}{getLiteratureTabText(language)}</NavLink></li>
+                                <li><NavLink exact activeClassName={s.active} onClick={toggleBurgerMenu} to={`${CATALOG_HISTORY_URL}?${SORT_PARAMETER}byPopularity&${TOPIC_PARAMETER}all`}>{isBurgerActive && <FaGlobeEurope className={s.menuIcon} />}{getHistoryTabText(language)}</NavLink></li>
+                                <li><NavLink exact activeClassName={s.active} onClick={disableArticleTab} to="/catalog/articles">{isBurgerActive && <FaRegFileAlt className={s.menuIcon} />}{getArticlesTabText(language)}</NavLink></li>
+                                <li><NavLink exact activeClassName={s.active} onClick={toggleBurgerMenu} to="/catalog/books">{isBurgerActive && <FaBookReader className={s.menuIcon} />}{getMyBooksTabText(language)}</NavLink></li>
                             </ul>
                             <button className={`${s.burger} ${isBurgerActive ? s.burgerActive : undefined}`} onClick={toggleBurgerMenu}>
                                 <span></span>
@@ -63,24 +72,27 @@ function Navbar({ setIsLoginModal, setIsSignUpModal }) {
                         </div>
 
                         <form className={`${s.form} ${isInputActive ? s.activeForm : undefined}`} onSubmit={e => e.preventDefault()}>
-                            <input onChange={e => searchBooks(e)} type={TEXT} placeholder={getSearchPlaceholder(language)} />
+                            <input onChange={e => searchBooks(e)} type={TEXT} placeholder={getSearchPlaceholderText(language)} />
                             <FaSearch />
                         </form>
 
                         <div className={s.links}>
                             <a href="https://vk.com/patmahayrr" className={`${s.fa} ${s.faVk}`}><FaVk /></a>
+
+                            <a href="https://t.me/patmahayrr" className={`${s.fa} ${s.faTelegram}`}><FaTelegramPlane /></a>
                             <a href="https://www.youtube.com/channel/UC6vrmiSj7IzUTqk-qdoabfg" className={`${s.fa} ${s.faYoutube}`}><FaYoutube /></a>
-                            <a href="https://tgstat.com/ru/channel/@patmahair" className={`${s.fa} ${s.faTelegram}`}><FaTelegram /></a>
+                            <a href="https://www.facebook.com/%D5%8A%D5%A1%D5%BF%D5%B4%D5%A1%D5%B0%D5%A1%D5%B5%D6%80%D0%9F%D0%B0%D1%82%D0%BC%D0%B0%D1%85%D0%B0%D0%B9%D1%80Patmahayr-108867618374947" className={`${s.fa} ${s.faFacebook}`}><FaFacebookF /></a>
+
                         </div>
 
                         {user
                             ? (<div className={`${s.authorization} ${s.logout}`}>
-                                <button onClick={submitLogout} className={s.singUp}>{getLogOutTab(language)}</button>
- 
+                                <button onClick={submitLogout} className={s.singUp}>{getLogOutTabText(language)}</button>
+
                             </div>)
                             : (<div className={s.authorization}>
-                                <button onClick={openSignUpModal} className={s.singUp}>{getSignUpTab(language)}</button>
-                                <button onClick={openLoginModal} className={s.login}>{getLoginTab(language)}</button>
+                                <button onClick={openSignUpModal} className={s.singUp}>{getSignUpTabText(language)}</button>
+                                <button onClick={openLoginModal} className={s.login}>{getLoginTabText(language)}</button>
                             </div>)}
 
                         {isInputActive

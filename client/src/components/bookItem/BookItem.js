@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import s from './BookItem.module.css'
 import StarRating from '../starRating/StarRating'
 import { Link } from 'react-router-dom'
@@ -7,16 +7,16 @@ import { UserContext } from '../../App'
 import { toast } from 'react-toastify'
 import { postAddOrRemoveBook } from './BookItemService'
 import { AUTHOR, BOOK_URL, DESCRIPTION, PROTOCOL_HOSTNAME_PORT, TITLE } from '../../utility/Constants'
-import { getReadNowText } from './translatedText/translatedText'
+import { getReadNowText, getUnauthorizedWarningText } from './translatedText/translatedText'
 
 function BookItem({ second, bookItem, books, setBooks }) {
     const { user, setUser, language } = useContext(UserContext)
     const isBookAdded = user?.books.find(bookId => bookId === bookItem._id)
 
     const addOrRemove = async () => {
-        if (!user) return toast.warning('Firstly you need to authorize')
+        if (!user) return toast.warning(getUnauthorizedWarningText(language))
 
-        const response = await postAddOrRemoveBook(bookItem, user)
+        const response = await postAddOrRemoveBook(bookItem, user, language)
 
         setUser({ ...user, books: response.data })
     }

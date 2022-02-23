@@ -7,11 +7,15 @@ import { Triangle } from 'react-loader-spinner'
 import { getBook, incrementBookView } from '../../utility/AxiosService'
 import { AUTHOR, CONTAINER, DESCRIPTION, PROTOCOL_HOSTNAME_PORT, TITLE } from '../../utility/Constants'
 import { UserContext } from '../../App'
+import ReaderModal from '../readerModal/ReaderModal'
+
 
 function BookPage() {
     const { language } = useContext(UserContext)
     const [currentBook, setCurrentBook] = useState(null)
     const [isReaderModal, setIsReaderModal] = useState(false)
+    const [isDownload, setIsDownload] = useState(false)
+    const [bookFormat, setBookFormat] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const bookId = useLocation().pathname.split('/').pop()
 
@@ -47,12 +51,12 @@ function BookPage() {
                     </div>}
 
                     <div className={s.buttons}>
-                        <button>Download</button>
-                        <button onClick={() => setIsReaderModal(true)}>Read Now</button>
-                    </div>
-                    {/* <iframe title='book' src={book} width="100%" height="500px"></iframe> */}
-                    {/* <embed src={book} type='application/pdf' position='absolute' width='100%' height='660px'></embed> */}
-                    <Reader isReaderModal={isReaderModal} setIsReaderModal={setIsReaderModal} currentBook={currentBook} />
+                        <button onClick={() => {setIsReaderModal(true); setIsDownload(true)}}>Download</button>
+                        <button onClick={() => {setIsReaderModal(true); setIsDownload(false)}}>Read Now</button>
+                    </div>    
+                    
+                    <ReaderModal isReaderModal={isReaderModal} setIsReaderModal={setIsReaderModal} setBookFormat={setBookFormat} currentBook={currentBook} isDownload={isDownload}/>
+                    {currentBook && !isDownload && <Reader bookUrl={currentBook[bookFormat]} setBookFormat={setBookFormat}/>}
                     {isLoading && <div className={s.loader}><Triangle height={380} width={300} color='#1c1c1c' /></ div>}
                 </div>
 

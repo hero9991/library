@@ -3,7 +3,7 @@ import s from './MainBody.module.css'
 import mainImage from '../../assets/logo/main1.png'
 import { Link } from 'react-router-dom'
 import { UserContext } from '../../App'
-import { getButtonUpperText, getReadButtonText, getTitleFirst, getTitleSecond } from './translatedText/translatedText'
+import { getButtonUpperText, getReadButtonText, getTitleFirstText, getTitleSecondText } from './translatedText/translatedText'
 import { CONTAINER } from '../../utility/Constants'
 
 function MainBody() {
@@ -16,8 +16,8 @@ function MainBody() {
                     <div className={s.topText}>
                         <h1>ՊԱՏՄԱՀԱՅՐ</h1>
                         <div>
-                            <h2>{getTitleFirst(language)}</h2>
-                            <h2>{getTitleSecond(language)}</h2>
+                            <h2>{getTitleFirstText(language)}</h2>
+                            <h2>{getTitleSecondText(language)}</h2>
                         </div>
                     </div>
                 </div>
@@ -27,7 +27,7 @@ function MainBody() {
                     <img src={mainImage} alt='' />
                     <div className={s.bottomText}>
                         <p>{getButtonUpperText(language)}</p>
-                        <Link to='/catalog'>{getReadButtonText(language)}</Link>
+                        <Link to='/catalog/literature?sort=byPopularity&topic=all'>{getReadButtonText(language)}</Link>
                     </div>
                 </div>
             </div>
