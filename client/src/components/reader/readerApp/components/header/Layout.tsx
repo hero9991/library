@@ -17,7 +17,7 @@ export const AutoLayout = styled.div`
   width: 100%;
   flex-grow: 1;
   display: flex;
-  justify-content: space-between;
+  justify-content: right;
   border-bottom: 2px solid ${palette.gray1};
 
   & > div {
@@ -27,6 +27,11 @@ export const AutoLayout = styled.div`
   }
   & > div:last-child {
     margin-right: 8px;
+  }
+  & > div > button {
+    font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 1rem;
+    background: transparent;
   }
 `;
 

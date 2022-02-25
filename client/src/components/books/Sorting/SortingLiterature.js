@@ -1,12 +1,12 @@
-import React from 'react'
+import React, { memo } from 'react'
 import s from '../Books.module.css'
 import { NavLink } from 'react-router-dom'
 import { BsArrowDownSquare } from 'react-icons/bs'
 import { get19CenturyText, getAllBooksText, getByAlphabetText, getByPopularityText, getByRatingText, getModernText, getSovietText } from '../translatedText/translatedText'
-import { toast } from 'react-toastify'
 import { CATALOG_LITERATURE_URL, CONTAINER, SORT_PARAMETER, TOPIC_PARAMETER } from '../../../utility/Constants'
 
-const SortingLiterature = ({ currentSort, currentTopic, language, isReversed, setIsReversed }) => {
+const SortingLiterature = memo(({ currentSort, currentTopic, language, isReversed, setIsReversed }) => {
+
     return (
         <div className={s.sortingWrapper}>
             <div className={`${s.sortingScroll} ${CONTAINER}`}>
@@ -32,6 +32,6 @@ const SortingLiterature = ({ currentSort, currentTopic, language, isReversed, se
             </div>
         </div>
     )
-}
+})
 
 export default SortingLiterature

@@ -161,7 +161,7 @@ const Option = ({
         </ControlIconBtnWrapper>
         <OptionDropdown title="Font"
                         defaultValue={fontFamily}
-                        valueList={["Origin", "Roboto"]}
+                        valueList={["Origin", "Tinos", "Menlo", "Courier New"]}
                         onSelect={onSelectFontFamily} />
         <OptionSlider active={true}
                       title="Size"

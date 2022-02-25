@@ -1,9 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React from 'react'
 import s from './UploadBookModal.module.css'
 import { useForm } from 'react-hook-form';
-import { UserContext } from '../../App';
-import { toast } from 'react-toastify'
-import { setClientSideError, setServerSideError } from '../../utility/ErrorHelper';
 import { uploadBook } from '../../utility/AxiosService';
 import { FILE, SUBMIT, TEXT } from '../../utility/Constants';
 
@@ -18,7 +15,6 @@ const UploadBookInput = ({ errors, register, type, item, isOptional }) => {
 }
 
 const UploadBookModal = ({ isUploadModal, setIsUploadModal }) => {
-    const { user } = useContext(UserContext)
     const { register, handleSubmit, reset, formState: { errors } } = useForm()
 
     const onSubmit = async e => {
@@ -45,8 +41,7 @@ const UploadBookModal = ({ isUploadModal, setIsUploadModal }) => {
             formData.append('epubEN', e.epubEN[0])
             formData.append('epubAM', e.epubAM[0])
             formData.append('image', e.image[0])
-            const some = await uploadBook(formData)
-            // setIsUploaded(true)
+            await uploadBook(formData)
             reset()
         } catch (error) {
             console.log(error)

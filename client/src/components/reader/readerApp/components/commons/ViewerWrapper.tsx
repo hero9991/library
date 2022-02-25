@@ -9,6 +9,7 @@ const ViewerWrapper = styled.div`
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
+  background: white;
   ${styles.scrollbar(0)};
 `;
 

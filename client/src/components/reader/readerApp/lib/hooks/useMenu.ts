@@ -90,7 +90,7 @@ function useMenu(ref: { current: any }, delay: number) {
 		if (!eventSignal && !control.display) return;
 		
 		const iframes = Array.from(document.querySelectorAll('iframe'));
-		const epubIframe = iframes.find(item => item.id.includes('epubjs-view'))
+		const epubIframe = iframes?.find(item => item.id.includes('epubjs-view'));
 
 		if (control.display) {
 			document.addEventListener('click', onClose);

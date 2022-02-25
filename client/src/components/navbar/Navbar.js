@@ -2,14 +2,13 @@ import React, { useContext, useState } from 'react'
 import s from './Navbar.module.css'
 import { NavLink, useHistory } from 'react-router-dom'
 import { FaYoutube, FaTelegramPlane, FaVk, FaFacebookF, FaSignInAlt, FaSearchPlus, FaSearch, FaHome, FaBook, FaBookReader, FaGlobeEurope, FaRegFileAlt } from 'react-icons/fa'
-import { getBooksBySearch, signOut } from '../../utility/AxiosService'
 import { UserContext } from '../../App'
 import { toast } from 'react-toastify'
 import { postSignOut } from './NavbarService'
 import { getArticlesTabText, getHistoryTabText, getHomeTabText, getLiteratureTabText, getLogOutTabText, getMyBooksTabText, getSignUpTabText, getLoginTabText, getSearchPlaceholderText, getArticleDisabledText } from './translatedText/translatedText'
 import { AM, CATALOG_HISTORY_URL, CATALOG_LITERATURE_URL, CONTAINER, RU, SORT_PARAMETER, TEXT, TOPIC_PARAMETER } from '../../utility/Constants'
 
-function Navbar({ setIsLoginModal, setIsSignUpModal }) {
+const Navbar = ({ setIsLoginModal, setIsSignUpModal }) => {
     const [isInputActive, setIsInputActive] = useState(true)
     const [isBurgerActive, setIsBurgerActive] = useState(false)
     const [delay, setDelay] = useState(false)

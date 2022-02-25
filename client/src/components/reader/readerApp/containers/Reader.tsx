@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Provider } from "react-redux";
 import { ReactEpubViewer } from "react-epub-viewer";
@@ -30,6 +30,22 @@ import Page from "../types/page";
 import Toc from "../types/toc";
 
 const Reader = ({ url, loadingView }: Props) => {
+  useEffect(() => {
+    const iframes = Array.from(document.querySelectorAll("iframe"));
+    const epubIframe = iframes?.find((item) => item.id.includes("epubjs-view"));
+    if (epubIframe && epubIframe.contentWindow) {
+      epubIframe.contentWindow.document
+        .querySelectorAll("span")
+        .forEach((item) => {
+          item.style.fontSize = bookStyle.fontSize + "px";
+          if (bookStyle.fontFamily !== "Origin")
+            item.style.fontFamily = bookStyle.fontFamily;
+          item.style.display = "unset";
+          item.style.lineHeight = bookStyle.lineHeight + "";
+        });
+    }
+  });
+
   const dispatch = useDispatch();
   const currentLocation = useSelector<RootState, Page>(
     (state) => state.book.currentLocation
@@ -87,14 +103,12 @@ const Reader = ({ url, loadingView }: Props) => {
    * Move page
    * @param type Direction
    */
-  const onPageMove = (type: "PREV" | "NEXT") => { 
-    console.log(123)
+  const onPageMove = (type: "PREV" | "NEXT") => {
     const node = viewerRef.current;
     if (!node || !node.prevPage || !node.nextPage) return;
 
     type === "PREV" && node.prevPage();
     type === "NEXT" && node.nextPage();
-    console.log(123)
   };
 
   /**
@@ -133,8 +147,7 @@ const Reader = ({ url, loadingView }: Props) => {
 
   /** ContextMenu off */
   const onContextmMenuRemove = () => setIsContextMenu(false);
-console.log(url)
-console.log(loadingView)
+
   return (
     <>
       <ViewerWrapper>

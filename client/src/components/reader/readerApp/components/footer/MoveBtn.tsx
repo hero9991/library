@@ -10,8 +10,8 @@ const MoveBtn = ({ type, onClick }: Props) => {
     : NextIcon;
   
   const msg = type === "PREV"
-    ? "이전 페이지"
-    : "다음 페이지";
+    ? "Previous"
+    : "Next";
 
   return (
     <Container onClick={onClick} title={msg}>

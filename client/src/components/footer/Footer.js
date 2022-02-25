@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { memo, useContext, useState } from 'react'
 import s from './Footer.module.css'
 import ReactCountryFlag from "react-country-flag"
 import { UserContext } from '../../App'
@@ -7,7 +7,7 @@ import Rules from './rules/Rules.js'
 import { AM, CONTAINER, EN, GB, RU } from '../../utility/Constants'
 
 
-function Footer({ setlanguage }) {
+const Footer = memo(({ setlanguage }) => {
     const { language } = useContext(UserContext)
     const [isRulesModal, setIsRulesModal] = useState(false)
 
@@ -33,6 +33,6 @@ function Footer({ setlanguage }) {
             </div>
         </section>
     )
-}
+})
 
 export default Footer

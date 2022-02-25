@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { memo } from 'react'
 import HomeBodyItem from '../homeBodyItem/HomeBodyItem'
 import MainBody from '../mainBody/MainBody'
 import s from './HomeBody.module.css'
 
-function HomeBody() {
+const HomeBody = memo(() => {
     return (
         <section className={s.homeBody}>
             <MainBody />
@@ -11,6 +11,6 @@ function HomeBody() {
             <HomeBodyItem isWhiteBack={false}/>
         </section>
     )
-}
+})
 
 export default HomeBody

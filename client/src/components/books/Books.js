@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import BookItem from '../bookItem/BookItem'
 import s from './Books.module.css'
 import { useLocation } from 'react-router-dom'
@@ -19,7 +19,8 @@ function Books() {
     const [numberOfChunk, setNumberOfChunk] = useState(1)
     const [isReversed, setIsReversed] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
-    const [userBookCount, setUserBookCount] = useState(user?.books.length)
+
+    const prevBooksCount = useRef(user?.books.length)
 
     const location = useLocation()
 
@@ -44,14 +45,14 @@ function Books() {
     useEffect(() => {
         (async function () {
             try {
-                if (user?.books.length && user?.books.length !== userBookCount && currentRoute !== BOOKS) return
+                if (user?.books && user?.books.length !== prevBooksCount.current && currentRoute !== BOOKS) return
                 switch (currentRoute) {
                     case LITERATURE:
                         setIsLoading(true)
                         await requestBooks(1, true)
                         break
                     case HISTORY:
-                        setIsLoading(true)
+                        setIsLoading(true) 
                         await requestBooks(1, true)
                         break
                     case SEARCH:
@@ -73,13 +74,13 @@ function Books() {
                 }
             } catch (e) {
                 toast.error('temp error')
-            } finally {
-                if (user?.books) setUserBookCount(user.books?.length)
+            } finally {                
+                if (user?.books) prevBooksCount.current = user?.books?.length
                 setIsLoading(false)
             }
         })()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [user?._id, user?.books, userBookCount, currentRoute, currentTopic, currentSort, value, isReversed])
+    }, [user?._id, user?.books, currentRoute, currentTopic, currentSort, value, isReversed])
 
     const getBookChunk = async () => {
         const error = await requestBooks(currentChunk + 1, false)
@@ -96,7 +97,7 @@ function Books() {
             const response = await getBooks(currentRoute, chunk, currentSort, currentTopic, isReversed, language)
 
             isFirstChunk ? setBooks([...response.data.books]) : setBooks([...books, ...response.data.books])
-            console.log(response.data.currentChunk) 
+            console.log(response.data.currentChunk)
             setCurrentChunk(response.data.currentChunk)
             setNumberOfChunk(response.data.numberOfChunk)
             return false
@@ -115,8 +116,8 @@ function Books() {
                 {user && currentRoute === BOOKS && books.length === 0 && <p className={s.emptyBooks}>{getEmptyMyBooksText(language)}</p>}
                 {!user && currentRoute === BOOKS && <p className={s.emptyBooks}>{getUnauthorizedMyBooksText(language)}</p>}
                 {books.map((item, index) => index % 2
-                    ? <BookItem second={true} bookItem={item} key={index} books={books} setBooks={setBooks} />
-                    : <BookItem second={false} bookItem={item} key={index} books={books} setBooks={setBooks} />)}
+                    ? <BookItem isSecond={true} bookItem={item} key={index} books={books} setBooks={setBooks} />
+                    : <BookItem isSecond={false} bookItem={item} key={index} books={books} setBooks={setBooks} />)}
                 {currentChunk < numberOfChunk && currentRoute !== BOOKS && currentRoute !== SEARCH && <button onClick={getBookChunk} className={s.viewMoreButton}>{getViewMoreText(language)}</button>}
 
                 {isLoading && <div className={s.loader}><Triangle height={380} width={300} color='#1c1c1c' /></ div>}

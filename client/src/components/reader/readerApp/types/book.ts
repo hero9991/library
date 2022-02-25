@@ -41,7 +41,7 @@ export type BookStyle = {
  * - Origin: 원본
  * - *: 커스텀 폰트
  */
-export type BookFontFamily = 'Origin' | 'Roboto';
+export type BookFontFamily = 'Origin' | 'Tinos' | 'Menlo' | 'Courier New'; 
 
 export type BookFlow = "paginated" | "scrolled-doc";
 

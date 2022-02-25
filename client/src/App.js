@@ -80,7 +80,7 @@ function App() {
           {user?.email === 'admin@upload.com' && <UploadBookModal isUploadModal={isUploadModal} setIsUploadModal={setIsUploadModal} />}
           <AuthorizationModal isLoginModal={isLoginModal} isSignUpModal={isSignUpModal} setIsLoginModal={setIsLoginModal} setIsSignUpModal={setIsSignUpModal} />
           <Footer setlanguage={setlanguage} />
-        </div>
+        </div> 
       </Router>
     </UserContext.Provider>
   )

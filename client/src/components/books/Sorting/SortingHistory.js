@@ -1,12 +1,12 @@
-import React from 'react'
+import React, { memo } from 'react'
 import s from '../Books.module.css'
 import { NavLink } from 'react-router-dom'
 import { BsArrowDownSquare } from 'react-icons/bs'
 import { getAllBooksText, getAncientText, getByAlphabetText, getByPopularityText, getByRatingText, getMeidevalText, getNationalMovementText, getPrehistoricEraText, getUrartuText } from '../translatedText/translatedText'
-import { toast } from 'react-toastify'
 import { CONTAINER, CATALOG_HISTORY_URL, SORT_PARAMETER, TOPIC_PARAMETER } from '../../../utility/Constants'
 
-const SortingHistory = ({ currentSort, currentTopic, language, isReversed, setIsReversed }) => {
+const SortingHistory = memo(({ currentSort, currentTopic, language, isReversed, setIsReversed }) => {
+
     return (
         <div className={s.sortingWrapper}>
             <div className={`${s.sortingScroll} ${CONTAINER}`}>
@@ -36,6 +36,6 @@ const SortingHistory = ({ currentSort, currentTopic, language, isReversed, setIs
             </div>
         </div>
     )
-}
+})
 
 export default SortingHistory

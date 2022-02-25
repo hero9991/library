@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { memo, useContext } from 'react'
 import s from './BookItem.module.css'
 import StarRating from '../starRating/StarRating'
 import { Link } from 'react-router-dom'
@@ -9,7 +9,7 @@ import { postAddOrRemoveBook } from './BookItemService'
 import { AUTHOR, BOOK_URL, DESCRIPTION, PROTOCOL_HOSTNAME_PORT, TITLE } from '../../utility/Constants'
 import { getReadNowText, getUnauthorizedWarningText } from './translatedText/translatedText'
 
-function BookItem({ second, bookItem, books, setBooks }) {
+const BookItem = memo(({ isSecond, bookItem, books, setBooks }) => {
     const { user, setUser, language } = useContext(UserContext)
     const isBookAdded = user?.books.find(bookId => bookId === bookItem._id)
 
@@ -22,7 +22,7 @@ function BookItem({ second, bookItem, books, setBooks }) {
     }
 
     return (
-        <div className={`${s.item} ${second ? s.secondItem : s.firstItem}`}>
+        <div className={`${s.item} ${isSecond ? s.secondItem : s.firstItem}`}>
             <Link to={BOOK_URL + bookItem._id}><img src={PROTOCOL_HOSTNAME_PORT + bookItem.linkImage} alt='' /></Link >
             <div className={s.textContent}>
                 <p className={s.title}><Link to={BOOK_URL + bookItem._id}>{bookItem[TITLE + language]}</Link ></p>
@@ -40,6 +40,6 @@ function BookItem({ second, bookItem, books, setBooks }) {
             </div>
         </div>
     )
-}
+}, (previousProps, currentProps) => previousProps.books.length === currentProps.books.length && previousProps.books.every((value, index) => value === currentProps.books[index]))
 
 export default BookItem

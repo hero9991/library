@@ -143,6 +143,9 @@ button {
   -moz-appearance: none;
   outline: none;
   border: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
 .react-pdf__Page {

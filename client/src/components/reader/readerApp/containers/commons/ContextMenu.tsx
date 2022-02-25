@@ -111,7 +111,7 @@ const ContextMenu = ({
     if (!viewerRef.current) return;
     
     const iframes = Array.from(document.querySelectorAll('iframe'));
-    const iframe = iframes.find(item => item.id.includes('epubjs-view'))
+    const iframe = iframes?.find(item => item.id.includes('epubjs-view'));
     const node = iframe && iframe.contentWindow && iframe.contentWindow.document;
     const scrolledTarget = viewerRef.current.querySelector('div');
 
