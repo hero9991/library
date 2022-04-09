@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import s from './AuthorizationModal.module.css'
 import { TiSocialGooglePlus } from 'react-icons/ti'
 import { GoogleLogin } from 'react-google-login'

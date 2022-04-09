@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import s from './BookPage.module.css'
 import Reader from '../reader/Reader'
 import { useLocation } from 'react-router'
@@ -26,11 +26,10 @@ function BookPage() {
                 setIsLoading(true)
                 const book = (await getBook(bookId)).data.book
                 setCurrentBook(book)
-                console.log(JSON.stringify(book))
                 setIsLoading(false)
                 await incrementBookView(bookId, book.viewCount)
-            } catch (e) {
-                toast.error('temp error')
+            } catch (error) {
+                toast.error(`Error ${error}`)
             }
         })()
     }, [bookId])

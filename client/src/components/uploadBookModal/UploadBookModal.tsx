@@ -65,33 +65,37 @@ const UploadBookModal = ({ isUploadModal, setIsUploadModal }: Props) => {
                 <div className={s.title}>
                     Upload Book
                 </div>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <UploadBookInput errors={errors} register={register} type={TEXT} item='titleRU' />
-                    <UploadBookInput errors={errors} register={register} type={TEXT} item='titleEN' />
-                    <UploadBookInput errors={errors} register={register} type={TEXT} item='titleAM' />
-                    <UploadBookInput errors={errors} register={register} type={TEXT} item='descriptionRU' />
-                    <UploadBookInput errors={errors} register={register} type={TEXT} item='descriptionEN' />
-                    <UploadBookInput errors={errors} register={register} type={TEXT} item='descriptionAM' />
-                    <UploadBookInput errors={errors} register={register} type={TEXT} item='authorRU' />
-                    <UploadBookInput errors={errors} register={register} type={TEXT} item='authorEN' />
-                    <UploadBookInput errors={errors} register={register} type={TEXT} item='authorAM' />
-                    <UploadBookInput errors={errors} register={register} type='date' item='date' />
-                    <UploadBookInput errors={errors} register={register} type={TEXT} item='topic' />
-                    <UploadBookInput errors={errors} register={register} type={TEXT} item='type' />
-                    PDF RU
-                    <UploadBookInput errors={errors} register={register} type={FILE} item='pdfRU' isOptional={true} />
-                    PDF EN
-                    <UploadBookInput errors={errors} register={register} type={FILE} item='pdfEN' isOptional={true} />
-                    PDF AM
-                    <UploadBookInput errors={errors} register={register} type={FILE} item='pdfAM' isOptional={true} />
-                    EPUB RU
-                    <UploadBookInput errors={errors} register={register} type={FILE} item='epubRU' isOptional={true} />
-                    EPUB EN
-                    <UploadBookInput errors={errors} register={register} type={FILE} item='epubEN' isOptional={true} />
-                    EPUB AM
-                    <UploadBookInput errors={errors} register={register} type={FILE} item='epubAM' isOptional={true}/>
-                    IMAGE
-                    <UploadBookInput errors={errors} register={register} type={FILE} item='image' />
+                <form className={s.mainForm} onSubmit={handleSubmit(onSubmit)}>
+                    <div>
+                        <UploadBookInput errors={errors} register={register} type={TEXT} item='titleRU' />
+                        <UploadBookInput errors={errors} register={register} type={TEXT} item='titleEN' />
+                        <UploadBookInput errors={errors} register={register} type={TEXT} item='titleAM' />
+                        <UploadBookInput errors={errors} register={register} type={TEXT} item='descriptionRU' />
+                        <UploadBookInput errors={errors} register={register} type={TEXT} item='descriptionEN' />
+                        <UploadBookInput errors={errors} register={register} type={TEXT} item='descriptionAM' />
+                        <UploadBookInput errors={errors} register={register} type={TEXT} item='authorRU' />
+                        <UploadBookInput errors={errors} register={register} type={TEXT} item='authorEN' />
+                        <UploadBookInput errors={errors} register={register} type={TEXT} item='authorAM' />
+                        <UploadBookInput errors={errors} register={register} type='date' item='date' />
+                        <UploadBookInput errors={errors} register={register} type={TEXT} item='topic' />
+                        <UploadBookInput errors={errors} register={register} type={TEXT} item='type' />
+                    </div>
+                    <div>
+                        PDF RU
+                        <UploadBookInput errors={errors} register={register} type={FILE} item='pdfRU' isOptional={true} />
+                        PDF EN
+                        <UploadBookInput errors={errors} register={register} type={FILE} item='pdfEN' isOptional={true} />
+                        PDF AM
+                        <UploadBookInput errors={errors} register={register} type={FILE} item='pdfAM' isOptional={true} />
+                        EPUB RU
+                        <UploadBookInput errors={errors} register={register} type={FILE} item='epubRU' isOptional={true} />
+                        EPUB EN
+                        <UploadBookInput errors={errors} register={register} type={FILE} item='epubEN' isOptional={true} />
+                        EPUB AM
+                        <UploadBookInput errors={errors} register={register} type={FILE} item='epubAM' isOptional={true}/>
+                        IMAGE
+                        <UploadBookInput errors={errors} register={register} type={FILE} item='image' />
+                    </div>
                     <input type={SUBMIT} value='Upload the book' />
                 </form>
             </div>

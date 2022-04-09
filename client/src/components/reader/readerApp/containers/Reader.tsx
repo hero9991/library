@@ -35,8 +35,8 @@ const Reader = ({ url, loadingView }: Props) => {
     const epubIframe = iframes?.find((item) => item.id.includes("epubjs-view"));
     if (epubIframe && epubIframe.contentWindow) {
       epubIframe.contentWindow.document
-        .querySelectorAll("span")
-        .forEach((item) => {
+        .querySelectorAll("span, div")
+        .forEach((item: any) => {
           item.style.fontSize = bookStyle.fontSize + "px";
           if (bookStyle.fontFamily !== "Origin")
             item.style.fontFamily = bookStyle.fontFamily;
@@ -107,8 +107,16 @@ const Reader = ({ url, loadingView }: Props) => {
     const node = viewerRef.current;
     if (!node || !node.prevPage || !node.nextPage) return;
 
-    type === "PREV" && node.prevPage();
-    type === "NEXT" && node.nextPage();
+    if (currentLocation.currentPage === 0) {
+      setBookStyle({...bookStyle, marginVertical: 6});
+      setTimeout(() => {
+        type === "PREV" && node.prevPage();
+        type === "NEXT" && node.nextPage();
+      });
+    } else {
+      type === "PREV" && node.prevPage();
+      type === "NEXT" && node.nextPage();
+    }
   };
 
   /**

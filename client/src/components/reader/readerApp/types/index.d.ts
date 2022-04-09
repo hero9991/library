@@ -1,4 +1,3 @@
-import { BookStyle, BookOption } from '../types/book';
 import * as React from "react";
 import Book, { BookOptions } from "epubjs/types/book";
 import { RenditionOptions } from "epubjs/types/rendition";

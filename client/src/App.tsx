@@ -1,11 +1,7 @@
 import Navbar from './components/navbar/Navbar'
 import HomeBody from './components/homeBody/HomeBody'
 import Footer from './components/footer/Footer'
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route
-} from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css'
 import 'react-toastify/dist/ReactToastify.css'
@@ -18,6 +14,7 @@ import { toast } from 'react-toastify'
 import UploadBookModal from './components/uploadBookModal/UploadBookModal'
 import { AM, EN, RU, TOKEN, CATALOG_LITERATURE_URL, CATALOG_HISTORY_URL } from './utility/Constants'
 import { language, user, UserContextInterface } from './utility/commonTypes'
+import CreateBook from './components/createBook/CreateBook'
 
 export const UserContext = createContext({} as UserContextInterface)
 
@@ -26,7 +23,6 @@ function App() {
   const [language, setlanguage] = useState<language>(EN)
   const [isLoginModal, setIsLoginModal] = useState<boolean>(false)
   const [isSignUpModal, setIsSignUpModal] = useState<boolean>(false)
-  const [isUploadModal, setIsUploadModal] = useState<boolean>(true)
 
   useEffect(() => {
     (async function () {
@@ -78,7 +74,7 @@ function App() {
               <BookPage />
             </Route>
           </Switch>
-          {user?.email === 'admin@upload.com' && <UploadBookModal isUploadModal={isUploadModal} setIsUploadModal={setIsUploadModal} />}
+          {user?.email === 'admin@upload.com' && <CreateBook />}
           <AuthorizationModal isLoginModal={isLoginModal} isSignUpModal={isSignUpModal} setIsLoginModal={setIsLoginModal} setIsSignUpModal={setIsSignUpModal} />
           <Footer setlanguage={setlanguage} />
         </div> 

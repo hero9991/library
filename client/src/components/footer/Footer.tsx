@@ -1,4 +1,4 @@
-import React, { memo, useContext, useState } from 'react'
+import { memo, useContext, useState } from 'react'
 import s from './Footer.module.css'
 import ReactCountryFlag from "react-country-flag"
 import { UserContext } from '../../App'

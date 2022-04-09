@@ -381,7 +381,7 @@ header {
         width: 60%;
     }
     .activeForm input {
-        /* background-color: rgb(255, 240, 240); */
+        background-color: rgb(255, 240, 240);
     }
 }
 

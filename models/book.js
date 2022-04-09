@@ -26,12 +26,12 @@ const bookSchema = mongoose.Schema({
     type: String,
     topic: String,
     linkImage: String,
-    linkPdfRU: String,
-    linkPdfEN: String,
-    linkPdfAM: String,
-    linkEpubRU: String,
-    linkEpubEN: String,
-    linkEpubAM: String,
+    pdfRU: String,
+    pdfEN: String,
+    pdfAM: String,
+    epubRU: String,
+    epubEN: String,
+    epubAM: String,
 })
 
 const Book = mongoose.model('Book', bookSchema)

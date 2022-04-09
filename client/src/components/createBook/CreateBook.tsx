@@ -1,0 +1,18 @@
+import { useState } from "react"
+import UploadBookModal from "../uploadBookModal/UploadBookModal"
+import s from './createBook.module.css'
+
+const CreateBook = () => {
+    const [isUploadModal, setIsUploadModal] = useState(false)
+    const toggleModal = () => setIsUploadModal(!isUploadModal)
+
+    return (
+        <div>
+            <button onClick={toggleModal} className={s.createBookButton}>Create Book</button>
+            <UploadBookModal isUploadModal={isUploadModal} setIsUploadModal={setIsUploadModal}/>
+        </div>
+    )
+}
+
+export default CreateBook
+ 

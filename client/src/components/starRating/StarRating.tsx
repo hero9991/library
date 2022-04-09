@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import { useContext, useState } from 'react'
 import s from './StarRating.module.css'
 import { FaStar, FaRegStar, FaStarHalfAlt } from 'react-icons/fa'
 import { UserContext } from '../../App';
@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { postBookRating } from './StarRatingService';
 import { book, UserContextInterface } from '../../utility/commonTypes';
 
-function StarRating({ book, books, setBooks }: Props) {
+const StarRating = ({ book, books, setBooks }: Props) => {
     const { user, setUser } = useContext<UserContextInterface>(UserContext)
     const [hover, setHover] = useState<number | null>(null);
 
@@ -20,7 +20,7 @@ function StarRating({ book, books, setBooks }: Props) {
             : bookItem))
     }
 
-    const setHoverStar = (ratingValue: number | null): any => {
+    const setHoverStar = (ratingValue: number | null) => {
         if (ratingValue) return setHover(ratingValue)
         if (hover) return setHover(null)
     }

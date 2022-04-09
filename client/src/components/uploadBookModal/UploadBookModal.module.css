@@ -64,3 +64,8 @@
 .wrapper {
     display: flex;
 }
+
+.mainForm {
+    display: flex;
+    justify-content: space-between;
+}

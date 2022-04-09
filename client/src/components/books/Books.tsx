@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import BookItem from '../bookItem/BookItem'
 import s from './Books.module.css'
 import { useLocation } from 'react-router-dom'
@@ -77,7 +77,7 @@ function Books() {
                         break
                 }
             } catch (error) {
-                toast.error('temp error')
+                toast.error(`Error ${error}`)
             } finally {                
                 if (user?.books) prevBooksCount.current = user?.books?.length
                 setIsLoading(false)

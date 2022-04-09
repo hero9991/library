@@ -102,6 +102,11 @@
     min-height: calc(100vh - 66px - 70px);
   }
 }
+@media (max-width: 1350px) {
+  .loader {
+    transform: translate(-50%, -30%) scale(.8)
+  }
+}
 @media (max-width: 1199px) {
   .content {
     padding: 40px 10px;

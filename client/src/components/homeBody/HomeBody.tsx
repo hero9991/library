@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import { memo } from 'react'
 import HomeBodyItem from '../homeBodyItem/HomeBodyItem'
 import MainBody from '../mainBody/MainBody'
 import s from './HomeBody.module.css'

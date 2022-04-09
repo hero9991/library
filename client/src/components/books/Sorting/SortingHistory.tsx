@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import { memo } from 'react'
 import s from '../Books.module.css'
 import { NavLink } from 'react-router-dom'
 import { BsArrowDownSquare } from 'react-icons/bs'

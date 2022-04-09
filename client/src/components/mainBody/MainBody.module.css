@@ -36,6 +36,9 @@
 .topText h1{
     font-size: 60px;
 }
+.topText h2:first-child {
+    padding-bottom: 10px;
+}
 
 .bottomContent  {
     height: 40vh;
@@ -94,14 +97,12 @@
     }
 }
 @media (max-width: 1350px) {
-    .bottomContent  {
-        
+    .topText h2{
+        font-size: 30px;
     }
 }
 @media (max-width: 1270px) {
-    .bottomContent  {
-        
-    }
+
 }
 @media (max-width: 1199px) {
     .topText div {
@@ -109,12 +110,6 @@
     }
     .topText h1{
         font-size: 55px;
-    }
-    .bottomContent  {
-    }
-}
-@media (max-width: 1070px) {
-    .bottomContent  {
     }
 }
 @media (max-width: 991px) {

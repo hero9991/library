@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import s from './MainBody.module.css'
 import mainImage from '../../assets/logo/main1.png'
 import { Link } from 'react-router-dom'

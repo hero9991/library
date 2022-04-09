@@ -15,7 +15,7 @@ export const incrementView = async (req, res) => {
 
 export const setRating = async (req, res) => {
     const { bookId, userId, rating } = req.body
-    console.log(rating)
+
     try {
         const bookItemData = await Book.findById(bookId)
         const ratingData = await StarRating.findOne({ bookId, userId })
@@ -33,7 +33,7 @@ export const setRating = async (req, res) => {
 
         const newRating = parseFloat((await getRatingPerBook(bookId)).toFixed(1))
         await Book.findByIdAndUpdate(bookId, { ratingCount: newRatingCount, rating: newRating })
-console.log(newRating)
+
         res.status(201).json({ ratingCount: newRatingCount, rating: newRating })
     } catch (error) {
         console.log(error)

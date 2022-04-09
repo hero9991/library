@@ -1,4 +1,4 @@
-import React, { memo, useContext } from 'react'
+import { memo, useContext } from 'react'
 import s from './BookItem.module.css'
 import StarRating from '../starRating/StarRating'
 import { Link } from 'react-router-dom'
