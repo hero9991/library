@@ -29,7 +29,7 @@ export const getConfirmPasswordText = (language: language) => language === EN
     ? 'Confirm Password'
     : language === RU
         ? 'Подтвердить пароль'
-        : 'Հաստատել գաղտնաբառը'
+        : 'Հաստատել'
 
 export const getFirstNameErrorText = (language: language) => language === EN
     ? 'First Name is required'

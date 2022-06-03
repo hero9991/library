@@ -1,4 +1,3 @@
-import React from 'react'
 import s from './HomeBodyItem.module.css'
 import Slider from '../slider/Slider'
 import { CONTAINER } from '../../utility/Constants'

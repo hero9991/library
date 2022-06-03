@@ -20,6 +20,11 @@ function BookPage() {
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const bookId: string = useLocation().pathname.split('/').pop()
 
+    const authorKey = (AUTHOR + language) as keyof book
+    const titleKey = (TITLE + language) as keyof book
+    const descriptionKey = (DESCRIPTION + language) as keyof book
+    const bookFormatKey = bookFormat as keyof book
+
     useEffect(() => {
         (async function () {
             try {
@@ -34,33 +39,38 @@ function BookPage() {
         })()
     }, [bookId])
 
+    const openReaderModal = (e: any) => {
+        setIsReaderModal(true)
+        setIsDownload(e.target.dataset.download)
+    }
+
     return (
         <section className={s.bookPage}>
             <div className={CONTAINER}>
-                <div className={s.content}>
+            {!isLoading 
+                ? <div className={s.content}>
                     {currentBook && <div className={s.mainContent}>
                         <div className={s.image}>
                             <img src={PROTOCOL_HOSTNAME_PORT + currentBook.linkImage} alt=''></img>
                         </div>
                         <div className={s.text}>
                             <div className={s.blackBand}>
-                                <p className={s.title}>{currentBook[(TITLE + language) as keyof book]}</p>
-                                <p className={s.author}>{currentBook[(AUTHOR + language) as keyof book]}</p>
+                                <p className={s.title}>{currentBook[titleKey]}</p>
+                                <p className={s.author}>{currentBook[authorKey]}</p>
                             </div>
-                            <p>{currentBook[(DESCRIPTION + language) as keyof book]}</p>
+                            <p>{currentBook[descriptionKey]}</p>
                         </div>
                     </div>}
 
                     <div className={s.buttons}>
-                        <button onClick={() => {setIsReaderModal(true); setIsDownload(true)}}>Download</button>
-                        <button onClick={() => {setIsReaderModal(true); setIsDownload(false)}}>Read Now</button>
+                        <button onClick={openReaderModal} data-download={true}>Download</button>
+                        <button onClick={openReaderModal}>Read Now</button>
                     </div>    
                     
                     <ReaderModal isReaderModal={isReaderModal} setIsReaderModal={setIsReaderModal} setBookFormat={setBookFormat} currentBook={currentBook} isDownload={isDownload}/>
-                    {currentBook && !isDownload && <Reader bookUrl={currentBook[bookFormat as keyof book]} setBookFormat={setBookFormat}/>}
-                    {isLoading && <div className={s.loader}><Triangle height={380} width={300} color='#1c1c1c' /></ div>}
+                    {currentBook && !isDownload && <Reader bookUrl={currentBook[bookFormatKey]} setBookFormat={setBookFormat}/>}
                 </div>
-
+                : <div className={s.loader}><Triangle height={380} width={300} color='#1c1c1c' /></ div>}
             </div>
         </section>
     )

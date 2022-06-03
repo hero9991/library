@@ -1,4 +1,3 @@
-import React from "react"
 import { AiOutlineCloseSquare } from 'react-icons/ai'
 import s from './Reader.module.css'
 import ReaderWrapper from "./readerApp/containers/Reader"

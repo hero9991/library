@@ -10,6 +10,7 @@ import { setClientSideError, setServerSideError } from '../../utility/ErrorHelpe
 import { COMMON, EMAIL, PASSWORD, SUBMIT, TEXT, TOKEN } from '../../utility/Constants';
 import { getConfirmPasswordErrorText, getConfirmPasswordText, getEmailErrorText, getEmailText, getFirstNameErrorText, getFirstNameText, getLastNameErrorText, getLastNameText, getPasswordErrorText, getPasswordText } from './translatedText/translatedText';
 import { UserContextInterface } from '../../utility/commonTypes';
+import AuthorizationInput from './authorizationInput/AuthorizationInput';
 
 const AuthorizationModal = ({ isLoginModal, isSignUpModal, setIsLoginModal, setIsSignUpModal }: Props) => {
     const { setUser, language } = useContext<UserContextInterface>(UserContext)
@@ -70,33 +71,43 @@ const AuthorizationModal = ({ isLoginModal, isSignUpModal, setIsLoginModal, setI
                     </div>
                     <form>
                         <div className={s.nameWrapper}>
-                            {isSignUpModal && <div>
-                                <input className={errors.firstName ? `${s.input} ${s.invalidInput}` : s.input} type={TEXT} placeholder={getFirstNameText(language)}
-                                    {...register('firstName', { required: true })} />
-                                {errors.firstName && <p>{getFirstNameErrorText(language)}</p>}
-                            </div>}
-                            {isSignUpModal && <div>
-                                <input className={errors.lastName ? `${s.input} ${s.invalidInput}` : s.input} type={TEXT} placeholder={getLastNameText(language)}
-                                    {...register('lastName', { required: true })} />
-                                {errors.lastName && <p>{getLastNameErrorText(language)}</p>}
-                            </div>}
+                            {isSignUpModal && <AuthorizationInput 
+                                inputArea='firstName' inputType={TEXT}
+                                errors={errors} register={register}
+                                placeholder={getFirstNameText(language)}
+                                errorText={getFirstNameErrorText(language)}
+                                validationObject={{ required: true }}/>
+                            }
+                            {isSignUpModal && <AuthorizationInput 
+                                inputArea='lastName' inputType={TEXT}
+                                errors={errors} register={register}
+                                placeholder={getLastNameText(language)}
+                                errorText={getLastNameErrorText(language)}
+                                validationObject={{ required: true }}/>
+                            }
                         </div>
-                        <input className={errors.email ? `${s.input} ${s.invalidInput}` : s.input} type={EMAIL} placeholder={getEmailText(language)}
-                            {...register(EMAIL, { onChange: () => clearErrors(COMMON), required: true, pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ })} />
-                        {errors.email && <p>{getEmailErrorText(language)}</p>}
+                        <AuthorizationInput 
+                            inputArea={EMAIL} inputType={EMAIL}
+                            errors={errors} register={register}
+                            placeholder={getEmailText(language)}
+                            errorText={getEmailErrorText(language)}
+                            validationObject={{ onChange: () => clearErrors(COMMON), required: true, pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ }}/>
                         <div className={s.passwordWrapper}>
-                            <div>
-                                <input className={errors.password ? `${s.input} ${s.invalidInput}` : s.input} type={PASSWORD} placeholder={getPasswordText(language)}
-                                    {...register(PASSWORD, { onChange: () => clearErrors(COMMON), required: true, minLength: 6 })} />
-                                {errors.password && <p>{getPasswordErrorText(language)}</p>}
-                            </div>
-                            {isSignUpModal && <div>
-                                <input className={errors.confirmPassword ? `${s.input} ${s.invalidInput}` : s.input} type={PASSWORD} placeholder={getConfirmPasswordText(language)}
-                                    {...register('confirmPassword', { onChange: () => clearErrors(COMMON), required: true })} />
-                                {errors.confirmPassword && <p>{getConfirmPasswordErrorText(language)}</p>}
-                            </div>}
-                        </div>
-                        {errors.common && <p>{errors.common.message}</p>}
+                            <AuthorizationInput 
+                                inputArea={PASSWORD} inputType={PASSWORD}
+                                errors={errors} register={register}
+                                placeholder={getPasswordText(language)} 
+                                errorText={getPasswordErrorText(language)} 
+                                validationObject={{ onChange: () => clearErrors(COMMON), required: true, minLength: 6 }}/>
+                            {isSignUpModal && <AuthorizationInput 
+                                inputArea='confirmPassword' inputType={PASSWORD} 
+                                errors={errors} register={register} 
+                                placeholder={getConfirmPasswordText(language)} 
+                                errorText={getConfirmPasswordErrorText(language)} 
+                                validationObject={{ onChange: () => clearErrors(COMMON), required: true }}/>
+                            }
+                        </div> 
+                        {errors.common && <p className={s.errorText}>{errors.common.message}</p>}
                     </form>
                 </div>
 
@@ -119,7 +130,7 @@ const AuthorizationModal = ({ isLoginModal, isSignUpModal, setIsLoginModal, setI
                     onFailure={googleFailure}
                     cookiePolicy='single_host_origin'
                 />
-                {errors.google && <p>{errors.google.message}</p>}
+                {errors.google && <p className={s.errorText}>{errors.google.message}</p>}
             </div>
         </div>
     )

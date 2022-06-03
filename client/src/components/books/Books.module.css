@@ -143,9 +143,12 @@
     right: 9vw;
   }
 }
-@media (max-width: 1400px) {
+@media (max-width: 1450px) {
   .sortingWrapper:after {
     right: 10vw;
+  }
+  .loader {
+    transform: translate(-50%, -30%) scale(.7);
   }
 }
 @media (max-width: 1400px) {

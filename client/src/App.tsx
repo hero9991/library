@@ -11,7 +11,6 @@ import AuthorizationModal from './components/authorizationModal/AuthorizationMod
 import { createContext, useEffect, useState, useMemo } from 'react'
 import { checkAuth, getCurrentCountryAddress, getUserRatings } from './utility/AxiosService'
 import { toast } from 'react-toastify'
-import UploadBookModal from './components/uploadBookModal/UploadBookModal'
 import { AM, EN, RU, TOKEN, CATALOG_LITERATURE_URL, CATALOG_HISTORY_URL } from './utility/Constants'
 import { language, user, UserContextInterface } from './utility/commonTypes'
 import CreateBook from './components/createBook/CreateBook'
@@ -20,7 +19,7 @@ export const UserContext = createContext({} as UserContextInterface)
 
 function App() {
   const [user, setUser] = useState<user | null>(null)
-  const [language, setlanguage] = useState<language>(EN)
+  const [language, setLanguage] = useState<language>(EN)
   const [isLoginModal, setIsLoginModal] = useState<boolean>(false)
   const [isSignUpModal, setIsSignUpModal] = useState<boolean>(false)
 
@@ -28,7 +27,7 @@ function App() {
     (async function () {
       try {
         const currentlanguage = (await getCurrentCountryAddress()).data.country_code
-        if (currentlanguage === RU || currentlanguage === AM) setlanguage(currentlanguage)
+        if (currentlanguage === RU || currentlanguage === AM) setLanguage(currentlanguage)
 
         if (!localStorage.getItem(TOKEN)) return
 
@@ -39,7 +38,7 @@ function App() {
         const userIdToRating = await getUserRatings(response.data.user._id)
         setUser({ ...response.data.user, bookRatings: { ...userIdToRating.data.bookIdToRating } })
 
-        if (response.data.user.language) setlanguage(response.data.user.language)
+        if (response.data.user.language) setLanguage(response.data.user.language)
       } catch (error: any) {
         toast.error(error.response?.data?.message)
       }
@@ -76,7 +75,7 @@ function App() {
           </Switch>
           {user?.email === 'admin@upload.com' && <CreateBook />}
           <AuthorizationModal isLoginModal={isLoginModal} isSignUpModal={isSignUpModal} setIsLoginModal={setIsLoginModal} setIsSignUpModal={setIsSignUpModal} />
-          <Footer setlanguage={setlanguage} />
+          <Footer setLanguage={setLanguage} />
         </div> 
       </Router>
     </UserContext.Provider>

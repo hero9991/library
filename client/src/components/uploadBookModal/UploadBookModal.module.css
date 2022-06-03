@@ -69,3 +69,10 @@
     display: flex;
     justify-content: space-between;
 }
+
+.uploadButton {
+    height: 41px;
+    border-radius: 5px;
+    border: 1px #000 solid;
+    cursor: pointer;
+}

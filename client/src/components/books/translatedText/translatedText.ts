@@ -7,86 +7,71 @@ export const getEmptyMyBooksText = (language: language) => language === EN
         ? 'Добавьте книги, чтобы сохранить результат'
         : 'Ավելացրեք գրքեր՝ արդյունքը պահպանելու համար'
 
-export const getUnauthorizedMyBooksText= (language: language) => language === EN
+export const getEmptyBooksSearchText = (language: language) => language === EN
+    ? 'No results found for your search'
+    : language === RU
+        ? 'По запросу ничего не найдено'
+        : 'Ձեր որոնման արդյունքները չեն գտնվել'
+
+export const getUnauthorizedMyBooksText = (language: language) => language === EN
     ? 'Firstly you need to login to save some books'
     : language === RU
         ? 'Сперва вам необходимо войти в систему, чтобы сохранить книги'
         : 'Ձեր գրքերը պահելու համար նախ պետք է մուտք գործեք'
 
-export const getViewMoreText= (language: language) => language === EN
+export const getViewMoreText = (language: language) => language === EN
     ? 'View more'
     : language === RU
         ? 'Показать еще'
         : 'Դիտել ավելին'
 
-export const getByPopularityText= (language: language) => language === EN
-    ? 'By popularity'
-    : language === RU
-        ? 'По популярности'
-        : 'Հանրաճանաչություն'
-
-export const getByRatingText= (language: language) => language === EN
-    ? 'By rating'
-    : language === RU
-        ? 'По рейтингу'
-        : 'Ըստ վարկանիշի'
-
-export const getByAlphabetText= (language: language) => language === EN
-    ? 'By alphabet'
-    : language === RU
-        ? 'По алфавиту'
-        : 'Այբբենական'
-
-export const getAllBooksText= (language: language) => language === EN
-    ? 'All books'
-    : language === RU
-        ? 'Все книги'
-        : 'Բոլոր գրքերը'
-
-export const getPrehistoricEraText= (language: language) => language === EN
-    ? 'Prehistoric era'
-    : language === RU
-        ? 'Доисторический период'
-        : 'Նախապատմական'
-
-export const getUrartuText= (language: language) => language === EN
-    ? 'Urartu'
-    : language === RU
-        ? 'Урарту'
-        : 'Ուրարտու'
-
-export const getAncientText= (language: language) => language === EN
-    ? 'Ancient Armenia'
-    : language === RU
-        ? 'Древняя Армения'
-        : 'Հին Հայաստան'
-
-export const getMeidevalText= (language: language) => language === EN
-    ? 'Meideval Armenia'
-    : language === RU
-        ? 'Древняя Армения'
-        : 'Միջնադարյան Հայաստան'
-
-export const getNationalMovementText= (language: language) => language === EN
-    ? 'National movement'
-    : language === RU
-        ? 'Национальное движение'
-        : 'Ազգային շարժում'
-
-export const getSovietText= (language: language) => language === EN
-    ? 'Soviet Union Period'
-    : language === RU
-        ? 'Советский период'
-        : 'Խորհրդային ժամանակաշրջան'
-
-export const getModernText= (language: language) => language === EN
-    ? 'Modern'
-    : language === RU
-        ? 'Современное'
-        : 'Ժամանակակից'
-
-export const get19CenturyText= (language: language) => language === EN
-    ? '19 century'
-    : language === RU
-        ? '19 век'
-        : '19 դար'
+export const topicTranslations = {
+    AM: {
+        byPopularity: 'Հանրաճանաչություն',
+        byRating: 'Ըստ վարկանիշի',
+        byAlphabet: 'Այբբենական',
+        all: 'Բոլոր գրքերը',
+        historicalNovels: 'Պատմական վեպեր',
+        sovietHistoriography: 'Խորհրդային պատմագրություն',
+        prerevolutionaryHistoriography: 'Նախահեղափոխական պատմագրություն',
+        partyLiterature: 'Կուսակցական գրականություն',
+        nationalPhilosophy: 'Ազգային փիլիսոփայություն',
+        artisticWorks: 'Արվեստի գործեր',
+        epics: 'էպոսներ',
+        poems: 'Պոեմ',
+        memoirs: 'Հուշեր',
+        rhymes: 'Բանաստեղծություններ'
+    },
+    RU: {
+        byPopularity: 'По популярности',
+        byRating: 'По рейтингу',
+        byAlphabet: 'По алфавиту',
+        all: 'Все книги',
+        historicalNovels: 'Исторические романы',
+        sovietHistoriography: 'Советская историография',
+        prerevolutionaryHistoriography: 'Дореволюционная историография',
+        partyLiterature: 'Партийная литература',
+        nationalPhilosophy: 'Национальная философия',
+        artisticWorks: 'Художественные произведения',
+        epics: 'Эпосы',
+        poems: 'Поэмы',
+        memoirs: 'Мемуары',
+        rhymes: 'Стихотворения'
+    },
+    EN: {
+        byPopularity: 'By popularity',
+        byRating: 'By rating',
+        byAlphabet: 'By alphabet',
+        all: 'All books',
+        historicalNovels: 'Historical novels',
+        sovietHistoriography: 'Soviet historiography',
+        prerevolutionaryHistoriography: 'Pre-revolutionary historiography',
+        partyLiterature: 'Party literature',
+        nationalPhilosophy: 'National philosophy',
+        artisticWorks: 'Artistic works',
+        epics: 'Epics',
+        poems: 'Poems',
+        memoirs: 'Memoirs',
+        rhymes: 'Rhymes'
+    }
+}

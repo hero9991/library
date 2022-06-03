@@ -21,8 +21,14 @@ export const getBooks = async (req, res) => {
         sortDirection = isReversed === 'true' ?  -sortDirection : sortDirection
 
         const bookData = topic === 'all'
-            ? await Book.find({ type }).sort({ [sortBy]: sortDirection, _id: -1 }).limit(LIMIT).skip(countToSkip)
-            : await Book.find({ type, topic }).sort({ [sortBy]: sortDirection, _id: -1 }).limit(LIMIT).skip(countToSkip)
+            ? await Book.find({ type })
+                        .sort({ [sortBy]: sortDirection, _id: -1 })
+                        .limit(LIMIT)
+                        .skip(countToSkip)
+            : await Book.find({ type, topic })
+                        .sort({ [sortBy]: sortDirection, _id: -1 })
+                        .limit(LIMIT)
+                        .skip(countToSkip)
 
         res.status(200).json({ books: bookData, currentChunk: Number(chunkNumber), numberOfChunk: Math.ceil(total / LIMIT) })
     } catch (error) {
@@ -35,7 +41,9 @@ export const getSliderBooks = async (req, res) => {
     const { type } = req.query
 
     try {
-        const bookData = await Book.find({ type }).sort({ viewCount: -1 }).limit(20)
+        const bookData = await Book.find({ type })
+                                   .sort({ viewCount: -1 })
+                                   .limit(20)
 
         res.status(200).json({ books: bookData })
     } catch (error) {
@@ -44,15 +52,28 @@ export const getSliderBooks = async (req, res) => {
 }
 
 export const getBooksBySearch = async (req, res) => {
-    const { searchQuery } = req.query
+    const { searchQuery, chunkNumber } = req.query
 
     try {
         const searchText = new RegExp(searchQuery, 'i')
-
-        const bookData = await Book.find({ $or: [{ titleRU: searchText }, { titleEN: searchText }, { titleAM: searchText }, { authorRU: searchText }, { authorEN: searchText }, { authorAM: searchText }] })
-
-        res.status(200).json({ books: bookData })
+        const LIMIT = 3
+        const countToSkip = (Number(chunkNumber) - 1) * LIMIT
+        const searchObject = {
+            $or: [
+                { titleRU: searchText }, 
+                { titleEN: searchText },   
+                { titleAM: searchText }, 
+                { authorRU: searchText }, 
+                { authorEN: searchText }, 
+                { authorAM: searchText }] 
+        }
+        const total = await Book.countDocuments(searchObject)
+        const bookData = await Book.find(searchObject).sort({ viewCount: -1, _id: -1 })
+                                                  .limit(LIMIT)
+                                                  .skip(countToSkip)
+        res.status(200).json({ books: bookData, currentChunk: Number(chunkNumber), numberOfChunk: Math.ceil(total / LIMIT)  })
     } catch (error) {
+        console.log(error)
         res.status(500).json({ message: error })
     }
 }
@@ -97,8 +118,9 @@ export const addBook = async (req, res) => {
             await User.updateOne({ _id: userId }, { $push: { books: bookItemData._id } })
         }
 
-        const userBooks = (await User.findById(userId)).books
-        res.status(201).json(userBooks)
+        const userBookIds = (await User.findById(userId)).books
+        const userBooks = await Book.find({ _id: { $in: userBookIds } })
+        res.status(201).json({ userBookIds, userBooks })
     } catch (error) {
         console.log(error)
         res.status(500).json({ message: error })

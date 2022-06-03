@@ -44,7 +44,7 @@ export const checkAuth = () => axios.get(`${API_URL}/refresh`, { withCredentials
 // Books
 export const getBooks = (type: string, chunkNumber: number, sort: string, topic: string, isReversed: boolean, language: string) => $api.get('/books', { params: { type, chunkNumber, sort, topic, isReversed, language } })
 export const getSliderBooks = (type: string) => $api.get('/sliderBooks', { params: { type } })
-export const getBooksBySearch = (searchQuery: string) => $api.get('/books/search', { params: { searchQuery } })
+export const getBooksBySearch = (searchQuery: string, chunkNumber: number) => $api.get('/books/search', { params: { searchQuery, chunkNumber } })
 export const getMyBooks = (id: string) => $api.get('/myBooks', { params: { id } })
 export const getBook = (id: string) => $api.get('/book', { params: { id } })
 export const getUserRatings = (userId: string) => $api.get('/getUserRatings', { params: { userId } })

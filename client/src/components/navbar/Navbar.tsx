@@ -28,10 +28,14 @@ const Navbar = ({ setIsLoginModal, setIsSignUpModal }: Props) => {
     const openSignUpModal = () => setIsSignUpModal(true)
 
     const submitLogout = async () => {
-        await postSignOut
+        try {
+            await postSignOut
 
-        localStorage.removeItem('token')
-        setUser(null)
+            localStorage.removeItem('token')
+            setUser(null)
+        } catch (error) {
+            toast.error(`Error ${error}`)
+        }
     }
 
     const searchBooks = (e: any) => {
@@ -78,17 +82,14 @@ const Navbar = ({ setIsLoginModal, setIsSignUpModal }: Props) => {
 
                         <div className={s.links}>
                             <a href="https://vk.com/patmahayrr" className={`${s.fa} ${s.faVk}`}><FaVk /></a>
-
                             <a href="https://t.me/patmahayrr" className={`${s.fa} ${s.faTelegram}`}><FaTelegramPlane /></a>
                             <a href="https://www.youtube.com/channel/UC6vrmiSj7IzUTqk-qdoabfg" className={`${s.fa} ${s.faYoutube}`}><FaYoutube /></a>
                             <a href="https://www.facebook.com/%D5%8A%D5%A1%D5%BF%D5%B4%D5%A1%D5%B0%D5%A1%D5%B5%D6%80%D0%9F%D0%B0%D1%82%D0%BC%D0%B0%D1%85%D0%B0%D0%B9%D1%80Patmahayr-108867618374947" className={`${s.fa} ${s.faFacebook}`}><FaFacebookF /></a>
-
                         </div>
 
                         {user
                             ? (<div className={`${s.authorization} ${s.logout}`}>
                                 <button onClick={submitLogout} className={s.singUp}>{getLogOutTabText(language)}</button>
-
                             </div>)
                             : (<div className={s.authorization}>
                                 <button onClick={openSignUpModal} className={s.singUp}>{getSignUpTabText(language)}</button>

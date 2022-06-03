@@ -8,7 +8,7 @@ import { AM, CONTAINER, EN, GB, RU } from '../../utility/Constants'
 import { UserContextInterface } from '../../utility/commonTypes'
 
 
-const Footer = memo(({ setlanguage }: Props) => {
+const Footer = memo(({ setLanguage }: Props) => {
     const { language } = useContext<UserContextInterface>(UserContext)
     const [isRulesModal, setIsRulesModal] = useState<boolean>(false)
 
@@ -27,9 +27,9 @@ const Footer = memo(({ setlanguage }: Props) => {
                 <div>{getSupportText(language)} vanyakubarin@mail.ru</div>
                 <div className={s.countryIcons}>
                     <span>{getChooseLanguageText(language)}</span>
-                    <ReactCountryFlag onClick={() => setlanguage(AM)} countryCode={AM} style={{ fontSize: '2.5em' }} />
-                    <ReactCountryFlag onClick={() => setlanguage(RU)} countryCode={RU} style={{ fontSize: '2.5em' }} />
-                    <ReactCountryFlag onClick={() => setlanguage(EN)} countryCode={GB} style={{ fontSize: '2.5em' }} />
+                    <ReactCountryFlag onClick={() => setLanguage(AM)} countryCode={AM} style={{ fontSize: '2.5em' }} />
+                    <ReactCountryFlag onClick={() => setLanguage(RU)} countryCode={RU} style={{ fontSize: '2.5em' }} />
+                    <ReactCountryFlag onClick={() => setLanguage(EN)} countryCode={GB} style={{ fontSize: '2.5em' }} />
                 </div>
             </div>
         </section>
@@ -37,7 +37,7 @@ const Footer = memo(({ setlanguage }: Props) => {
 })
 
 interface Props {
-	setlanguage: any
+	setLanguage: any
 }
 
 export default Footer

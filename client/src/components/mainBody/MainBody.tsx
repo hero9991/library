@@ -4,7 +4,7 @@ import mainImage from '../../assets/logo/main1.png'
 import { Link } from 'react-router-dom'
 import { UserContext } from '../../App'
 import { getButtonUpperText, getReadButtonText, getTitleFirstText, getTitleSecondText } from './translatedText/translatedText'
-import { CONTAINER } from '../../utility/Constants'
+import { CATALOG_LITERATURE_URL, CONTAINER } from '../../utility/Constants'
 import { UserContextInterface } from '../../utility/commonTypes'
 
 function MainBody() {
@@ -28,7 +28,7 @@ function MainBody() {
                     <img src={mainImage} alt='' />
                     <div className={s.bottomText}>
                         <p>{getButtonUpperText(language)}</p>
-                        <Link to='/catalog/literature?sort=byPopularity&topic=all'>{getReadButtonText(language)}</Link>
+                        <Link to={`${CATALOG_LITERATURE_URL}?sort=byPopularity&topic=all`}>{getReadButtonText(language)}</Link>
                     </div>
                 </div>
             </div>

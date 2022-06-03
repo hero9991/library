@@ -1,8 +1,8 @@
-import React from 'react'
 import s from './UploadBookModal.module.css'
 import { useForm } from 'react-hook-form';
 import { uploadBook } from '../../utility/AxiosService';
 import { FILE, SUBMIT, TEXT } from '../../utility/Constants';
+import { toast } from 'react-toastify';
 
 const UploadBookInput = ({ errors, register, type, item, isOptional }: ChildProps) => {
     return (
@@ -24,36 +24,26 @@ interface ChildProps {
 
 const UploadBookModal = ({ isUploadModal, setIsUploadModal }: Props) => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm()
+    const bookKeys = ['titleRU',       'titleEN',       'titleAM', 
+                      'descriptionRU', 'descriptionEN', 'descriptionAM', 
+                      'authorRU',      'authorEN',      'authorAM',
+                      'date',          'topic',         'type',
+                      'pdfRU',         'pdfEN',         'pdfAM',
+                      'epubRU',        'epubEN',        'epubAM',
+                      'image'
+    ]
 
     const onSubmit = async (e: any) => {
         try {
-            console.log(e.titleRU)
             const formData = new FormData()
-            formData.append('titleRU', e.titleRU)
-            formData.append('titleEN', e.titleEN)
-            formData.append('titleAM', e.titleAM)
-            formData.append('descriptionRU', e.descriptionRU)
-            formData.append('descriptionEN', e.descriptionEN)
-            formData.append('descriptionAM', e.descriptionAM)
-            formData.append('authorRU', e.authorRU)
-            formData.append('authorEN', e.authorEN)
-            formData.append('authorAM', e.authorAM)
-            formData.append('date', e.date)
-            formData.append('topic', e.topic)
-            formData.append('type', e.type)
-    
-            formData.append('pdfRU', e.pdfRU[0])
-            formData.append('pdfEN', e.pdfEN[0])
-            formData.append('pdfAM', e.pdfAM[0])
-            formData.append('epubRU', e.epubRU[0])
-            formData.append('epubEN', e.epubEN[0])
-            formData.append('epubAM', e.epubAM[0])
-            formData.append('image', e.image[0])
+            const getValue = (key: string, index: number) => index <= 11 ? e[key] : e[key][0]
+
+            bookKeys.forEach((key, index) => formData.append(key, getValue(key, index)))
+
             await uploadBook(formData)
             reset()
         } catch (error) {
-            console.log(error)
-            console.log(33)
+            toast.error(`Error ${error}`)
         }
     }
 
@@ -67,36 +57,15 @@ const UploadBookModal = ({ isUploadModal, setIsUploadModal }: Props) => {
                 </div>
                 <form className={s.mainForm} onSubmit={handleSubmit(onSubmit)}>
                     <div>
-                        <UploadBookInput errors={errors} register={register} type={TEXT} item='titleRU' />
-                        <UploadBookInput errors={errors} register={register} type={TEXT} item='titleEN' />
-                        <UploadBookInput errors={errors} register={register} type={TEXT} item='titleAM' />
-                        <UploadBookInput errors={errors} register={register} type={TEXT} item='descriptionRU' />
-                        <UploadBookInput errors={errors} register={register} type={TEXT} item='descriptionEN' />
-                        <UploadBookInput errors={errors} register={register} type={TEXT} item='descriptionAM' />
-                        <UploadBookInput errors={errors} register={register} type={TEXT} item='authorRU' />
-                        <UploadBookInput errors={errors} register={register} type={TEXT} item='authorEN' />
-                        <UploadBookInput errors={errors} register={register} type={TEXT} item='authorAM' />
-                        <UploadBookInput errors={errors} register={register} type='date' item='date' />
-                        <UploadBookInput errors={errors} register={register} type={TEXT} item='topic' />
-                        <UploadBookInput errors={errors} register={register} type={TEXT} item='type' />
+                        {bookKeys.slice(0, 12).map(key => <UploadBookInput key={key} errors={errors} register={register} type={key === 'date' ? 'date' : TEXT} item={key} />)}
                     </div>
                     <div>
-                        PDF RU
-                        <UploadBookInput errors={errors} register={register} type={FILE} item='pdfRU' isOptional={true} />
-                        PDF EN
-                        <UploadBookInput errors={errors} register={register} type={FILE} item='pdfEN' isOptional={true} />
-                        PDF AM
-                        <UploadBookInput errors={errors} register={register} type={FILE} item='pdfAM' isOptional={true} />
-                        EPUB RU
-                        <UploadBookInput errors={errors} register={register} type={FILE} item='epubRU' isOptional={true} />
-                        EPUB EN
-                        <UploadBookInput errors={errors} register={register} type={FILE} item='epubEN' isOptional={true} />
-                        EPUB AM
-                        <UploadBookInput errors={errors} register={register} type={FILE} item='epubAM' isOptional={true}/>
-                        IMAGE
-                        <UploadBookInput errors={errors} register={register} type={FILE} item='image' />
+                        {bookKeys.slice(12).map((key, index) => <div key={key} >
+                            {key}
+                            <UploadBookInput errors={errors} register={register} type={FILE} item={key} isOptional={key !== 'image'} />
+                        </div>)}
                     </div>
-                    <input type={SUBMIT} value='Upload the book' />
+                    <input className={s.uploadButton} type={SUBMIT} value='Upload the book' />
                 </form>
             </div>
         </div>

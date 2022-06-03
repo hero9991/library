@@ -6,9 +6,8 @@ import { getBooks, getBooksBySearch, getMyBooks } from '../../utility/AxiosServi
 import { UserContext } from '../../App'
 import { toast } from 'react-toastify'
 import { Triangle } from 'react-loader-spinner'
-import SortingLiterature from './Sorting/SortingLiterature'
-import SortingHistory from './Sorting/SortingHistory'
-import { getEmptyMyBooksText, getUnauthorizedMyBooksText, getViewMoreText } from './translatedText/translatedText'
+import Sorting from './Sorting/Sorting'
+import { getEmptyMyBooksText, getEmptyBooksSearchText, getUnauthorizedMyBooksText, getViewMoreText } from './translatedText/translatedText'
 import { BOOKS, CONTAINER, HISTORY, LITERATURE, SEARCH } from '../../utility/Constants'
 import { book } from '../../utility/commonTypes'
 
@@ -16,7 +15,6 @@ function Books() {
     const { user, language } = useContext(UserContext)
 
     const [books, setBooks] = useState<book[]>([])
-    console.log(books)
     const [currentChunk, setCurrentChunk] = useState<number>(1)
     const [numberOfChunk, setNumberOfChunk] = useState<number>(1)
     const [isReversed, setIsReversed] = useState<boolean>(false)
@@ -26,10 +24,10 @@ function Books() {
 
     const location = useLocation()
 
-    const currentRoute: string | null = location.pathname.split('/').pop()
+    const currentRoute: string = location.pathname.split('/').pop()
     const currentSort: string | null = new URLSearchParams(location.search).get('sort')
     const currentTopic: string | null = new URLSearchParams(location.search).get('topic')
-    const value: string | null = new URLSearchParams(location.search).get('value')
+    const searchValue: string | null = new URLSearchParams(location.search).get('value')
 
     useEffect(() => {
         const stickBackground = () => {
@@ -48,25 +46,14 @@ function Books() {
     useEffect(() => {
         (async function () {
             try {
-                if (user?.books && user?.books.length !== prevBooksCount.current && currentRoute !== BOOKS) return
+                if (user?.books && user?.books.length !== prevBooksCount.current) return
                 switch (currentRoute) {
-                    case LITERATURE:
-                        setIsLoading(true)
-                        await requestBooks(1, true)
-                        break
-                    case HISTORY:
+                    case LITERATURE :case HISTORY :case SEARCH:
                         setIsLoading(true) 
                         await requestBooks(1, true)
                         break
-                    case SEARCH:
-                        if (!value) return
-                        setIsLoading(true)
-                        await getBooksBySearch(value).then(data => {
-                            setBooks(data.data.books)
-                        })
-                        break
                     case BOOKS:
-                        if (!user?._id) return setBooks([])
+                        if (!user?._id) return
                         setIsLoading(true)
                         await getMyBooks(user._id)
                             .then(data => {
@@ -84,7 +71,7 @@ function Books() {
             }
         })()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [user?._id, user?.books, currentRoute, currentTopic, currentSort, value, isReversed])
+    }, [user?._id, user?.books, currentRoute, currentTopic, currentSort, searchValue, isReversed])
 
     const getBookChunk = async () => {
         const error = await requestBooks(currentChunk + 1, false)
@@ -95,15 +82,17 @@ function Books() {
     }
 
     const requestBooks = async (chunk: number, isFirstChunk: boolean) => {
-        if (!currentRoute || !currentTopic || !currentSort) return
+        if ((currentRoute === LITERATURE || currentRoute === HISTORY) 
+            && (!currentRoute || !currentTopic || !currentSort)) return
+        if (currentRoute === SEARCH 
+            && !searchValue) return
         let id
         try {
             id = toast.loading("Please wait...")
-
-            const response = await getBooks(currentRoute, chunk, currentSort, currentTopic, isReversed, language)
-
+            const response = currentRoute === SEARCH ? await getBooksBySearch(searchValue as string, chunk)
+                                                     : await getBooks(currentRoute as string, chunk, currentSort as string, 
+                                                                      currentTopic as string, isReversed, language)
             isFirstChunk ? setBooks([...response.data.books]) : setBooks([...books, ...response.data.books])
-            console.log(response.data.currentChunk)
             setCurrentChunk(response.data.currentChunk)
             setNumberOfChunk(response.data.numberOfChunk)
             return false
@@ -116,18 +105,18 @@ function Books() {
 
     return (
         <section className={s.books}>
-            {currentRoute === LITERATURE && <SortingLiterature currentSort={currentSort} currentTopic={currentTopic} language={language} isReversed={isReversed} setIsReversed={setIsReversed} />}
-            {currentRoute === HISTORY && <SortingHistory currentSort={currentSort} currentTopic={currentTopic} language={language} isReversed={isReversed} setIsReversed={setIsReversed} />}
-            <div className={CONTAINER}>
-                {user && currentRoute === BOOKS && books.length === 0 && <p className={s.emptyBooks}>{getEmptyMyBooksText(language)}</p>}
-                {!user && currentRoute === BOOKS && <p className={s.emptyBooks}>{getUnauthorizedMyBooksText(language)}</p>}
-                {books.map((item, index) => index % 2
-                    ? <BookItem isSecond={true} bookItem={item} key={index} books={books} setBooks={setBooks} />
-                    : <BookItem isSecond={false} bookItem={item} key={index} books={books} setBooks={setBooks} />)}
-                {currentChunk < numberOfChunk && currentRoute !== BOOKS && currentRoute !== SEARCH && <button onClick={getBookChunk} className={s.viewMoreButton}>{getViewMoreText(language)}</button>}
+            {(currentRoute === HISTORY || currentRoute === LITERATURE) && <Sorting currentSort={currentSort} currentTopic={currentTopic} language={language} isReversed={isReversed} setIsReversed={setIsReversed} isLiterature={currentRoute === LITERATURE}/>}
+            {!isLoading 
+                ? <div className={CONTAINER}>
+                    {user && currentRoute === BOOKS && books.length === 0 && <p className={s.emptyBooks}>{getEmptyMyBooksText(language)}</p>}
+                    {!user && currentRoute === BOOKS && <p className={s.emptyBooks}>{getUnauthorizedMyBooksText(language)}</p>}
+                    {currentRoute === SEARCH && books.length === 0 && <p className={s.emptyBooks}>{getEmptyBooksSearchText(language)}</p>}
 
-                {isLoading && <div className={s.loader}><Triangle height={380} width={300} color='#1c1c1c' /></ div>}
-            </div>
+                    {books.map((item, index) => <BookItem isSecond={!!(index % 2)} bookItem={item} key={index} books={books} setBooks={setBooks} currentRoute={currentRoute} />)}
+
+                    {currentChunk < numberOfChunk && currentRoute !== BOOKS && <button onClick={getBookChunk} className={s.viewMoreButton}>{getViewMoreText(language)}</button>}
+                </div>
+                : <div className={s.loader}><Triangle height={380} width={300} color='#1c1c1c'/></ div>}
         </section>
     )
 }

@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
-import { Swiper, SwiperSlide } from "swiper/react"
+import { Swiper, SwiperSlide } from 'swiper/react'
 import SwiperCore, { Navigation, Pagination, Autoplay } from 'swiper'
 import 'swiper/swiper-bundle.min.css'
 import s from './Slider.module.css'
@@ -30,6 +30,9 @@ function Slider({ isBlackFont }: Props) {
 
     const { language } = useContext<UserContextInterface>(UserContext)
     const [books, setBooks] = useState<book[]>(initialBooks)
+
+    const authorKey = (AUTHOR + language) as keyof book
+    const titleKey = (TITLE + language) as keyof book
 
     useEffect(() => {
         (async function() {
@@ -108,14 +111,14 @@ function Slider({ isBlackFont }: Props) {
         <div className={`${s.slider} ${isBlackFont ? s.blackFont : s.whiteFont + ' whiteFont'}`}>
             <h2 className={s.topic}>{isBlackFont ? getHistoryTitleText(language) : getLiteratureTitleText(language)}</h2>
             <div className={s.books}>
-                <Swiper id='main' wrapperTag="ul" className={s.swiper} {...params}>
-                    {books.map(book => <SwiperSlide key={book._id} tag="li">
+                <Swiper id='main' wrapperTag='ul' className={s.swiper} {...params}>
+                    {books.map(book => <SwiperSlide key={book._id} tag='li'>
                         <NavLink exact to={`/book/${book._id}`}>
-                            {book.linkImage ? <img className={s.bookItem} src={PROTOCOL_HOSTNAME_PORT + book.linkImage} alt="no img" /> : <div className={s.bookItem}></div>}
+                            {book.linkImage ? <img className={s.bookItem} src={PROTOCOL_HOSTNAME_PORT + book.linkImage} alt='no img' /> : <div className={s.bookItem}></div>}
                         </NavLink>
                         <StarRating book={book} books={books} setBooks={setBooks} />
-                        <p className={s.title}><NavLink exact to={`/book/${book._id}`}>{book[(TITLE + language) as keyof book]}</NavLink></p>
-                        <p className={s.author}>{book[(AUTHOR + language) as keyof book]}</p>
+                        <p className={s.title}><NavLink exact to={`/book/${book._id}`}>{book[titleKey]}</NavLink></p>
+                        <p className={s.author}>{book[authorKey]}</p>
                     </SwiperSlide>
                     )}
                     <div className={`swiper-button-prev ${s.prevButton}`}></div>

@@ -36,6 +36,10 @@ export type book = {
 
 export type bookFormats = 'pdfRU' | 'pdfEN' | 'pdfAM' | 'epubRU' | 'epubEN' | 'epubAM'
 
+export type sortingTopics = 'byPopularity' | 'byRating' | 'byAlphabet'
+export type topics =  'all' | 'historicalNovels' | 'sovietHistoriography' | 'prerevolutionaryHistoriography' | 'partyLiterature' 
+    | 'nationalPhilosophy' | 'artisticWorks' | 'epics' | 'poems' | 'memoirs' | 'rhymes'
+
 export interface UserContextInterface {
     language: language
     user: any

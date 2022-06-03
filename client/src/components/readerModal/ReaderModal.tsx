@@ -1,4 +1,3 @@
-import React from 'react'
 import ReactCountryFlag from 'react-country-flag'
 import { AM, GB, RU, PROTOCOL_HOSTNAME_PORT } from '../../utility/Constants'
 import { AiOutlineCloudDownload} from 'react-icons/ai'
