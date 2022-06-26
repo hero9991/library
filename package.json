@@ -6,7 +6,7 @@
   "scripts": {
     "serverDev": "nodemon --require dotenv/config index.js",
     "start": "node --require dotenv/config index.js",
-    "heroku-postbuild": "cd client && npm install && npm run build"
+    "heroku-postbuild": "cd client && npm install"
   },
   "keywords": [],
   "author": "",
