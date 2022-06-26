@@ -16,7 +16,6 @@ const __dirname = path.dirname(__filename);
 console.log(__dirname)
 app.use(express.static(path.join(__dirname, '/client/build')));
  
-app.use(cors({ credentials: true, origin: [process.env.CLIENT_URL, 'http://192.168.1.145:3000', 'https://library-am.herokuapp.com'] }))
 app.use(express.json())
 app.use(cookieParser())
 app.use('/uploads',  express.static('uploads'))
