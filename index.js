@@ -21,7 +21,7 @@ app.use('/uploads',  express.static('uploads'))
 
 app.use(function(request, response, next) {
     console.log(request.secure)
-    if (!request.secure && req.headers['x-forwarded-proto'] !== 'https') {
+    if (!request.secure && request.headers['x-forwarded-proto'] !== 'https') {
         console.log('https://' + request.headers.host + request.url)
        return response.redirect('https://' + request.headers.host + request.url);
     }
