@@ -9,8 +9,9 @@ import bookRoutes from './routes/books.js'
 import userRoutes from './routes/users.js'
 
 const app = express()
-
+console.log(1)
 const __filename = fileURLToPath(import.meta.url);
+console.log(__filename)
 const __dirname = path.dirname(__filename);
 console.log(__dirname)
 app.use(express.static(path.resolve(__dirname, './client/build')));
