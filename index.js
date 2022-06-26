@@ -13,7 +13,8 @@ const app = express()
 app.use(function(request, response, next) {
     console.log(request.secure)
     if (!request.secure) {
-       return response.redirect("https://" + request.headers.host + request.url);
+        console.log("https://" + request.headers.host + request.url)
+       return response.redirect('https://' + request.headers.host + request.url);
     }
     next();
 })
