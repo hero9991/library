@@ -7,8 +7,13 @@ import { toast } from 'react-toastify';
 const UploadBookInput = ({ errors, register, type, item, isOptional }: ChildProps) => {
     return (
         <div className={s.wrapper}>
-            <input className={errors[item] ? `${s.input} ${s.invalidInput}` : s.input} type={type} placeholder={item}
-                {...register(item, {required: !isOptional})} />
+            {item.includes('description')
+            ?<textarea className={errors[item] ? `${s.input} ${s.invalidInput}` : s.input} type={type} placeholder={item}
+            {...register(item, {required: !isOptional})} />
+        : <input className={errors[item] ? `${s.input} ${s.invalidInput}` : s.input} type={type} placeholder={item}
+        {...register(item, {required: !isOptional})} />}
+            {/* <textarea className={errors[item] ? `${s.input} ${s.invalidInput}` : s.input} type={type} placeholder={item}
+                {...register(item, {required: !isOptional})} /> */}
             {errors[item] && <p>{item} is required.</p>}
         </div>
     )
@@ -22,7 +27,7 @@ interface ChildProps {
     isOptional?: boolean
 }
 
-const UploadBookModal = ({ isUploadModal, setIsUploadModal }: Props) => {
+const UploadBookModal = ({ isUploadModal, setIsUploadModal, bookId }: Props) => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm()
     const bookKeys = ['titleRU',       'titleEN',       'titleAM', 
                       'descriptionRU', 'descriptionEN', 'descriptionAM', 
@@ -36,7 +41,8 @@ const UploadBookModal = ({ isUploadModal, setIsUploadModal }: Props) => {
     const onSubmit = async (e: any) => {
         try {
             const formData = new FormData()
-            const getValue = (key: string, index: number) => index <= 11 ? e[key] : e[key][0]
+            const getValue = (key: string, index: number) => index <= 11 ? addBreakForDescriptioins(e[key], key) : e[key][0]
+            const addBreakForDescriptioins = (value: string, key: string) => key.includes('description') ? value.replace(/\\n/g, "\n") : value
 
             bookKeys.forEach((key, index) => formData.append(key, getValue(key, index)))
 
@@ -75,6 +81,7 @@ const UploadBookModal = ({ isUploadModal, setIsUploadModal }: Props) => {
 interface Props {
     isUploadModal: boolean
     setIsUploadModal: any
+    bookId?: string
 }
 
 export default UploadBookModal

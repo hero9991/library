@@ -9,10 +9,11 @@ import { AUTHOR, CONTAINER, DESCRIPTION, PROTOCOL_HOSTNAME_PORT, TITLE } from '.
 import { UserContext } from '../../App'
 import ReaderModal from '../readerModal/ReaderModal'
 import { book, bookFormats, UserContextInterface } from '../../utility/commonTypes'
+import UpdateBook from '../updateBook/UpdateBook'
 
 
 function BookPage() {
-    const { language } = useContext<UserContextInterface>(UserContext)
+    const { user, language } = useContext<UserContextInterface>(UserContext)
     const [currentBook, setCurrentBook] = useState<book | null>(null)
     const [isReaderModal, setIsReaderModal] = useState<boolean>(false)
     const [isDownload, setIsDownload] = useState<boolean>(false)
@@ -58,10 +59,9 @@ function BookPage() {
                                 <p className={s.title}>{currentBook[titleKey]}</p>
                                 <p className={s.author}>{currentBook[authorKey]}</p>
                             </div>
-                            <p>{currentBook[descriptionKey]}</p>
+                            <p className={s.description}>{currentBook[descriptionKey]}</p>
                         </div>
                     </div>}
-
                     <div className={s.buttons}>
                         <button onClick={openReaderModal} data-download={true}>Download</button>
                         <button onClick={openReaderModal}>Read Now</button>
@@ -69,6 +69,7 @@ function BookPage() {
                     
                     <ReaderModal isReaderModal={isReaderModal} setIsReaderModal={setIsReaderModal} setBookFormat={setBookFormat} currentBook={currentBook} isDownload={isDownload}/>
                     {currentBook && !isDownload && <Reader bookUrl={currentBook[bookFormatKey]} setBookFormat={setBookFormat}/>}
+                    {user?.email === 'admin@upload.com' && <UpdateBook bookId={bookId} />}
                 </div>
                 : <div className={s.loader}><Triangle height={380} width={300} color='#1c1c1c' /></ div>}
             </div>

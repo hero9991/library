@@ -32,7 +32,6 @@ function App() {
         if (!localStorage.getItem(TOKEN)) return
 
         const response = await checkAuth()
-        if (currentlanguage === 'AZ') while (true) alert(`It's not over yet, ${response.data.user.name}`)
 
         localStorage.setItem(TOKEN, response.data.accessToken)
         const userIdToRating = await getUserRatings(response.data.user._id)

@@ -22,7 +22,7 @@ const BookItem = memo(({ isSecond, bookItem, books, setBooks, currentRoute }: Pr
         if (!user) return toast.warning(getUnauthorizedWarningText(language))
 
         const response = await postAddOrRemoveBook(bookItem, user, titleKey)
-        
+
         setUser({ ...user, books: response.data.userBookIds })
 
         if( currentRoute !== BOOKS) return

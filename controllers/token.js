@@ -3,9 +3,9 @@ import jwt from 'jsonwebtoken'
 import User from '../models/user.js'
 
 export const refresh = async (req, res) => {
-    console.log(0)
+    console.log(req)
     const { refreshToken } = req.cookies
-
+console.log(refreshToken)
     try {
         if (!refreshToken) return res.status(401).json({ message: 'User is not logged in' })
 

@@ -36,7 +36,6 @@ export const setRating = async (req, res) => {
 
         res.status(201).json({ ratingCount: newRatingCount, rating: newRating })
     } catch (error) {
-        console.log(error)
         res.status(500).json({ message: error })
     }
 }
@@ -50,7 +49,6 @@ export const getUserRatings = async (req, res) => {
 
         res.status(201).json({ bookIdToRating })
     } catch (error) {
-        console.log(error)
         res.status(500).json({ message: error })
     }
 }

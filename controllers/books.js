@@ -32,7 +32,6 @@ export const getBooks = async (req, res) => {
 
         res.status(200).json({ books: bookData, currentChunk: Number(chunkNumber), numberOfChunk: Math.ceil(total / LIMIT) })
     } catch (error) {
-        console.log(error)
         res.status(500).json({ message: error })
     }
 }
@@ -73,7 +72,6 @@ export const getBooksBySearch = async (req, res) => {
                                                   .skip(countToSkip)
         res.status(200).json({ books: bookData, currentChunk: Number(chunkNumber), numberOfChunk: Math.ceil(total / LIMIT)  })
     } catch (error) {
-        console.log(error)
         res.status(500).json({ message: error })
     }
 }
@@ -122,7 +120,6 @@ export const addBook = async (req, res) => {
         const userBooks = await Book.find({ _id: { $in: userBookIds } })
         res.status(201).json({ userBookIds, userBooks })
     } catch (error) {
-        console.log(error)
         res.status(500).json({ message: error })
     }
 }
@@ -142,7 +139,6 @@ export const uploadBook = async (req, res) => {
             epubAM: req.files.epubAM ? `${filePath}${req.files.epubAM[0].filename}` : ''})
         res.status(201).json({ createdBook })
     } catch (error) {
-        console.log(error)
         res.status(500).json({ message: error || 'signUp catch block' })
     }
 }

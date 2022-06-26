@@ -20,7 +20,7 @@ const AuthorizationModal = ({ isLoginModal, isSignUpModal, setIsLoginModal, setI
         try {
             clearErrors(COMMON)
 
-            enterUser(true, postSignIn, data)
+            await enterUser(true, postSignIn, data)
         } catch (error: any) {
             setServerSideError(setError, error.response?.data?.message[0]?.msg || error.response?.data?.message)
         }
@@ -29,16 +29,19 @@ const AuthorizationModal = ({ isLoginModal, isSignUpModal, setIsLoginModal, setI
         try {
             if (data.password !== data.confirmPassword) return setClientSideError(setError, getConfirmPasswordErrorText(language))
 
-            enterUser(false, postSignUp, data)
+            await enterUser(false, postSignUp, data)
         } catch (error: any) {
             setServerSideError(setError, error.response?.data?.message[0]?.msg || error.response?.data?.message)
         }
     }
 
     const googleSuccess = async (data: any) => {
-        enterUser(true, postGoogleAccount, data)
+        console.log(44)
+        await enterUser(true, postGoogleAccount, data)
     }
     const googleFailure = (error: any) => {
+        console.log(error)
+        console.log(error.details)
         if (error?.error === 'popup_closed_by_user') return
         toast.error(`Authorization has failed. Error: ${error?.error}`)
     }

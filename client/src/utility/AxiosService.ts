@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { PROTOCOL_HOSTNAME_PORT } from './Constants'
 
-// const API_URL = 'http://192.168.1.145:5000/api'
 const API_URL = `${PROTOCOL_HOSTNAME_PORT}/api`
 
 const $api = axios.create({
@@ -26,7 +25,6 @@ $api.interceptors.response.use((config: any) => config,
             localStorage.setItem('token', response.data.accessToken)
             return $api.request(originalRequest)
         } catch (error) {
-            console.log('Is not logged in')
             throw error
         }
     })

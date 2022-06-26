@@ -53,7 +53,7 @@ function Books() {
                         await requestBooks(1, true)
                         break
                     case BOOKS:
-                        if (!user?._id) return
+                        if (!user?._id) return setBooks([])
                         setIsLoading(true)
                         await getMyBooks(user._id)
                             .then(data => {

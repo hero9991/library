@@ -2,12 +2,19 @@ import express from 'express'
 import mongoose from 'mongoose'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
+import path from 'path'
+import { fileURLToPath } from 'url';
 
 import bookRoutes from './routes/books.js'
 import userRoutes from './routes/users.js'
 
 const app = express()
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+app.use(express.static(path.resolve(__dirname, './client/build')));
+ 
 app.use(cors({ credentials: true, origin: [process.env.CLIENT_URL, 'http://192.168.1.145:3000'] }))
 app.use(express.json())
 app.use(cookieParser())

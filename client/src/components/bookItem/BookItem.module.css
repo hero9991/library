@@ -85,7 +85,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     line-height: 1.2em;
-    max-width: 80%;
+    max-width: 60%;
     font-size: 24px;
     font-weight: 700;
     letter-spacing: 1px;
@@ -99,7 +99,7 @@
 }
 
 .author{
-    max-width: 80%;
+    max-width: 60%;
     font-size: 16px;
     color: #ADAA9A;
     letter-spacing: 1px;
@@ -125,6 +125,18 @@
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;  
     overflow: hidden;
+}
+
+@media (max-width: 991px) {
+    .title {
+        max-width: 45%;
+    }
+}
+
+@media (max-width: 767px) {
+    .title {
+        max-width: 90%;
+    }
 }
 
 @media (max-width: 767px) {
