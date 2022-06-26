@@ -10,15 +10,6 @@ import userRoutes from './routes/users.js'
 
 const app = express()
 
-app.use(function(request, response, next) {
-    console.log(request.secure)
-    if (!request.secure) {
-        console.log("https://" + request.headers.host + request.url)
-       return response.redirect('https://' + request.headers.host + request.url);
-    }
-    next();
-})
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 app.use(express.static(path.join(__dirname, '/client/build')));
@@ -27,6 +18,15 @@ app.use(cors({ credentials: true, origin: [process.env.CLIENT_URL] }))
 app.use(express.json())
 app.use(cookieParser())
 app.use('/uploads',  express.static('uploads'))
+
+app.use(function(request, response, next) {
+    console.log(request.secure)
+    if (!request.secure && req.headers['x-forwarded-proto'] !== 'https') {
+        console.log('https://' + request.headers.host + request.url)
+       return response.redirect('https://' + request.headers.host + request.url);
+    }
+    next();
+})
 
 app.use('/api', bookRoutes)
 app.use('/api', userRoutes)
