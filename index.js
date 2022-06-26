@@ -12,7 +12,7 @@ const app = express()
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
+console.log(__dirname)
 app.use(express.static(path.resolve(__dirname, './client/build')));
  
 app.use(cors({ credentials: true, origin: [process.env.CLIENT_URL, 'http://192.168.1.145:3000'] }))
