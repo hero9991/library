@@ -16,6 +16,7 @@ const __dirname = path.dirname(__filename);
 console.log(__dirname)
 app.use(express.static(path.join(__dirname, '/client/build')));
  
+app.use(cors({ credentials: true, origin: [process.env.CLIENT_URL] }))
 app.use(express.json())
 app.use(cookieParser())
 app.use('/uploads',  express.static('uploads'))
