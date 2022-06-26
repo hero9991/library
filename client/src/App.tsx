@@ -24,6 +24,7 @@ function App() {
   const [isSignUpModal, setIsSignUpModal] = useState<boolean>(false)
 
   useEffect(() => {
+    console.log('in useEffect');
     (async function () {
       try {
         const currentlanguage = (await getCurrentCountryAddress()).data.country_code
@@ -39,6 +40,7 @@ function App() {
 
         if (response.data.user.language) setLanguage(response.data.user.language)
       } catch (error: any) {
+        console.log('in error')
         toast.error(error.response?.data?.message)
       }
     })()
