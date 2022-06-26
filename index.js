@@ -16,6 +16,12 @@ const __dirname = path.dirname(__filename);
 console.log(__dirname)
 app.use(express.static(path.join(__dirname, '/client/build')));
  
+app.use(function(request, response, next) {
+    if (!request.secure) {
+       return response.redirect("https://" + request.headers.host + request.url);
+    }
+    next();
+})
 app.use(cors({ credentials: true, origin: [process.env.CLIENT_URL] }))
 app.use(express.json())
 app.use(cookieParser())
