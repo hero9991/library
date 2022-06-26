@@ -1,6 +1,6 @@
 import { useState } from "react"
 import UploadBookModal from "../uploadBookModal/UploadBookModal"
-import s from './CreateBook.module.css'
+// import s from './CreateBook.module.css'
 
 const CreateBook = () => {
     const [isUploadModal, setIsUploadModal] = useState(false)
@@ -8,7 +8,7 @@ const CreateBook = () => {
 
     return (
         <div>
-            <button onClick={toggleModal} className={s.createBookButton}>Create Book</button>
+            <button onClick={toggleModal} >Create Book</button>
             <UploadBookModal isUploadModal={isUploadModal} setIsUploadModal={setIsUploadModal}/>
         </div>
     )
