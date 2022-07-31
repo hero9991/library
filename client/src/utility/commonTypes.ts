@@ -6,6 +6,7 @@ export type user = {
     _id: string
     books: string[]
     bookRatings: { [key: string]: string }
+    isAdmin: boolean
 }
 
 export type book = {
@@ -36,9 +37,13 @@ export type book = {
 
 export type bookFormats = 'pdfRU' | 'pdfEN' | 'pdfAM' | 'epubRU' | 'epubEN' | 'epubAM'
 
+export type actionTypes = 'OPEN' | 'DOWNLOAD' | 'UPLOAD' | 'DELETE'
+
 export type sortingTopics = 'byPopularity' | 'byRating' | 'byAlphabet'
 export type topics =  'all' | 'historicalNovels' | 'sovietHistoriography' | 'prerevolutionaryHistoriography' | 'partyLiterature' 
     | 'nationalPhilosophy' | 'artisticWorks' | 'epics' | 'poems' | 'memoirs' | 'rhymes'
+
+export type types = 'literature' | 'history'
 
 export interface UserContextInterface {
     language: language

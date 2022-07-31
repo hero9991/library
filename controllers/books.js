@@ -1,5 +1,6 @@
 import Book from '../models/book.js'
 import User from '../models/user.js'
+import { unlink } from 'node:fs';
 
 export const getBooks = async (req, res) => {
     const { type, chunkNumber, sort, topic, isReversed, language} = req.query
@@ -143,3 +144,68 @@ export const uploadBook = async (req, res) => {
     }
 }
 
+export const updateBookInfo = async (req, res) => {
+    const { bookId, titleRU, titleEN, titleAM, descriptionRU, descriptionEN, descriptionAM, authorRU, authorEN, authorAM, date, topic, type } = req.body
+
+    try {
+        const bookToUpdate = await Book.findById(bookId)
+        await Book.updateOne({ _id: bookId }, { $set: { 
+            titleRU: titleRU || bookToUpdate.titleRU,
+            titleEN: titleEN || bookToUpdate.titleEN, 
+            titleAM: titleAM || bookToUpdate.titleAM,  
+            descriptionRU: descriptionRU || bookToUpdate.descriptionRU,  
+            descriptionEN: descriptionEN || bookToUpdate.descriptionEN,  
+            descriptionAM: descriptionAM || bookToUpdate.descriptionAM,  
+            authorRU: authorRU || bookToUpdate.authorRU, 
+            authorEN: authorEN || bookToUpdate.authorEN, 
+            authorAM: authorAM || bookToUpdate.authorAM, 
+            date: date || bookToUpdate.date, 
+            topic: topic || bookToUpdate.topic, 
+            type: type || bookToUpdate.type
+        }})
+        const updatedBook = await Book.findById(bookId)
+
+        res.status(201).json({ updatedBook })
+    } catch (error) {
+        res.status(500).json({ message: error || 'signUp catch block' })
+    }
+}
+
+export const addBookFile = async (req, res) => {
+    const { bookId, bookFormat } = req.body
+
+    try {
+        const filePath = '/uploads/'
+        await Book.findByIdAndUpdate(bookId, { [bookFormat]: `${filePath}${req.file.filename}` });
+
+        const updatedBook = await Book.findById(bookId)
+
+        res.status(201).json({ updatedBook })
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ message: error || 'signUp catch block' })
+    }
+}
+
+export const deleteBookFile = async (req, res) => {
+    console.log(123)
+    const { bookId, bookFormat } = req.body
+console.log(44)
+    try {
+        console.log(bookId)
+        const book = await Book.findById(bookId);
+        console.log(bookFormat)
+        unlink(book[bookFormat].substring(1), async (err) => {
+            if (err) throw err;
+            console.log('path/file.txt was deleted');
+        })
+
+        await Book.findByIdAndUpdate(bookId, {[bookFormat]: ''})
+        const updatedBook = await Book.findById(bookId)
+
+        res.status(201).json({ updatedBook })
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ message: error || 'signUp catch block' })
+    }
+}

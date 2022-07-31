@@ -25,7 +25,7 @@
     flex-direction: column;
     justify-content: space-around;
     font-weight: 700;
-    font-size: 55px;
+    font-size: 50px;
     color: #1b1b1b;
     letter-spacing: -0.02px;
     margin-left: auto;
@@ -43,7 +43,6 @@
 .bottomContent  {
     height: 40vh;
     position: relative;
-    font-family: 'Tinos', serif;
     font-size: 16px;
     letter-spacing: 2px;
     color: #fff;
@@ -100,7 +99,7 @@
 }
 @media (max-width: 1350px) {
     .topText h2{
-        font-size: 30px;
+        font-size: 40px;
     }
 }
 @media (max-width: 1270px) {

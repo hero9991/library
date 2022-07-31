@@ -3,9 +3,8 @@ import jwt from 'jsonwebtoken'
 import User from '../models/user.js'
 
 export const refresh = async (req, res) => {
-    console.log(req)
     const { refreshToken } = req.cookies
-console.log(refreshToken)
+
     try {
         if (!refreshToken) return res.status(401).json({ message: 'User is not logged in' })
 
@@ -79,4 +78,7 @@ export const handleTokens = async (userData, res) => {
     return tokens
 }
 
-export const getResponse = (userData, tokens) => ({user: {email: userData.email, name: userData.name, _id: userData._id, books: userData.books}, accessToken: tokens.accessToken})
+export const getResponse = (userData, tokens) => ({
+    user: {email: userData.email, name: userData.name, language: userData.language, _id: userData._id, books: userData.books, isAdmin: userData.isAdmin},
+    accessToken: tokens.accessToken
+})

@@ -5,13 +5,13 @@ export const getTitleFirstText = (language: language) => language === EN
     ? 'History of our land'
     : language === RU
         ? 'История земли'
-        : 'Մեր երկրի պատմությունը'
+        : 'Երկրի պատմությունը'
 
 export const getTitleSecondText = (language: language) => language === EN
     ? 'Roots of our literature'
     : language === RU
         ? 'Корни литературы'
-        : 'Մեր գրականության արմատները'
+        : 'Մեր արմատները'
 
 export const getButtonUpperText = (language: language) => language === EN
     ? 'PDF Version is Available'

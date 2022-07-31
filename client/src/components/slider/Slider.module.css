@@ -50,7 +50,7 @@
 }
 .title {
     line-height: 1.5em;
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 700;
     letter-spacing: 1px;
     display: -webkit-box;
@@ -70,7 +70,7 @@
 
 .author{
     line-height: 1.4em;
-    font-size: 16px;
+    font-size: 14px;
     color: #ADAA9A;
     letter-spacing: 1px;
     margin: 0 0;
@@ -130,10 +130,7 @@
 @media (max-width: 1600px) {
     .title {
         line-height: 1.4em;
-        font-size: 23px;
-    }
-    .author{
-        font-size: 15px;
+        font-size: 18px;
     }
     .books {
         width: 80%;
@@ -145,10 +142,6 @@
 @media (max-width: 1400px) {
     .title {
         line-height: 1.3em;
-        font-size: 22px;
-    }
-    .author{
-        font-size: 14px;
     }
     .books {
         width: 70%;
@@ -170,10 +163,7 @@
     }
     .title {
         line-height: 1.2em;
-        font-size: 20px;
-    }
-    .author{
-        font-size: 13px;
+        font-size: 16px;
     }
     .topic {
         padding: 40px 0 15px;
@@ -193,7 +183,6 @@
         font-size: 17px;
     }
     .title {
-        font-size: 18px;
     }
     .author{
         line-height: 1.4em;

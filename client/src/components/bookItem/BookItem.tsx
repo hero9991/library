@@ -31,9 +31,9 @@ const BookItem = memo(({ isSecond, bookItem, books, setBooks, currentRoute }: Pr
 
     return (
         <div className={`${s.item} ${isSecond ? s.secondItem : s.firstItem}`}>
-            <Link to={BOOK_URL + bookItem._id}><img src={PROTOCOL_HOSTNAME_PORT + bookItem.linkImage} alt='' /></Link >
+            <Link to={BOOK_URL + bookItem._id} title={bookItem[titleKey]}><img src={PROTOCOL_HOSTNAME_PORT + bookItem.linkImage} alt='' /></Link >
             <div className={s.textContent}>
-                <p className={s.title}><Link to={BOOK_URL + bookItem._id}>{bookItem[titleKey]}</Link ></p>
+                <p className={s.title} title={bookItem[titleKey] as string}><Link to={BOOK_URL + bookItem._id}>{bookItem[titleKey]}</Link ></p>
                 <p className={s.author}>{bookItem[authorKey]} </p>
                 <div className={s.ratingWrapper}>
                     <StarRating book={bookItem} books={books} setBooks={setBooks} />

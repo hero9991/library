@@ -1,7 +1,7 @@
 import express from 'express'
 import { body } from 'express-validator'
 import { refresh } from '../controllers/token.js'
-import { signIn, signOut, signUp, authorizeGoogleAccount } from '../controllers/user.js'
+import { signIn, signOut, signUp, authorizeGoogleAccount, setLanguage } from '../controllers/user.js'
 
 const router = express.Router()
 
@@ -12,6 +12,7 @@ router.post('/signup', [
     body('password', 'Password is not valid').isLength({ min: 6 })
 ], signUp)
 router.post('/authorizegoogleaccount', authorizeGoogleAccount)
+router.post('/setLanguage', setLanguage)
 router.get('/refresh', refresh)
 
 export default router

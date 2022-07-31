@@ -1,30 +1,34 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect, useContext, useRef } from 'react'
 import s from './BookPage.module.css'
 import Reader from '../reader/Reader'
 import { useLocation } from 'react-router'
 import { toast } from 'react-toastify'
 import { Triangle } from 'react-loader-spinner'
 import { getBook, incrementBookView } from '../../utility/AxiosService'
-import { AUTHOR, CONTAINER, DESCRIPTION, PROTOCOL_HOSTNAME_PORT, TITLE } from '../../utility/Constants'
+import { AUTHOR, CONTAINER, DELETE, DESCRIPTION, DOWNLOAD, OPEN, PROTOCOL_HOSTNAME_PORT, TITLE, UPLOAD } from '../../utility/Constants'
 import { UserContext } from '../../App'
 import ReaderModal from '../readerModal/ReaderModal'
-import { book, bookFormats, UserContextInterface } from '../../utility/commonTypes'
+import { actionTypes, book, bookFormats, UserContextInterface } from '../../utility/commonTypes'
 import UpdateBook from '../updateBook/UpdateBook'
+import { getDeleteBookText, getDownloadText, getReadNowText, getShowFullDescriptionText, getUploadBookText } from './translatedText/translatedText'
 
 
 function BookPage() {
+    const descriptionRef: any = useRef(null);
     const { user, language } = useContext<UserContextInterface>(UserContext)
     const [currentBook, setCurrentBook] = useState<book | null>(null)
     const [isReaderModal, setIsReaderModal] = useState<boolean>(false)
-    const [isDownload, setIsDownload] = useState<boolean>(false)
+    const [actionType, setActionType] = useState<actionTypes | null>(null)
     const [bookFormat, setBookFormat] = useState<bookFormats | ''>('')
     const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [isEclipseApplied, setIsEclipseApplied] = useState<boolean>(false)
     const bookId: string = useLocation().pathname.split('/').pop()
 
     const authorKey = (AUTHOR + language) as keyof book
     const titleKey = (TITLE + language) as keyof book
     const descriptionKey = (DESCRIPTION + language) as keyof book
     const bookFormatKey = bookFormat as keyof book
+    const isOpen = actionType === OPEN
 
     useEffect(() => {
         (async function () {
@@ -42,7 +46,19 @@ function BookPage() {
 
     const openReaderModal = (e: any) => {
         setIsReaderModal(true)
-        setIsDownload(e.target.dataset.download)
+        setActionType(e.target.dataset.type)
+    }
+
+    const showFullDescriptionButton = (e: any) => {
+        setIsEclipseApplied(e.target.offsetHeight < e.target.scrollHeight)
+    }
+    const hideFullDescriptionButton = () => {
+        setIsEclipseApplied(false)
+    }
+
+    const showFullDescription = () => {
+        descriptionRef.current.style.display = 'block'
+        setIsEclipseApplied(false)
     }
 
     return (
@@ -59,17 +75,24 @@ function BookPage() {
                                 <p className={s.title}>{currentBook[titleKey]}</p>
                                 <p className={s.author}>{currentBook[authorKey]}</p>
                             </div>
-                            <p className={s.description}>{currentBook[descriptionKey]}</p>
+                            <p onMouseEnter={showFullDescriptionButton} onMouseLeave={hideFullDescriptionButton} ref={descriptionRef} className={s.description}>
+                                {currentBook[descriptionKey]}
+                                {isEclipseApplied && <button className={s.showDescriptionButton} onClick={showFullDescription}>{getShowFullDescriptionText(language)}</button>}
+                            </p>
                         </div>
                     </div>}
                     <div className={s.buttons}>
-                        <button onClick={openReaderModal} data-download={true}>Download</button>
-                        <button onClick={openReaderModal}>Read Now</button>
+                        <button onClick={openReaderModal} data-type={DOWNLOAD}>{getDownloadText(language)}</button>
+                        <button onClick={openReaderModal} data-type={OPEN}>{getReadNowText(language)}</button>
                     </div>    
-                    
-                    <ReaderModal isReaderModal={isReaderModal} setIsReaderModal={setIsReaderModal} setBookFormat={setBookFormat} currentBook={currentBook} isDownload={isDownload}/>
-                    {currentBook && !isDownload && <Reader bookUrl={currentBook[bookFormatKey]} setBookFormat={setBookFormat}/>}
-                    {user?.email === 'admin@upload.com' && <UpdateBook bookId={bookId} />}
+                    {user?.isAdmin && <div className={`${s.buttons} ${s.adminButtons}`}>
+                        <button onClick={openReaderModal} data-type={DELETE}>{getDeleteBookText(language)}</button>
+                        <button onClick={openReaderModal} data-type={UPLOAD}>{getUploadBookText(language)}</button>
+                    </div>}
+
+                    <ReaderModal isReaderModal={isReaderModal} setIsReaderModal={setIsReaderModal} setBookFormat={setBookFormat} currentBook={currentBook as book} actionType={actionType} setCurrentBook={setCurrentBook}/>
+                    {currentBook && isOpen && bookFormatKey && <Reader bookUrl={currentBook[bookFormatKey]} setBookFormat={setBookFormat}/>}
+                    {user?.isAdmin && <UpdateBook bookId={bookId} setCurrentBook={setCurrentBook}/>}
                 </div>
                 : <div className={s.loader}><Triangle height={380} width={300} color='#1c1c1c' /></ div>}
             </div>

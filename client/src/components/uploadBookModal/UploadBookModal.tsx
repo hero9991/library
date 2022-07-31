@@ -1,19 +1,24 @@
 import s from './UploadBookModal.module.css'
 import { useForm } from 'react-hook-form';
-import { uploadBook } from '../../utility/AxiosService';
-import { FILE, SUBMIT, TEXT } from '../../utility/Constants';
+import { updateBookInfo, uploadBook } from '../../utility/AxiosService';
+import { COMMON, FILE, SUBMIT, TEXT } from '../../utility/Constants';
 import { toast } from 'react-toastify';
+import { setClientSideError } from '../../utility/ErrorHelper';
+import { topics, types } from '../../utility/commonTypes';
 
-const UploadBookInput = ({ errors, register, type, item, isOptional }: ChildProps) => {
+const UploadBookInput = ({ errors, register, clearErrors, type, item, isOptional, isUpdate }: ChildProps) => {
+    const isRequired = !isOptional && !isUpdate;
+
     return (
         <div className={s.wrapper}>
             {item.includes('description')
-            ?<textarea className={errors[item] ? `${s.input} ${s.invalidInput}` : s.input} type={type} placeholder={item}
-            {...register(item, {required: !isOptional})} />
-        : <input className={errors[item] ? `${s.input} ${s.invalidInput}` : s.input} type={type} placeholder={item}
-        {...register(item, {required: !isOptional})} />}
-            {/* <textarea className={errors[item] ? `${s.input} ${s.invalidInput}` : s.input} type={type} placeholder={item}
-                {...register(item, {required: !isOptional})} /> */}
+                ? <textarea className={errors[item] ? `${s.input} ${s.invalidInput}` : s.input} type={type} placeholder={item} 
+                {...register(item, {required: isRequired})} />
+                : (item.includes('topic') || item.includes('type'))
+                    ? <input className={errors[item] ? `${s.input} ${s.invalidInput}` : s.input} type={type} placeholder={item}
+                    {...register(item, { onChange: () => clearErrors(COMMON), required: isRequired})} />
+                    : <input className={errors[item] ? `${s.input} ${s.invalidInput}` : s.input} type={type} placeholder={item}
+                    {...register(item, {required: isRequired})} />}
             {errors[item] && <p>{item} is required.</p>}
         </div>
     )
@@ -22,13 +27,15 @@ const UploadBookInput = ({ errors, register, type, item, isOptional }: ChildProp
 interface ChildProps {
     errors: any
     register: any
+    clearErrors: any
     type: string
     item: string
     isOptional?: boolean
+    isUpdate?: boolean
 }
 
-const UploadBookModal = ({ isUploadModal, setIsUploadModal, bookId }: Props) => {
-    const { register, handleSubmit, reset, formState: { errors } } = useForm()
+const UploadBookModal = ({ isUploadModal, setIsUploadModal, bookId, setCurrentBook }: Props) => {
+    const { register, handleSubmit, reset, clearErrors, setError, formState: { errors } } = useForm()
     const bookKeys = ['titleRU',       'titleEN',       'titleAM', 
                       'descriptionRU', 'descriptionEN', 'descriptionAM', 
                       'authorRU',      'authorEN',      'authorAM',
@@ -41,17 +48,35 @@ const UploadBookModal = ({ isUploadModal, setIsUploadModal, bookId }: Props) => 
     const onSubmit = async (e: any) => {
         try {
             const formData = new FormData()
-            const getValue = (key: string, index: number) => index <= 11 ? addBreakForDescriptioins(e[key], key) : e[key][0]
+            const getValue = (key: string, index: number) => index <= 11 ? addBreakForDescriptioins(e[key], key) : e[key] && e[key][0]
             const addBreakForDescriptioins = (value: string, key: string) => key.includes('description') ? value.replace(/\\n/g, "\n") : value
+            bookKeys.forEach((key, index) => getValue(key, index) && formData.append(key, getValue(key, index)))
 
-            bookKeys.forEach((key, index) => formData.append(key, getValue(key, index)))
+            if (formData.get('type') && !isTypeTypes(formData.get('type') as string)) return setClientSideError(setError, 'Correct the type field: it can be either literature or history')
+            if (formData.get('topic') && !isTypeTopics(formData.get('topic') as string)) return setClientSideError(setError, `Correct the topic field: it can be: 'historicalNovels', 'sovietHistoriography', 'prerevolutionaryHistoriography', 'partyLiterature', 'nationalPhilosophy', 'artisticWorks', 'epics', 'poems', 'memoirs', 'rhymes'`)
+            
+            if (bookId) {
+                formData.append('bookId', bookId)
+                const currentBook = await updateBookInfo(formData) 
+                setCurrentBook(currentBook.data.updatedBook)
+            } else {
+                await uploadBook(formData)
+            }
 
-            await uploadBook(formData)
             reset()
         } catch (error) {
             toast.error(`Error ${error}`)
         }
     }
+
+    const isTypeTypes = (inputString: string): inputString is types => 
+        ['literature', 'history'].includes(inputString)
+
+    const isTypeTopics = (inputString: string): inputString is topics => 
+        ['historicalNovels', 'sovietHistoriography', 'prerevolutionaryHistoriography', 
+        'partyLiterature', 'nationalPhilosophy', 'artisticWorks', 'epics', 'poems', 
+        'memoirs', 'rhymes'].includes(inputString)
+    
 
     const hidePopup = () => setIsUploadModal(false)
 
@@ -63,15 +88,16 @@ const UploadBookModal = ({ isUploadModal, setIsUploadModal, bookId }: Props) => 
                 </div>
                 <form className={s.mainForm} onSubmit={handleSubmit(onSubmit)}>
                     <div>
-                        {bookKeys.slice(0, 12).map(key => <UploadBookInput key={key} errors={errors} register={register} type={key === 'date' ? 'date' : TEXT} item={key} />)}
+                        {bookKeys.slice(0, 12).map(key => <UploadBookInput key={key} errors={errors} register={register} clearErrors={clearErrors} type={key === 'date' ? 'date' : TEXT} item={key} isUpdate={!!bookId}/>)}
                     </div>
-                    <div>
+                    {!bookId && <div>
                         {bookKeys.slice(12).map((key, index) => <div key={key} >
                             {key}
-                            <UploadBookInput errors={errors} register={register} type={FILE} item={key} isOptional={key !== 'image'} />
+                            <UploadBookInput errors={errors} register={register} clearErrors={clearErrors} type={FILE} item={key} isOptional={key !== 'image'}/>
                         </div>)}
-                    </div>
-                    <input className={s.uploadButton} type={SUBMIT} value='Upload the book' />
+                    </div>}
+                    <input className={s.uploadButton} type={SUBMIT} value={bookId ? 'Update the book' : 'Upload the book'} />
+                    {errors.common && <p className={s.errorText}>{errors.common.message}</p>}
                 </form>
             </div>
         </div>
@@ -82,6 +108,7 @@ interface Props {
     isUploadModal: boolean
     setIsUploadModal: any
     bookId?: string
+    setCurrentBook?: any
 }
 
 export default UploadBookModal

@@ -36,12 +36,9 @@ const AuthorizationModal = ({ isLoginModal, isSignUpModal, setIsLoginModal, setI
     }
 
     const googleSuccess = async (data: any) => {
-        console.log(44)
         await enterUser(true, postGoogleAccount, data)
     }
     const googleFailure = (error: any) => {
-        console.log(error)
-        console.log(error.details)
         if (error?.error === 'popup_closed_by_user') return
         toast.error(`Authorization has failed. Error: ${error?.error}`)
     }

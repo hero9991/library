@@ -5,7 +5,7 @@ export const getReadNowText = (language: language) => language === EN
     ? 'Read Now'
     : language === RU
         ? 'Читать сейчас'
-        : 'Կարդացեք հիմա'
+        : 'Կարդալ հիմա'
 
 export const getUnauthorizedWarningText = (language: language) => language === EN
     ? 'Firstly you need to authorize'

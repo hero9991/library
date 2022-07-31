@@ -27,10 +27,7 @@ function App() {
     console.log('in useEffect');
     (async function () {
       try {
-        const currentlanguage = (await getCurrentCountryAddress()).data.country_code
-        if (currentlanguage === RU || currentlanguage === AM) setLanguage(currentlanguage)
-
-        if (!localStorage.getItem(TOKEN)) return
+        if (!localStorage.getItem(TOKEN)) return await setCurrentLanguageByLocation()
 
         const response = await checkAuth()
 
@@ -38,13 +35,22 @@ function App() {
         const userIdToRating = await getUserRatings(response.data.user._id)
         setUser({ ...response.data.user, bookRatings: { ...userIdToRating.data.bookIdToRating } })
 
-        if (response.data.user.language) setLanguage(response.data.user.language)
+        if (response.data.user.language) {
+          setLanguage(response.data.user.language)
+        } else {
+          await setCurrentLanguageByLocation()
+        }
       } catch (error: any) {
-        console.log('in error')
-        toast.error(error.response?.data?.message)
+        console.log(error)
+        toast.error(`Error ${error}`)
       }
     })()
   }, [])
+
+  const setCurrentLanguageByLocation = async () => {
+      const currentlanguage = (await getCurrentCountryAddress()).data.country_code // не работает для сафари
+      if (currentlanguage === RU || currentlanguage === AM) setLanguage(currentlanguage)
+  }
 
   const userValue = useMemo(() => ({ user, setUser, language }), [user, language]);
 
@@ -74,7 +80,7 @@ function App() {
               <BookPage />
             </Route>
           </Switch>
-          {user?.email === 'admin@upload.com' && <CreateBook />}
+          {user?.isAdmin && <CreateBook />}
           <AuthorizationModal isLoginModal={isLoginModal} isSignUpModal={isSignUpModal} setIsLoginModal={setIsLoginModal} setIsSignUpModal={setIsSignUpModal} />
           <Footer setLanguage={setLanguage} />
         </div> 

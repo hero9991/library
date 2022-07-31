@@ -28,6 +28,12 @@ export const EN: language = 'EN'
 export const GB = 'GB'
 export const RU: language = 'RU'
 
+export const OPEN = 'OPEN'
+export const DOWNLOAD = 'DOWNLOAD'
+export const UPLOAD = 'UPLOAD'
+export const DELETE = 'DELETE'
+
 export const CONTAINER = 'container'
 
-export const PROTOCOL_HOSTNAME_PORT = 'https://library-am.herokuapp.com'
+// export const PROTOCOL_HOSTNAME_PORT = 'https://library-am.herokuapp.com'
+export const PROTOCOL_HOSTNAME_PORT = 'http://localhost:5000'

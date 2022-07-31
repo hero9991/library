@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { bookFormats, language } from './commonTypes'
 import { PROTOCOL_HOSTNAME_PORT } from './Constants'
 
 const API_URL = `${PROTOCOL_HOSTNAME_PORT}/api`
@@ -36,6 +37,8 @@ export const signIn = (email: string, password: string) => $api.post('/signin', 
 export const signOut = () => $api.post('/signout')
 export const authorizeGoogleAccount = (token: string) => $api.post('/authorizegoogleaccount', { token })
 
+export const setUserLanguage = (language: language, userId: string) => $api.post('/setLanguage', { language, userId })
+
 // Refresh auth
 export const checkAuth = () => axios.get(`${API_URL}/refresh`, { withCredentials: true })
 
@@ -53,5 +56,8 @@ export const incrementBookView = (bookId: string, viewCount: string) => $api.pos
 
 // Upload books
 export const uploadBook = (data: any) => $api.post('/upload', data)
+export const updateBookInfo = (data: any) => $api.post('/updateBookInfo', data)
+export const addBookFile = (data: any) => $api.post('/addBookFile', data)
+export const deleteBookFile = (bookId: string, bookFormat: bookFormats) => $api.post('/deleteBookFile', { bookId, bookFormat })
 
 export const getCurrentCountryAddress = () => axios.get('https://ipapi.co/json/')

@@ -20,7 +20,13 @@ const upload = multer({
         }
     }
 })
-const cpUpload = upload.fields([{ name: 'pdfRU', maxCount: 1 }, { name: 'pdfEN', maxCount: 1 }, { name: 'pdfAM', maxCount: 1 },
+
+//for update book info
+export const uploadNone = multer()
+
+//for initial book upload
+export const cpUpload = upload.fields([{ name: 'pdfRU', maxCount: 1 }, { name: 'pdfEN', maxCount: 1 }, { name: 'pdfAM', maxCount: 1 },
 { name: 'epubRU', maxCount: 1 }, { name: 'epubEN', maxCount: 1 }, { name: 'epubAM', maxCount: 1 }, { name: 'image', maxCount: 1 }])
 
-export default cpUpload
+//for single file upload
+export const cbUploadSingle = upload.single('book')

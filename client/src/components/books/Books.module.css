@@ -114,7 +114,7 @@
   height: 50px;
   cursor: pointer;
   background-color: #fef1f3;
-  font-family: "Tinos", serif;
+  font-family: "Playfair Display", serif, -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   font-size: 20px;
   letter-spacing: 2px;
   border: none;
@@ -173,6 +173,11 @@
   }
   .topics a {
     color: #313131;
+  }
+}
+@media (max-width: 991px) {
+  .sorting > a {
+    font-size: 13px;
   }
 }
 @media (max-width: 767px) {

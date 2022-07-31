@@ -5,6 +5,8 @@ const userSchema = mongoose.Schema({
     email: { type: String, unique: true, required: true },
     password: { type: String, required: true },
     books: [{ type: String }],
+    language: String,
+    isAdmin: Boolean
 })
 
 const User = mongoose.model('User', userSchema)

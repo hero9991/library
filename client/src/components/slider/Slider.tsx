@@ -113,11 +113,11 @@ function Slider({ isBlackFont }: Props) {
             <div className={s.books}>
                 <Swiper id='main' wrapperTag='ul' className={s.swiper} {...params}>
                     {books.map(book => <SwiperSlide key={book._id} tag='li'>
-                        <NavLink exact to={`/book/${book._id}`}>
+                        <NavLink exact to={`/book/${book._id}`} title={book[titleKey]}>
                             {book.linkImage ? <img className={s.bookItem} src={PROTOCOL_HOSTNAME_PORT + book.linkImage} alt='no img' /> : <div className={s.bookItem}></div>}
                         </NavLink>
                         <StarRating book={book} books={books} setBooks={setBooks} />
-                        <p className={s.title}><NavLink exact to={`/book/${book._id}`}>{book[titleKey]}</NavLink></p>
+                        <p className={s.title} title={book[titleKey] as string}><NavLink exact to={`/book/${book._id}`}>{book[titleKey]}</NavLink></p>
                         <p className={s.author}>{book[authorKey]}</p>
                     </SwiperSlide>
                     )}
