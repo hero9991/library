@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "serverDev": "nodemon --require dotenv/config index.js",
+    "serverDev": "nodemon index.js",
     "start": "node index.js",
     "heroku-postbuild": "cd client && npm install"
   },
