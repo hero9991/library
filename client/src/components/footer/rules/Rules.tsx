@@ -1,12 +1,18 @@
+import { useContext } from 'react'
+import { UserContext } from '../../../App'
+import { UserContextInterface } from '../../../utility/commonTypes'
+import { getRulesInnerText } from '../translatedText/translatedText'
 import s from './Rules.module.css'
 
 const Rules = ({ isRulesModal, setIsRulesModal }: Props) => {
+    const { language } = useContext<UserContextInterface>(UserContext)
+
     const hidePopup = () => setIsRulesModal(false)
 
     return (
         <div onClick={hidePopup} className={isRulesModal ? `${s.rulesModal} ${s.active}` : s.rulesModal}>
             <div onClick={e => e.stopPropagation()} className={isRulesModal ? `${s.rulesModalContent} ${s.active}` : s.rulesModalContent}>
-                Библиотека не подразумевает передачи книг в распоряжение или владение пользователям и читателям. Чтение книг может происходить лишь через веб-приложение для чтения на сайте, либо через приложения для мобильных и других устройств. Вся организация личных каталогов книг (полок) происходит исключительно внутри самого сервиса.
+                {getRulesInnerText(language)}
             </ div>
         </ div>
     )

@@ -35,5 +35,5 @@ export const DELETE = 'DELETE'
 
 export const CONTAINER = 'container'
 
- export const PROTOCOL_HOSTNAME_PORT = 'https://patmahair.com'
+export const PROTOCOL_HOSTNAME_PORT = 'http://194.31.55.138'
 //export const PROTOCOL_HOSTNAME_PORT = 'http://localhost:5000'
