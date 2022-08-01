@@ -35,7 +35,7 @@ const Footer = memo(({ setLanguage }: Props) => {
 
             <div className={`${CONTAINER} ${s.footerWrapper}`}>
                 <div onClick={openPopup}>{getRulesText(language)}</div>
-                <div><a href='https://vk.com/id685971222' target='_blank' rel='noreferrer'>{getSupportText(language)}</a></div>
+                <div><a href='https://vk.com/id171718509' target='_blank' rel='noreferrer'>{getSupportText(language)}</a></div>
                 <div className={s.countryIcons}>
                     <span>{getChooseLanguageText(language)}</span>
                     <ReactCountryFlag onClick={handleLanguage} data-value={AM} countryCode={AM} style={{ fontSize: '2.5em' }} />
