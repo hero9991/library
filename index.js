@@ -16,16 +16,6 @@ app.use(express.json())
 app.use(cookieParser())
 app.use('/uploads',  express.static('uploads'))
 
-// app.use(function(req, res, next) {
-//     console.log(req.secure)
-//     console.log(req.headers['x-forwarded-proto'])
-//     if (!req.secure && req.headers['x-forwarded-proto'] !== 'https') {
-//         console.log('https://' + req.headers.host + req.url)
-//        return res.redirect('https://' + req.headers.host + req.url);
-//     }
-//     next();
-// })
-
 app.use('/api', bookRoutes)
 app.use('/api', userRoutes)
 
