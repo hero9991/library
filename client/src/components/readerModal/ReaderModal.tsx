@@ -74,7 +74,7 @@ const ReaderModal = ({ isReaderModal, setIsReaderModal, setBookFormat, currentBo
     const addBook = async () => {
         setIsUploadFormModal(true)
     }
-    const isEmojiSupported = !emojiSupport();
+    const isEmojiSupported = emojiSupport();
 
     return (
         <div onClick={() => setIsReaderModal(false)} className={isReaderModal ? `${s.readerModal} ${s.active}` : s.readerModal}>
