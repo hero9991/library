@@ -13,13 +13,24 @@
     cursor: pointer;
 }
 
-.countryIcons span {
+.countryIcons {
+    display: flex;
+    align-items: center;
+}
+
+.emojiFlag {
     cursor: pointer;
     padding-left: 6px;
     transition: all linear .2s;
     vertical-align: middle;
 }
-.countryIcons span:hover {
+.commonFlag {
+    cursor: pointer;
+    width: 30px;
+    margin-left: 6px;
+    transition: all linear .2s;
+}
+.emojiFlag:hover, .commonFlag:hover {
     transform: scale(1.1);
 }
 

@@ -38,6 +38,7 @@
 .readerModalContent > div {
     font-weight: 900;
     margin: auto;
+    text-align: center;
 }
 .figure {
     transition: all linear .2s;
@@ -100,4 +101,8 @@
     border-radius: 5px;
     border: 2px #000 solid;
     cursor: pointer;
+}
+
+.commonFlag {
+    width: 50%;
 }

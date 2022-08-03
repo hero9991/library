@@ -1,4 +1,6 @@
 import ReactCountryFlag from 'react-country-flag'
+import emojiSupport from 'detect-emoji-support'
+import { RU as RU_FLAG, AM as AM_FLAG, GB as GB_FLAG } from 'country-flag-icons/react/3x2'
 import { AM, GB, RU, DOWNLOAD, OPEN, UPLOAD, DELETE, SUBMIT } from '../../utility/Constants'
 import s from './ReaderModal.module.css'
 import { actionTypes, book, bookFormats } from '../../utility/commonTypes'
@@ -51,9 +53,8 @@ const ReaderModal = ({ isReaderModal, setIsReaderModal, setBookFormat, currentBo
     const items = ['epubRU', 'epubAM', 'epubEN', 'pdfRU', 'pdfAM', 'pdfEN']
     
     const handleBook = (e: any) => {
-        console.log(e.target.dataset.format)
         if (isDownload) return
-        setCurrentBookFormat(e.target.dataset.format)
+        setCurrentBookFormat(e.currentTarget.dataset.format)
 
         isOpen && currentBookFormat && currentBookFormat.includes('epub') && openEpubReader()
         isDelete && deleteBook()
@@ -66,25 +67,24 @@ const ReaderModal = ({ isReaderModal, setIsReaderModal, setBookFormat, currentBo
     }
 
     const deleteBook = async () => {
-            console.log(currentBook)
-            console.log(currentBookFormat)
             if (!currentBookFormat) return
             const book = await postDeletionOfBookFile(currentBook._id, currentBookFormat as bookFormats)
-            console.log(book)
             setCurrentBook(book.data.updatedBook)
-        
     }
     const addBook = async () => {
         setIsUploadFormModal(true)
     }
+    const isEmojiSupported = !emojiSupport();
 
     return (
         <div onClick={() => setIsReaderModal(false)} className={isReaderModal ? `${s.readerModal} ${s.active}` : s.readerModal}>
             {currentBook && <div onClick={e => e.stopPropagation()} className={isReaderModal ? `${s.readerModalContent} ${s.active}` : s.readerModalContent}>
                 <div></div>
-                <div><ReactCountryFlag countryCode={RU} style={{ fontSize: '2em' }} /></div>
-                <div><ReactCountryFlag countryCode={AM} style={{ fontSize: '2em' }} /></div>
-                <div><ReactCountryFlag countryCode={GB} style={{ fontSize: '2em' }} /></div>
+                <div>{isEmojiSupported ? <ReactCountryFlag countryCode={RU} style={{ fontSize: '2em' }} /> : <AM_FLAG className={s.commonFlag} />}</div>
+                <div>{isEmojiSupported ? <ReactCountryFlag countryCode={AM} style={{ fontSize: '2em' }} /> : <RU_FLAG className={s.commonFlag} />}</div>
+                <div>{isEmojiSupported ? <ReactCountryFlag countryCode={GB} style={{ fontSize: '2em' }} /> : <GB_FLAG className={s.commonFlag} />}</div>
+          
+                    
                 <div>EPUB</div>
                 {items.slice(0, 3).map((item, index) => <FigureItem key={item} handleBook={handleBook} figureType={!(index % 2) ? 'circle' : 'rhombus'} 
                     format={item as bookFormats} currentBook={currentBook} isDownload={isDownload} isOpen={isOpen} isUpload={isUpload} isDelete={isDelete} />)}

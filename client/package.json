@@ -1,12 +1,14 @@
 {
   "name": "client",
   "version": "0.1.0",
-  "homepage": ".",
+  "homepage": "https://patmahair.com/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.24.0",
+    "country-flag-icons": "^1.5.5",
+    "detect-emoji-support": "^0.1.7",
     "epubjs": "^0.3.93",
     "jwt-decode": "^3.1.2",
     "react": "^17.0.2",
