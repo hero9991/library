@@ -80,10 +80,12 @@ const ReaderModal = ({ isReaderModal, setIsReaderModal, setBookFormat, currentBo
         <div onClick={() => setIsReaderModal(false)} className={isReaderModal ? `${s.readerModal} ${s.active}` : s.readerModal}>
             {currentBook && <div onClick={e => e.stopPropagation()} className={isReaderModal ? `${s.readerModalContent} ${s.active}` : s.readerModalContent}>
                 <div></div>
-                <div>{isEmojiSupported ? <ReactCountryFlag countryCode={RU} style={{ fontSize: '2em' }} /> : <AM_FLAG className={s.commonFlag} />}</div>
+                {/* <div>{isEmojiSupported ? <ReactCountryFlag countryCode={RU} style={{ fontSize: '2em' }} /> : <AM_FLAG className={s.commonFlag} />}</div>
                 <div>{isEmojiSupported ? <ReactCountryFlag countryCode={AM} style={{ fontSize: '2em' }} /> : <RU_FLAG className={s.commonFlag} />}</div>
-                <div>{isEmojiSupported ? <ReactCountryFlag countryCode={GB} style={{ fontSize: '2em' }} /> : <GB_FLAG className={s.commonFlag} />}</div>
-          
+                <div>{isEmojiSupported ? <ReactCountryFlag countryCode={GB} style={{ fontSize: '2em' }} /> : <GB_FLAG className={s.commonFlag} />}</div> */}
+                <div><AM_FLAG className={s.commonFlag} /></div>
+                <div><RU_FLAG className={s.commonFlag} /></div>
+                <div><GB_FLAG className={s.commonFlag} /></div>
                     
                 <div>EPUB</div>
                 {items.slice(0, 3).map((item, index) => <FigureItem key={item} handleBook={handleBook} figureType={!(index % 2) ? 'circle' : 'rhombus'} 

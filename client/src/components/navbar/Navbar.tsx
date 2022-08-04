@@ -38,14 +38,31 @@ const Navbar = ({ setIsLoginModal, setIsSignUpModal }: Props) => {
         }
     }
 
-    const searchBooks = (e: any) => {
+    const searchBooks = (e: any) => {        
         window.clearTimeout(delay)
+
+        if (!e.target.value) return
 
         setDelay(
             window.setTimeout(() => {
                 history.push(`/catalog/search?value=${e.target.value}`)
             }, 1500)
         )
+    }
+
+    const immidiateSearch = (e: any) => {
+        if (e.key !== 'Enter') return
+
+        window.clearTimeout(delay)
+       
+        if (!e.target.value) return
+        
+        history.push(`/catalog/search?value=${e.target.value}`)
+    }
+
+    const resetInput = (e: any) => {
+        window.clearTimeout(delay)
+        e.target.value = '';
     }
 
     const disableArticleTab = (e: any) => {
@@ -69,14 +86,21 @@ const Navbar = ({ setIsLoginModal, setIsSignUpModal }: Props) => {
                                 <li><NavLink exact activeClassName={s.active} onClick={toggleBurgerMenu} to={`${CATALOG_HISTORY_URL}?${SORT_PARAMETER}byPopularity&${TOPIC_PARAMETER}all`}>{isBurgerActive && <FaGlobeEurope className={s.menuIcon} />}{getHistoryTabText(language)}</NavLink></li>
                                 <li><NavLink exact activeClassName={s.active} onClick={disableArticleTab} to="/catalog/articles">{isBurgerActive && <FaRegFileAlt className={s.menuIcon} />}{getArticlesTabText(language)}</NavLink></li>
                                 <li><NavLink exact activeClassName={s.active} onClick={toggleBurgerMenu} to="/catalog/books">{isBurgerActive && <FaBookReader className={s.menuIcon} />}{getMyBooksTabText(language)}</NavLink></li>
+                                {isBurgerActive && <li className={s.burgerLinks}>
+                                    <a href="https://vk.com/patmahayrr" className={`${s.fa} ${s.faVk}`} target='_blank' rel='noreferrer'><FaVk /></a>
+                                    <a href="https://t.me/patmahayrr" className={`${s.fa} ${s.faTelegram}`} target='_blank' rel='noreferrer'><FaTelegramPlane /></a>
+                                    <a href="https://www.youtube.com/channel/UC6vrmiSj7IzUTqk-qdoabfg" className={`${s.fa} ${s.faYoutube}`} target='_blank' rel='noreferrer'><FaYoutube /></a>
+                                    <a href="https://www.facebook.com/%D5%8A%D5%A1%D5%BF%D5%B4%D5%A1%D5%B0%D5%A1%D5%B5%D6%80%D0%9F%D0%B0%D1%82%D0%BC%D0%B0%D1%85%D0%B0%D0%B9%D1%80Patmahayr-108867618374947" className={`${s.fa} ${s.faFacebook}`} target='_blank' rel='noreferrer'><FaFacebookF /></a>
+                                </li>}
                             </ul>
+                            
                             <button className={`${s.burger} ${isBurgerActive ? s.burgerActive : undefined}`} onClick={toggleBurgerMenu}>
                                 <span></span>
                             </button>
                         </div>
 
                         <form className={`${s.form} ${isInputActive ? s.activeForm : undefined}`} onSubmit={e => e.preventDefault()}>
-                            <input onChange={e => searchBooks(e)} type={TEXT} placeholder={getSearchPlaceholderText(language)} />
+                            <input onChange={searchBooks} onKeyDown={immidiateSearch} onBlur={resetInput} type={TEXT} placeholder={getSearchPlaceholderText(language)} />
                             <FaSearch />
                         </form>
 

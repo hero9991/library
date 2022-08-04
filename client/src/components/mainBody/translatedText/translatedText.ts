@@ -14,10 +14,10 @@ export const getTitleSecondText = (language: language) => language === EN
         : 'Մեր արմատները'
 
 export const getButtonUpperText = (language: language) => language === EN
-    ? 'PDF Version is Available'
+    ? 'PDF/EPUB formats are Available'
     : language === RU
-        ? 'Версия в PDF формате доступна'
-        : 'PDF տարբերակը հասանելի է'
+        ? 'Книги в PDF/Epub форматах доступны'
+        : 'PDF/EPUB տարբերակները հասանելի էն'
 
 export const getReadButtonText = (language: language) => language === EN
     ? 'Read now'

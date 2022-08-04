@@ -98,7 +98,7 @@
     }
 }
 @media (max-width: 1350px) {
-    .topText h2{
+    .topText div {
         font-size: 40px;
     }
 }
@@ -160,9 +160,9 @@
 @media screen and (orientation:portrait) and (max-width: 767px) {
     .bottomContent img {
         position: absolute;
-        bottom: 20%;
+        bottom: 25%;
         height: unset;
-        max-width: 85%;
+        max-width: 93%;
         max-height: 90vh;
         /* display: none;; */
     }

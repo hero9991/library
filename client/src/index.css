@@ -198,3 +198,7 @@ button {
     width: 1170px;
   }
 }
+
+.Toastify__toast-container--top-center {
+  margin-left: 0;
+}

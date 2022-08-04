@@ -120,6 +120,7 @@
   border: none;
   opacity: 0.9;
   transition: all linear 0.2s;
+  color: black;
 }
 .viewMoreButton:hover {
   color: #fff;

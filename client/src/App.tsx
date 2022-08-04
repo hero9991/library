@@ -24,7 +24,6 @@ function App() {
   const [isSignUpModal, setIsSignUpModal] = useState<boolean>(false)
 
   useEffect(() => {
-    console.log('in useEffect');
     (async function () {
       try {
         if (!localStorage.getItem(TOKEN)) return await setCurrentLanguageByLocation()

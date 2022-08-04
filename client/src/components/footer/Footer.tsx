@@ -18,7 +18,6 @@ const Footer = memo(({ setLanguage }: Props) => {
 
     const handleLanguage = (e: any) => {
         const selectedLanguage: language = e.currentTarget.dataset.value
-        console.log(selectedLanguage)
         setLanguage(selectedLanguage)
 
         if (!user?._id) return
@@ -38,7 +37,7 @@ const Footer = memo(({ setLanguage }: Props) => {
             <div className={`${CONTAINER} ${s.footerWrapper}`}>
                 <div onClick={openPopup}>{getRulesText(language)}</div>
                 <div><a href='https://vk.com/id171718509' target='_blank' rel='noreferrer'>{getSupportText(language)}</a></div>
-                {emojiSupport() 
+                {/* {emojiSupport() 
                 ? <div className={s.countryIcons}>
                     <span>{getChooseLanguageText(language)}</span>
                     <ReactCountryFlag className={s.emojiFlag} onClick={handleLanguage} data-value={AM} countryCode={AM} style={{ fontSize: '2.5em' }} />
@@ -50,7 +49,13 @@ const Footer = memo(({ setLanguage }: Props) => {
                     <AM_FLAG className={s.commonFlag} onClick={handleLanguage} data-value={AM} />
                     <RU_FLAG className={s.commonFlag} onClick={handleLanguage} data-value={RU}/>
                     <GB_FLAG className={s.commonFlag} onClick={handleLanguage} data-value={EN} />
-                </div>}
+                </div>} */}
+                <div className={s.countryIcons}>
+                    <span>{getChooseLanguageText(language)}</span>
+                    <AM_FLAG className={s.commonFlag} onClick={handleLanguage} data-value={AM} />
+                    <RU_FLAG className={s.commonFlag} onClick={handleLanguage} data-value={RU}/>
+                    <GB_FLAG className={s.commonFlag} onClick={handleLanguage} data-value={EN} />
+                </div>
             </div>
         </section>
     )

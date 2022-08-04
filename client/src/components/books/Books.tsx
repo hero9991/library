@@ -88,7 +88,7 @@ function Books() {
             && !searchValue) return
         let id
         try {
-            id = toast.loading("Please wait...")
+            if (!isFirstChunk) id = toast.loading("Please wait...")
             const response = currentRoute === SEARCH ? await getBooksBySearch(searchValue as string, chunk)
                                                      : await getBooks(currentRoute as string, chunk, currentSort as string, 
                                                                       currentTopic as string, isReversed, language)
@@ -99,7 +99,7 @@ function Books() {
         } catch (error: any) {
             return toast.error(error.message)
         } finally {
-            toast.dismiss(id);
+            if (!isFirstChunk) toast.dismiss(id)
         }
     }
 
