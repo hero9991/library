@@ -83,8 +83,8 @@ const ReaderModal = ({ isReaderModal, setIsReaderModal, setBookFormat, currentBo
                 {/* <div>{isEmojiSupported ? <ReactCountryFlag countryCode={RU} style={{ fontSize: '2em' }} /> : <AM_FLAG className={s.commonFlag} />}</div>
                 <div>{isEmojiSupported ? <ReactCountryFlag countryCode={AM} style={{ fontSize: '2em' }} /> : <RU_FLAG className={s.commonFlag} />}</div>
                 <div>{isEmojiSupported ? <ReactCountryFlag countryCode={GB} style={{ fontSize: '2em' }} /> : <GB_FLAG className={s.commonFlag} />}</div> */}
-                <div><AM_FLAG className={s.commonFlag} /></div>
                 <div><RU_FLAG className={s.commonFlag} /></div>
+                <div><AM_FLAG className={s.commonFlag} /></div>
                 <div><GB_FLAG className={s.commonFlag} /></div>
                     
                 <div>EPUB</div>
