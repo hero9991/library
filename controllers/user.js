@@ -84,11 +84,9 @@ export const authorizeGoogleAccount = async (req, res) => {
 } 
 
 export const setLanguage = async (req, res) => {
-    console.log(111)
     const { language, userId } = req.body
 
     try {
-        console.log(111)
         await User.findOneAndUpdate({ _id: userId }, { language })
         res.status(200).json({ language })
     } catch (error) {

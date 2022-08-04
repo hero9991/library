@@ -6,7 +6,7 @@ export const getBooks = async (req, res) => {
     const { type, chunkNumber, sort, topic, isReversed, language} = req.query
 
     try {
-        const LIMIT = 3
+        const LIMIT = 5
         const countToSkip = (Number(chunkNumber) - 1) * LIMIT
         const total = topic === 'all'
             ? await Book.countDocuments({ type })
@@ -56,7 +56,7 @@ export const getBooksBySearch = async (req, res) => {
 
     try {
         const searchText = new RegExp(searchQuery, 'i')
-        const LIMIT = 3
+        const LIMIT = 5
         const countToSkip = (Number(chunkNumber) - 1) * LIMIT
         const searchObject = {
             $or: [
@@ -188,13 +188,10 @@ export const addBookFile = async (req, res) => {
 }
 
 export const deleteBookFile = async (req, res) => {
-    console.log(123)
     const { bookId, bookFormat } = req.body
-console.log(44)
+
     try {
-        console.log(bookId)
         const book = await Book.findById(bookId);
-        console.log(bookFormat)
         unlink(book[bookFormat].substring(1), async (err) => {
             if (err) throw err;
             console.log('path/file.txt was deleted');
