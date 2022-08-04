@@ -7,10 +7,10 @@ import { CATALOG_HISTORY_URL, CATALOG_LITERATURE_URL, CONTAINER, SORT_PARAMETER,
 import { language, sortingTopics, topics } from '../../../utility/commonTypes'
 
 const Sorting = memo(({ currentSort, currentTopic, language, isReversed, setIsReversed, isLiterature }: Props) => {
-    const sortingTopics: sortingTopics[] = ['byPopularity', 'byRating', 'byAlphabet']
+    const sortingTopics: sortingTopics[] = ['byPopularity', 'byRating', 'byAlphabet']    
     const topics: topics[] = isLiterature 
-        ? ['all', 'artisticWorks', 'epics', 'poems', 'memoirs', 'rhymes'] 
-        : ['all', 'historicalNovels', 'sovietHistoriography', 'prerevolutionaryHistoriography', 'partyLiterature' ]
+        ? ['all', 'literature', 'novels', 'historicalNovels', 'epics', 'poems', 'biographies'] 
+        : ['all', 'culture', 'fromPoliticians', 'lettersAndDocuments', 'sovietHistoriography', 'historicalWritings', 'outstandingArmenians']
     const url = isLiterature ? CATALOG_LITERATURE_URL : CATALOG_HISTORY_URL
 
     return (

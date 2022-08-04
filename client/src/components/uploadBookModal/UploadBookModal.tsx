@@ -73,9 +73,10 @@ const UploadBookModal = ({ isUploadModal, setIsUploadModal, bookId, setCurrentBo
         ['literature', 'history'].includes(inputString)
 
     const isTypeTopics = (inputString: string): inputString is topics => 
-        ['historicalNovels', 'sovietHistoriography', 'prerevolutionaryHistoriography', 
-        'partyLiterature', 'nationalPhilosophy', 'artisticWorks', 'epics', 'poems', 
-        'memoirs', 'rhymes'].includes(inputString)
+        [
+            'literature', 'novels', 'historicalNovels', 'epics', 'poems', 'biographies', 
+            'culture', 'fromPoliticians', 'lettersAndDocuments', 'sovietHistoriography', 'historicalWritings', 'outstandingArmenians'
+        ].includes(inputString)
     
 
     const hidePopup = () => setIsUploadModal(false)

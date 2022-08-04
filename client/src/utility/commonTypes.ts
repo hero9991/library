@@ -40,8 +40,8 @@ export type bookFormats = 'pdfRU' | 'pdfEN' | 'pdfAM' | 'epubRU' | 'epubEN' | 'e
 export type actionTypes = 'OPEN' | 'DOWNLOAD' | 'UPLOAD' | 'DELETE'
 
 export type sortingTopics = 'byPopularity' | 'byRating' | 'byAlphabet'
-export type topics =  'all' | 'historicalNovels' | 'sovietHistoriography' | 'prerevolutionaryHistoriography' | 'partyLiterature' 
-    | 'nationalPhilosophy' | 'artisticWorks' | 'epics' | 'poems' | 'memoirs' | 'rhymes'
+export type topics =  'all' | 'literature' | 'novels' | 'historicalNovels' | 'epics' | 'poems' | 'biographies'
+    | 'culture' | 'fromPoliticians' | 'lettersAndDocuments' | 'sovietHistoriography' | 'historicalWritings' | 'outstandingArmenians'
 
 export type types = 'literature' | 'history'
 
