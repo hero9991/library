@@ -47,7 +47,8 @@ function App() {
   }, [])
 
   const setCurrentLanguageByLocation = async () => {
-      const currentlanguage = (await getCurrentCountryAddress()).data.country_code // не работает для сафари
+      const currentlanguage = (await getCurrentCountryAddress()).data.country
+      console.log(currentlanguage)
       if (currentlanguage === RU || currentlanguage === AM) setLanguage(currentlanguage)
   }
 

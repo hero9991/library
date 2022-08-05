@@ -60,4 +60,4 @@ export const updateBookInfo = (data: any) => $api.post('/updateBookInfo', data)
 export const addBookFile = (data: any) => $api.post('/addBookFile', data)
 export const deleteBookFile = (bookId: string, bookFormat: bookFormats) => $api.post('/deleteBookFile', { bookId, bookFormat })
 
-export const getCurrentCountryAddress = () => axios.get('https://ipapi.co/json/')
+export const getCurrentCountryAddress = () => axios.get('https://ipinfo.io/json?token=681314bfddb2d3')
