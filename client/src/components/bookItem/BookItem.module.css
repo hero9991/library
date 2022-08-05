@@ -104,7 +104,7 @@
     font-size: 16px;
     color: #ADAA9A;
     letter-spacing: 1px;
-    margin: 10px 0;
+    margin: 8px 0 10px;
 }
 
 .ratingWrapper {
@@ -185,11 +185,8 @@
     }
 }
 @media (max-width: 684px) {
-    .title {
-        line-height: 0.9em;
-    }
     .author{
-        margin: 7px 0;
+        margin: 5px 0 7px;
     }
     .textContent > div {
         height: 23px;
@@ -210,10 +207,10 @@
         margin-left: 10px;
     }
     .title {
-        font-size: 20px;
+        font-size: 16px;
     }
     .author {
-        font-size: 14px;
+        font-size: 12px;
     }
     .text {
         font-size: 14px;
@@ -239,5 +236,15 @@
     }
     .text {
         line-height: 1.29;
+        font-size: 12px;
+        -webkit-line-clamp: 5;
+    }
+    .title {
+        font-size: 14px;
+        max-width: 80%;
+    }
+    .author {
+        font-size: 10px;
+        margin: 3px 0 5px;
     }
 }
