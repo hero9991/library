@@ -82,6 +82,13 @@
     border: 1px #000 solid;
     cursor: pointer;
 }
+.disabledButton {
+    height: 41px;
+    border-radius: 5px;
+    border: 1px #000 solid;
+    pointer-events: none;
+    background-color: gray;
+}
 
 .errorText {
   color: rgb(255, 0, 0);

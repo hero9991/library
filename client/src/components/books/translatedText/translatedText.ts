@@ -59,7 +59,7 @@ export const topicTranslations = {
         poems: 'Поэмы',
         biographies: 'Биографии',
 
-        culture: 'Култура',
+        culture: 'Культура',
         fromPoliticians: 'От политиков и партий',
         lettersAndDocuments: 'Письма и документы',
         sovietHistoriography: 'Советская историография',

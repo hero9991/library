@@ -5,6 +5,7 @@ import { COMMON, FILE, SUBMIT, TEXT } from '../../utility/Constants';
 import { toast } from 'react-toastify';
 import { setClientSideError } from '../../utility/ErrorHelper';
 import { topics, types } from '../../utility/commonTypes';
+import { useState } from 'react';
 
 const UploadBookInput = ({ errors, register, clearErrors, type, item, isOptional, isUpdate }: ChildProps) => {
     const isRequired = !isOptional && !isUpdate;
@@ -35,6 +36,7 @@ interface ChildProps {
 }
 
 const UploadBookModal = ({ isUploadModal, setIsUploadModal, bookId, setCurrentBook }: Props) => {
+    const [isDisabledButton, setIsDisabledButton] = useState(false)
     const { register, handleSubmit, reset, clearErrors, setError, formState: { errors } } = useForm()
     const bookKeys = ['titleRU',       'titleEN',       'titleAM', 
                       'descriptionRU', 'descriptionEN', 'descriptionAM', 
@@ -47,6 +49,9 @@ const UploadBookModal = ({ isUploadModal, setIsUploadModal, bookId, setCurrentBo
 
     const onSubmit = async (e: any) => {
         try {
+            if (isDisabledButton) return
+
+            setIsDisabledButton(true)
             const formData = new FormData()
             const getValue = (key: string, index: number) => index <= 11 ? addBreakForDescriptioins(e[key], key) : e[key] && e[key][0]
             const addBreakForDescriptioins = (value: string, key: string) => key.includes('description') ? value.replace(/\\n/g, "\n") : value
@@ -66,6 +71,8 @@ const UploadBookModal = ({ isUploadModal, setIsUploadModal, bookId, setCurrentBo
             reset()
         } catch (error) {
             toast.error(`Error ${error}`)
+        } finally {
+            setIsDisabledButton(false)
         }
     }
 
@@ -97,7 +104,7 @@ const UploadBookModal = ({ isUploadModal, setIsUploadModal, bookId, setCurrentBo
                             <UploadBookInput errors={errors} register={register} clearErrors={clearErrors} type={FILE} item={key} isOptional={key !== 'image'}/>
                         </div>)}
                     </div>}
-                    <input className={s.uploadButton} type={SUBMIT} value={bookId ? 'Update the book' : 'Upload the book'} />
+                    <input className={isDisabledButton ? s.disabledButton : s.uploadButton} type={SUBMIT} value={bookId ? 'Update the book' : 'Upload the book'} />
                     {errors.common && <p className={s.errorText}>{errors.common.message}</p>}
                 </form>
             </div>
