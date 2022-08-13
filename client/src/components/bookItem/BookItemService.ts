@@ -8,7 +8,7 @@ export const postAddOrRemoveBook = async (bookItem: book, user: user, titleKey: 
         pending: 'Pending',
         success: {
             render({ data }: any) {
-                return data.data.length > user.books.length
+                return data.data.userBookIds.length > user.books.length
                     ? `${bookItem[titleKey]} has been added 👌`
                     : `${bookItem[titleKey]} has been deleted 👌`
             }
