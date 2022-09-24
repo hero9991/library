@@ -13,7 +13,7 @@
 }
 
 .content {
-  padding: 70px 70px;
+  padding: 70px 70px 10px;
 }
 
 .mainContent {
@@ -130,7 +130,7 @@
     height: 220px;
   }
   .content {
-    padding: 40px 100px;
+    padding: 40px 100px 10px;
   }
   .bookPage {
     min-height: calc(100vh - 66px - 70px);
@@ -149,7 +149,7 @@
 }
 @media (max-width: 1199px) {
   .content {
-    padding: 40px 10px;
+    padding: 40px 10px 10px;
   }
   .title {
     font-size: 30px;
@@ -167,9 +167,6 @@
 @media (max-width: 991px) {
   .bookPage:before {
     height: 190px;
-  }
-  .content {
-    padding: 40px 10px;
   }
   .image {
     width: 35%;

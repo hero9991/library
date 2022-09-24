@@ -6,8 +6,8 @@ import { BsBookmarkCheckFill, BsFillBookmarkPlusFill, BsBookmark } from 'react-i
 import { UserContext } from '../../App'
 import { toast } from 'react-toastify'
 import { postAddOrRemoveBook } from './BookItemService'
-import { AUTHOR, BOOKS, BOOK_URL, DESCRIPTION, PROTOCOL_HOSTNAME_PORT, TITLE } from '../../utility/Constants'
-import { getReadNowText, getUnauthorizedWarningText } from './translatedText/translatedText'
+import { AUTHOR, BOOKS, BOOK_URL, DESCRIPTION, getUnauthorizedWarningText, PROTOCOL_HOSTNAME_PORT, TITLE } from '../../utility/Constants'
+import { getReadNowText } from './translatedText/translatedText'
 import { book, UserContextInterface } from '../../utility/commonTypes'
 
 const BookItem = memo(({ isSecond, bookItem, books, setBooks, currentRoute }: Props) => {
@@ -21,7 +21,7 @@ const BookItem = memo(({ isSecond, bookItem, books, setBooks, currentRoute }: Pr
     const addOrRemove = async () => {
         if (!user) return toast.warning(getUnauthorizedWarningText(language))
 
-        const response = await postAddOrRemoveBook(bookItem, user, titleKey)
+        const response = await postAddOrRemoveBook(bookItem, user, titleKey, language)
 
         setUser({ ...user, books: response.data.userBookIds })
 

@@ -1,19 +1,23 @@
 import { validateAccessToken } from '../controllers/token.js';
 
-const adminAuth = async (req, res, next) => {
+const adminAuth = (req, res, next) => {
     try {
-        const token = req.headers.authorization?.split(' ')[1];
-        if (!token) return next(res.status(401).json({ message: 'User is not logged in' }))
-
-        const decodedData = validateAccessToken(token)
-
-        if (decodedData?.email !== process.env.ADMIN_EMAIL) return next(res.status(401).json({ message: 'Invalid credentials' }))
-        req.user = { email: decodedData.email, id: decodedData.id } // why do we need this?
+        const decodedUserData = getDecodedUserData(req)
+        if (!isAdminUser(decodedUserData)) return next(res.status(401).json({ message: 'Invalid credentials' }))
+        req.user = { email: decodedUserData.email, id: decodedUserData.id } // why do we need this?
 
         next()
     } catch (error) {
         next(res.status(401).json({ message: error || 'auth catch block' }))
     }
 }
+
+export const getDecodedUserData = (req) => {
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) return
+
+    return validateAccessToken(token)
+}
+export const isAdminUser = (decodedUserData) => decodedUserData?.email === process.env.ADMIN_EMAIL
 
 export default adminAuth

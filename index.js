@@ -6,6 +6,7 @@ import dotenv  from "dotenv"
 
 import bookRoutes from './routes/books.js'
 import userRoutes from './routes/users.js'
+import commentRoutes from './routes/comments.js'
 
 dotenv.config()
 
@@ -18,6 +19,7 @@ app.use('/uploads',  express.static('uploads'))
 
 app.use('/api', bookRoutes)
 app.use('/api', userRoutes)
+app.use('/api', commentRoutes)
 
 const PORT = process.env.PORT || 5000
 

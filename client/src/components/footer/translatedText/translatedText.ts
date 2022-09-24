@@ -19,6 +19,12 @@ export const getChooseLanguageText = (language: language) => language === EN
         ? 'Выберите язык: '
         : 'Ընտրեք լեզուն․ '
 
+export const getLanguageUpdatedText = (language: language) => language === EN
+    ? 'Language has been set'
+    : language === RU
+        ? 'Язык установлен'
+        : 'Լեզուն սահմանվել է'
+
 export const getRulesInnerText = (language: language) => language === EN
     ? 'The project is not commercial and is aimed solely at educational purposes. We respect copyrights, so if you find violations, please report them immediately by clicking on the support link. Enjoy reading.'
     : language === RU

@@ -21,12 +21,8 @@ export const getBooks = async (req, res) => {
         let sortDirection = sortBy === title ? 1 : -1
         sortDirection = isReversed === 'true' ?  -sortDirection : sortDirection
 
-        const bookData = topic === 'all'
-            ? await Book.find({ type })
-                        .sort({ [sortBy]: sortDirection, _id: -1 })
-                        .limit(LIMIT)
-                        .skip(countToSkip)
-            : await Book.find({ type, topic })
+        const findBody = topic === 'all' ? { type } : { type, topic }
+        const bookData = await Book.find(findBody)
                         .sort({ [sortBy]: sortDirection, _id: -1 })
                         .limit(LIMIT)
                         .skip(countToSkip)

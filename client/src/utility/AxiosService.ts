@@ -60,4 +60,11 @@ export const updateBookInfo = (data: any) => $api.post('/updateBookInfo', data)
 export const addBookFile = (data: any) => $api.post('/addBookFile', data)
 export const deleteBookFile = (bookId: string, bookFormat: bookFormats) => $api.post('/deleteBookFile', { bookId, bookFormat })
 
+// Comments
+export const getComments = (parentId: string) => $api.get('/comments', { params: { parentId } })
+export const createComment = (userId: string, userName: string, parentId: string, body: string) => $api.post('/createComment', { userId, userName, parentId, body })
+export const updateComment = (commentId: string, body: string, userId: string) => $api.post('/updateComment', { commentId, body, userId })
+export const deleteComment = (commentId: string, userId: string) => $api.post('/deleteComment', { commentId, userId })
+export const reactComent = (commentId: string, userId: string, isLike: boolean) => $api.post('/reactComment', { commentId, userId, isLike })
+
 export const getCurrentCountryAddress = () => axios.get('https://ipinfo.io/json?token=681314bfddb2d3')

@@ -35,6 +35,18 @@ export type book = {
     _id: string
 }
 
+export type comment = {
+    userId: string
+    userName: string
+    parentId: string
+    createdDate: string
+    body: string
+    likes: string[]
+    dislikes: string[]
+    isUpdated: boolean
+    _id: string
+}
+
 export type bookFormats = 'pdfRU' | 'pdfEN' | 'pdfAM' | 'epubRU' | 'epubEN' | 'epubAM'
 
 export type actionTypes = 'OPEN' | 'DOWNLOAD' | 'UPLOAD' | 'DELETE'

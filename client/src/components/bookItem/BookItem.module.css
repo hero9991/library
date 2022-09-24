@@ -166,6 +166,9 @@
     .bookmarkToAdd {
         display: none;
     }
+    .item:first-child {
+        margin-top: 20px;
+    }
     .item {
         border-radius: 20px;
     }

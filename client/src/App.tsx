@@ -26,7 +26,7 @@ function App() {
   useEffect(() => {
     (async function () {
       try {
-        if (!localStorage.getItem(TOKEN)) return await setCurrentLanguageByLocation()
+        if (!localStorage.getItem(TOKEN)) return setCurrentLanguageByLocation()
 
         const response = await checkAuth()
 
@@ -37,10 +37,9 @@ function App() {
         if (response.data.user.language) {
           setLanguage(response.data.user.language)
         } else {
-          await setCurrentLanguageByLocation()
+          setCurrentLanguageByLocation()
         }
       } catch (error: any) {
-        console.log(error)
         toast.error(`Error ${error}`)
       }
     })()
@@ -48,7 +47,6 @@ function App() {
 
   const setCurrentLanguageByLocation = async () => {
       const currentlanguage = (await getCurrentCountryAddress()).data.country
-      console.log(currentlanguage)
       if (currentlanguage === RU || currentlanguage === AM) setLanguage(currentlanguage)
   }
 

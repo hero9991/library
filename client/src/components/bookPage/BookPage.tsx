@@ -11,6 +11,7 @@ import ReaderModal from '../readerModal/ReaderModal'
 import { actionTypes, book, bookFormats, UserContextInterface } from '../../utility/commonTypes'
 import UpdateBook from '../updateBook/UpdateBook'
 import { getDeleteBookText, getDownloadText, getReadNowText, getShowFullDescriptionText, getUploadBookText } from './translatedText/translatedText'
+import CommentSection from '../commentSection/CommentSection'
 
 
 function BookPage() {
@@ -89,6 +90,8 @@ function BookPage() {
                         <button onClick={openReaderModal} data-type={DELETE}>{getDeleteBookText(language)}</button>
                         <button onClick={openReaderModal} data-type={UPLOAD}>{getUploadBookText(language)}</button>
                     </div>}
+
+                    <CommentSection bookId={bookId}/>
 
                     <ReaderModal isReaderModal={isReaderModal} setIsReaderModal={setIsReaderModal} setBookFormat={setBookFormat} currentBook={currentBook as book} actionType={actionType} setCurrentBook={setCurrentBook}/>
                     {currentBook && isOpen && bookFormatKey && <Reader bookUrl={currentBook[bookFormatKey]} setBookFormat={setBookFormat}/>}

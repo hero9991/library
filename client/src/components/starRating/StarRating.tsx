@@ -5,15 +5,16 @@ import { UserContext } from '../../App';
 import { toast } from 'react-toastify';
 import { postBookRating } from './StarRatingService';
 import { book, UserContextInterface } from '../../utility/commonTypes';
+import { getUnauthorizedWarningText } from '../../utility/Constants';
 
 const StarRating = ({ book, books, setBooks }: Props) => {
-    const { user, setUser } = useContext<UserContextInterface>(UserContext)
+    const { user, setUser, language } = useContext<UserContextInterface>(UserContext)
     const [hover, setHover] = useState<number | null>(null);
 
     const setRating = async (ratingValue: number) => {
-        if (!user) return toast.warning('Firstly you need to authorize')
+        if (!user) return toast.warning(getUnauthorizedWarningText(language))
         
-        const ratingData = await postBookRating(book._id, user._id, ratingValue) 
+        const ratingData = await postBookRating(book._id, user._id, ratingValue, language)
         setUser({ ...user, bookRatings: { ...user.bookRatings, [book._id]: ratingValue } })
         setBooks(books.map(bookItem => bookItem._id === book._id
             ? { ...bookItem, rating: ratingData.data.rating, ratingCount: ratingData.data.ratingCount }
