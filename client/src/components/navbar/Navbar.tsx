@@ -5,7 +5,7 @@ import { FaYoutube, FaTelegramPlane, FaVk, FaFacebookF, FaSignInAlt, FaSearchPlu
 import { UserContext } from '../../App'
 import { toast } from 'react-toastify'
 import { postSignOut } from './NavbarService'
-import { getArticlesTabText, getHistoryTabText, getHomeTabText, getLiteratureTabText, getLogOutTabText, getMyBooksTabText, getSignUpTabText, getLoginTabText, getSearchPlaceholderText, getArticleDisabledText } from './translatedText/translatedText'
+import { getArticlesTabText, getHistoryTabText, getHomeTabText, getLiteratureTabText, getLogOutTabText, getMyBooksTabText, getSignUpTabText, getLoginTabText, getSearchPlaceholderText } from './translatedText/translatedText'
 import { AM, CATALOG_ARTICLE_URL, CATALOG_HISTORY_URL, CATALOG_LITERATURE_URL, CONTAINER, RU, SORT_PARAMETER, TEXT, TOPIC_PARAMETER } from '../../utility/Constants'
 import { UserContextInterface } from '../../utility/commonTypes'
 
