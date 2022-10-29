@@ -56,20 +56,20 @@ export const getPostsUpperText = (language: language) => language === EN
         : 'ՄԵԿՆԱԲԱՆՈՒԹՅՈՒՆՆԵՐ'
 
 export const getCommentSavedText = (language: language) => language === EN
-    ? 'The replay has been saved'
+    ? 'Saved'
     : language === RU
-        ? 'Ответ сохранен'
-        : 'Պատասխանը ավելացվել է'
+        ? 'Сохранено'
+        : 'Ավելացվել է'
 
 export const getCommentDeletedText = (language: language) => language === EN
-    ? 'The replay has been deleted'
+    ? 'Dleted'
     : language === RU
-        ? 'Ответ удален'
-        : 'Պատասխանը ջնջվել է'
+        ? 'Удалено'
+        : 'Ջնջվել է'
 
 export const getCommentUpdatedText = (language: language) => language === EN
-    ? 'The replay has been updated'
+    ? 'Updated'
     : language === RU
-        ? 'Ответ обновлен'
-        : 'Պատասխանը թարմացվել է'
+        ? 'Обновлено'
+        : 'Թարմացվել է'
         
