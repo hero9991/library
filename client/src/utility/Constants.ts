@@ -10,6 +10,7 @@ export const SUBMIT = 'submit'
 
 export const LITERATURE = 'literature'
 export const HISTORY = 'history'
+export const ARTICLE = 'article'
 export const BOOKS = 'books'
 export const SEARCH = 'search'
 
@@ -20,6 +21,7 @@ export const DESCRIPTION = 'description'
 export const BOOK_URL = '/book/'
 export const CATALOG_HISTORY_URL = '/catalog/history'
 export const CATALOG_LITERATURE_URL = '/catalog/literature'
+export const CATALOG_ARTICLE_URL = '/catalog/article'
 export const SORT_PARAMETER = 'sort='
 export const TOPIC_PARAMETER = 'topic='
 

@@ -57,8 +57,8 @@ const UploadBookModal = ({ isUploadModal, setIsUploadModal, bookId, setCurrentBo
             const addBreakForDescriptioins = (value: string, key: string) => key.includes('description') ? value.replace(/\\n/g, "\n") : value
             bookKeys.forEach((key, index) => getValue(key, index) && formData.append(key, getValue(key, index)))
 
-            if (formData.get('type') && !isTypeTypes(formData.get('type') as string)) return setClientSideError(setError, 'Correct the type field: it can be either literature or history')
-            if (formData.get('topic') && !isTypeTopics(formData.get('topic') as string)) return setClientSideError(setError, `Correct the topic field: it can be: 'historicalNovels', 'sovietHistoriography', 'prerevolutionaryHistoriography', 'partyLiterature', 'nationalPhilosophy', 'artisticWorks', 'epics', 'poems', 'memoirs', 'rhymes'`)
+            if (formData.get('type') && !isTypeTypes(formData.get('type') as string)) return setClientSideError(setError, 'Correct the type field: it can be either literature or history or article')
+            if (formData.get('topic') && !isTypeTopics(formData.get('topic') as string)) return setClientSideError(setError, `Correct the topic field: it can be: 'all', 'literature', 'novels', 'historicalNovels', 'epics', 'poems', 'biographies', 'culture', 'fromPoliticians', 'lettersAndDocuments', 'sovietHistoriography', 'historicalWritings', 'outstandingArmenians'`)
             
             if (bookId) {
                 formData.append('bookId', bookId)
@@ -77,11 +77,11 @@ const UploadBookModal = ({ isUploadModal, setIsUploadModal, bookId, setCurrentBo
     }
 
     const isTypeTypes = (inputString: string): inputString is types => 
-        ['literature', 'history'].includes(inputString)
+        ['literature', 'history', 'article'].includes(inputString)
 
     const isTypeTopics = (inputString: string): inputString is topics => 
         [
-            'literature', 'novels', 'historicalNovels', 'epics', 'poems', 'biographies', 
+            'all', 'literature', 'novels', 'historicalNovels', 'epics', 'poems', 'biographies', 
             'culture', 'fromPoliticians', 'lettersAndDocuments', 'sovietHistoriography', 'historicalWritings', 'outstandingArmenians'
         ].includes(inputString)
     

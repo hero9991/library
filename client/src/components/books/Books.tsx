@@ -8,7 +8,7 @@ import { toast } from 'react-toastify'
 import { Triangle } from 'react-loader-spinner'
 import Sorting from './Sorting/Sorting'
 import { getEmptyMyBooksText, getEmptyBooksSearchText, getUnauthorizedMyBooksText, getViewMoreText } from './translatedText/translatedText'
-import { BOOKS, CONTAINER, HISTORY, LITERATURE, SEARCH } from '../../utility/Constants'
+import { ARTICLE, BOOKS, CONTAINER, HISTORY, LITERATURE, SEARCH } from '../../utility/Constants'
 import { book } from '../../utility/commonTypes'
 
 function Books() {
@@ -48,7 +48,7 @@ function Books() {
             try {
                 if (user?.books && user?.books.length !== prevBooksCount.current) return
                 switch (currentRoute) {
-                    case LITERATURE :case HISTORY :case SEARCH:
+                    case LITERATURE :case HISTORY :case ARTICLE :case SEARCH:
                         setIsLoading(true) 
                         await requestBooks(1, true)
                         break
@@ -82,7 +82,7 @@ function Books() {
     }
 
     const requestBooks = async (chunk: number, isFirstChunk: boolean) => {
-        if ((currentRoute === LITERATURE || currentRoute === HISTORY) 
+        if ((currentRoute === LITERATURE || currentRoute === HISTORY || currentRoute === ARTICLE) 
             && (!currentRoute || !currentTopic || !currentSort)) return
         if (currentRoute === SEARCH 
             && !searchValue) return
@@ -105,7 +105,7 @@ function Books() {
 
     return (
         <section className={s.books}>
-            {(currentRoute === HISTORY || currentRoute === LITERATURE) && <Sorting currentSort={currentSort} currentTopic={currentTopic} language={language} isReversed={isReversed} setIsReversed={setIsReversed} isLiterature={currentRoute === LITERATURE}/>}
+            {(currentRoute === HISTORY || currentRoute === LITERATURE || currentRoute === ARTICLE) && <Sorting currentSort={currentSort} currentTopic={currentTopic} language={language} isReversed={isReversed} setIsReversed={setIsReversed} isLiterature={currentRoute === LITERATURE} isArticle={currentRoute === ARTICLE}/>}
             {!isLoading 
                 ? <div className={CONTAINER}>
                     {user && currentRoute === BOOKS && books.length === 0 && <p className={s.emptyBooks}>{getEmptyMyBooksText(language)}</p>}

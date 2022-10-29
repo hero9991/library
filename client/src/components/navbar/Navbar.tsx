@@ -6,7 +6,7 @@ import { UserContext } from '../../App'
 import { toast } from 'react-toastify'
 import { postSignOut } from './NavbarService'
 import { getArticlesTabText, getHistoryTabText, getHomeTabText, getLiteratureTabText, getLogOutTabText, getMyBooksTabText, getSignUpTabText, getLoginTabText, getSearchPlaceholderText, getArticleDisabledText } from './translatedText/translatedText'
-import { AM, CATALOG_HISTORY_URL, CATALOG_LITERATURE_URL, CONTAINER, RU, SORT_PARAMETER, TEXT, TOPIC_PARAMETER } from '../../utility/Constants'
+import { AM, CATALOG_ARTICLE_URL, CATALOG_HISTORY_URL, CATALOG_LITERATURE_URL, CONTAINER, RU, SORT_PARAMETER, TEXT, TOPIC_PARAMETER } from '../../utility/Constants'
 import { UserContextInterface } from '../../utility/commonTypes'
 
 const Navbar = ({ setIsLoginModal, setIsSignUpModal }: Props) => {
@@ -65,11 +65,6 @@ const Navbar = ({ setIsLoginModal, setIsSignUpModal }: Props) => {
         e.target.value = '';
     }
 
-    const disableArticleTab = (e: any) => {
-        toast.warning(getArticleDisabledText(language))
-        e.preventDefault()
-    }
-
     return (
         <header>
             <nav className={s.navbar}>
@@ -84,7 +79,7 @@ const Navbar = ({ setIsLoginModal, setIsSignUpModal }: Props) => {
                                 <li><NavLink exact activeClassName={s.active} onClick={toggleBurgerMenu} to="/">{isBurgerActive && <FaHome className={s.menuIcon} />}{getHomeTabText(language)}</NavLink></li>
                                 <li><NavLink exact activeClassName={s.active} onClick={toggleBurgerMenu} to={`${CATALOG_LITERATURE_URL}?${SORT_PARAMETER}byPopularity&${TOPIC_PARAMETER}all`}>{isBurgerActive && <FaBook className={s.menuIcon} />}{getLiteratureTabText(language)}</NavLink></li>
                                 <li><NavLink exact activeClassName={s.active} onClick={toggleBurgerMenu} to={`${CATALOG_HISTORY_URL}?${SORT_PARAMETER}byPopularity&${TOPIC_PARAMETER}all`}>{isBurgerActive && <FaGlobeEurope className={s.menuIcon} />}{getHistoryTabText(language)}</NavLink></li>
-                                <li><NavLink exact activeClassName={s.active} onClick={disableArticleTab} to="/catalog/articles">{isBurgerActive && <FaRegFileAlt className={s.menuIcon} />}{getArticlesTabText(language)}</NavLink></li>
+                                <li><NavLink exact activeClassName={s.active} onClick={toggleBurgerMenu} to={`${CATALOG_ARTICLE_URL}?${SORT_PARAMETER}byPopularity&${TOPIC_PARAMETER}all`}>{isBurgerActive && <FaRegFileAlt className={s.menuIcon} />}{getArticlesTabText(language)}</NavLink></li>
                                 <li><NavLink exact activeClassName={s.active} onClick={toggleBurgerMenu} to="/catalog/books">{isBurgerActive && <FaBookReader className={s.menuIcon} />}{getMyBooksTabText(language)}</NavLink></li>
                                 {isBurgerActive && <li className={s.burgerLinks}>
                                     <a href="https://vk.com/patmahayrr" className={`${s.fa} ${s.faVk}`} target='_blank' rel='noreferrer'><FaVk /></a>

@@ -55,7 +55,7 @@ export type sortingTopics = 'byPopularity' | 'byRating' | 'byAlphabet'
 export type topics =  'all' | 'literature' | 'novels' | 'historicalNovels' | 'epics' | 'poems' | 'biographies'
     | 'culture' | 'fromPoliticians' | 'lettersAndDocuments' | 'sovietHistoriography' | 'historicalWritings' | 'outstandingArmenians'
 
-export type types = 'literature' | 'history'
+export type types = 'literature' | 'history' | 'article'
 
 export interface UserContextInterface {
     language: language

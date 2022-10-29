@@ -11,7 +11,7 @@ import AuthorizationModal from './components/authorizationModal/AuthorizationMod
 import { createContext, useEffect, useState, useMemo } from 'react'
 import { checkAuth, getCurrentCountryAddress, getUserRatings } from './utility/AxiosService'
 import { toast } from 'react-toastify'
-import { AM, EN, RU, TOKEN, CATALOG_LITERATURE_URL, CATALOG_HISTORY_URL } from './utility/Constants'
+import { AM, EN, RU, TOKEN, CATALOG_LITERATURE_URL, CATALOG_HISTORY_URL, CATALOG_ARTICLE_URL } from './utility/Constants'
 import { language, user, UserContextInterface } from './utility/commonTypes'
 import CreateBook from './components/createBook/CreateBook'
 
@@ -66,6 +66,9 @@ function App() {
               <Books />
             </Route>
             <Route path={CATALOG_HISTORY_URL}>
+              <Books />
+            </Route>
+            <Route path={CATALOG_ARTICLE_URL}>
               <Books />
             </Route>
             <Route path="/catalog/search">

@@ -214,3 +214,25 @@
         margin-bottom: 5px
     }
 }
+.inputToolbarInline > div {
+    margin-right: 0;
+    margin-left: 0;
+}
+.inputToolbarInline > div:last-child {
+    margin-right: 10px;
+}
+
+.inputToolbarList > div {
+    margin-right: 0;
+    margin-left: 0;
+}
+.inputToolbarList > div:last-child {
+    margin-right: 10px;
+}
+
+.inputToolbarPopupEmoji  {
+    bottom: 35px;
+    right: 5px;
+    top: unset !important; 
+    left: unset !important;
+}
