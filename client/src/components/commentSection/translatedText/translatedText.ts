@@ -14,16 +14,16 @@ export const getCancelText = (language: language) => language === EN
         : 'Չեղարկել'
 
 export const getShowCommentsText = (language: language) => language === EN
-    ? 'Show comments'
+    ? 'Show replies'
     : language === RU
-        ? 'Раскрыть комментарии'
-        : 'Մեկնաբանությունները'
+        ? 'Раскрыть ответы'
+        : 'Պատասխանները'
 
 export const getHideCommentsText = (language: language) => language === EN
-    ? 'Hide comments'
+    ? 'Hide replies'
     : language === RU
-        ? 'Скрыть комментарии'
-        : 'Թաքցնել մեկնաբանությունները'
+        ? 'Скрыть ответы'
+        : 'Թաքցնել պատասխանները'
 
 export const getDeleteText = (language: language) => language === EN
     ? 'Delete'
@@ -50,26 +50,26 @@ export const getShareText = (language: language) => language === EN
         : 'Կիսվել'
 
 export const getPostsUpperText = (language: language) => language === EN
-    ? 'POSTS'
+    ? 'COMMENTS'
     : language === RU
-        ? 'ПОСТЫ'
-        : 'ՓՈՍՏԵՐ'
+        ? 'КОММЕНТАРИИ'
+        : 'ՄԵԿՆԱԲԱՆՈՒԹՅՈՒՆՆԵՐ'
 
 export const getCommentSavedText = (language: language) => language === EN
-    ? 'The comment has been saved'
+    ? 'The replay has been saved'
     : language === RU
-        ? 'Комментарий сохранен'
-        : 'Մեկնաբանությունն ավելացվել է'
+        ? 'Ответ сохранен'
+        : 'Պատասխանը ավելացվել է'
 
 export const getCommentDeletedText = (language: language) => language === EN
-    ? 'The comment has been deleted'
+    ? 'The replay has been deleted'
     : language === RU
-        ? 'Комментарий удален'
-        : 'Մեկնաբանությունը ջնջվել է'
+        ? 'Ответ удален'
+        : 'Պատասխանը ջնջվել է'
 
 export const getCommentUpdatedText = (language: language) => language === EN
-    ? 'The comment has been updated'
+    ? 'The replay has been updated'
     : language === RU
-        ? 'Комментарий обновлен'
-        : 'Մեկնաբանությունը թարմացվել է'
+        ? 'Ответ обновлен'
+        : 'Պատասխանը թարմացվել է'
         
