@@ -58,7 +58,7 @@ const UploadBookModal = ({ isUploadModal, setIsUploadModal, bookId, setCurrentBo
             bookKeys.forEach((key, index) => getValue(key, index) && formData.append(key, getValue(key, index)))
 
             if (formData.get('type') && !isTypeTypes(formData.get('type') as string)) return setClientSideError(setError, 'Correct the type field: it can be either literature or history or article')
-            if (formData.get('topic') && !isTypeTopics(formData.get('topic') as string)) return setClientSideError(setError, `Correct the topic field: it can be: 'all', 'literature', 'novels', 'historicalNovels', 'epics', 'poems', 'biographies', 'culture', 'fromPoliticians', 'lettersAndDocuments', 'sovietHistoriography', 'historicalWritings', 'outstandingArmenians'`)
+            if (formData.get('topic') && !isTypeTopics(formData.get('topic') as string)) return setClientSideError(setError, `Correct the topic field: it can be: 'literature', 'novels', 'historicalNovels', 'epics', 'poems', 'biographies', 'culture', 'fromPoliticians', 'lettersAndDocuments', 'sovietHistoriography', 'historicalWritings', 'outstandingArmenians', 'history', 'economy', 'politics', 'philosophy', 'religion', 'law', 'others'`)
             
             if (bookId) {
                 formData.append('bookId', bookId)
@@ -81,8 +81,9 @@ const UploadBookModal = ({ isUploadModal, setIsUploadModal, bookId, setCurrentBo
 
     const isTypeTopics = (inputString: string): inputString is topics => 
         [
-            'all', 'literature', 'novels', 'historicalNovels', 'epics', 'poems', 'biographies', 
-            'culture', 'fromPoliticians', 'lettersAndDocuments', 'sovietHistoriography', 'historicalWritings', 'outstandingArmenians'
+            'literature', 'novels', 'historicalNovels', 'epics', 'poems', 'biographies', 
+            'culture', 'fromPoliticians', 'lettersAndDocuments', 'sovietHistoriography', 'historicalWritings', 'outstandingArmenians',
+            'history', 'economy', 'politics', 'philosophy', 'religion', 'law', 'others'
         ].includes(inputString)
     
 

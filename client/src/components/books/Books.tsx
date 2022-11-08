@@ -7,7 +7,7 @@ import { UserContext } from '../../App'
 import { toast } from 'react-toastify'
 import { Triangle } from 'react-loader-spinner'
 import Sorting from './Sorting/Sorting'
-import { getEmptyMyBooksText, getEmptyBooksSearchText, getUnauthorizedMyBooksText, getViewMoreText } from './translatedText/translatedText'
+import { getEmptyMyBooksText, getEmptyBooksSearchText, getUnauthorizedMyBooksText, getViewMoreText, getEmptyArticlesText } from './translatedText/translatedText'
 import { ARTICLE, BOOKS, CONTAINER, HISTORY, LITERATURE, SEARCH } from '../../utility/Constants'
 import { book } from '../../utility/commonTypes'
 
@@ -111,6 +111,7 @@ function Books() {
                     {user && currentRoute === BOOKS && books.length === 0 && <p className={s.emptyBooks}>{getEmptyMyBooksText(language)}</p>}
                     {!user && currentRoute === BOOKS && <p className={s.emptyBooks}>{getUnauthorizedMyBooksText(language)}</p>}
                     {currentRoute === SEARCH && books.length === 0 && <p className={s.emptyBooks}>{getEmptyBooksSearchText(language)}</p>}
+                    {currentRoute === ARTICLE && books.length === 0 && <p className={s.emptyBooks}>{getEmptyArticlesText(language)}</p>}
 
                     {books.map((item, index) => <BookItem isSecond={!!(index % 2)} bookItem={item} key={index} books={books} setBooks={setBooks} currentRoute={currentRoute} />)}
 

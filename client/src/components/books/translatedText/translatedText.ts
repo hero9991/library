@@ -13,6 +13,12 @@ export const getEmptyBooksSearchText = (language: language) => language === EN
         ? 'По запросу ничего не найдено'
         : 'Ձեր որոնման արդյունքները չեն գտնվել'
 
+export const getEmptyArticlesText = (language: language) => language === EN
+    ? 'No articles have been added to this topic yet'
+    : language === RU
+        ? 'На данную тему еще не было добавлено статей'
+        : 'Այս թեմային դեռ հոդվածներ չեն ավելացվել'
+
 export const getUnauthorizedMyBooksText = (language: language) => language === EN
     ? 'Firstly you need to login to save some books'
     : language === RU
@@ -30,7 +36,7 @@ export const topicTranslations = {
         byPopularity: 'Հանրաճանաչություն',
         byRating: 'Ըստ վարկանիշի',
         byAlphabet: 'Այբբենական',
-        all: 'Բոլոր գրքերը',
+        all: 'Բոլորը',
 
         literature: 'Գրականություն',
         novels: 'Հեքիաթներ, վեպեր, պիեսներ և պատմվածքներ',
@@ -45,12 +51,21 @@ export const topicTranslations = {
         sovietHistoriography: 'Խորհրդային պատմագրություն',
         historicalWritings: 'Պատմական գրություններ',
         outstandingArmenians: 'Ականավոր հայեր',
+
+        history: 'Պատմություն',
+        // culture: 'Մշակույթ', is dublicated
+        economy: 'Տնտեսագիտություն և ֆինանսներ',
+        politics: 'Քաղաքականություն', 
+        philosophy: 'Փիլիսոփայություն', 
+        religion: 'Կրոն', 
+        law: 'Օրենք', 
+        others: 'Այլ'
     },
     RU: {
         byPopularity: 'По популярности',
         byRating: 'По рейтингу',
         byAlphabet: 'По алфавиту',
-        all: 'Все книги',
+        all: 'Все',
 
         literature: 'Литература',
         novels: 'Сказки, повести, пьесы и рассказы',
@@ -65,12 +80,21 @@ export const topicTranslations = {
         sovietHistoriography: 'Советская историография',
         historicalWritings: 'Исторические труды',
         outstandingArmenians: 'Выдающиеся армяне',
+
+        history: 'История',
+        // culture: 'Культура', is dublicated
+        economy: 'Экономика и финансы',
+        politics: 'Политика', 
+        philosophy: 'Философия', 
+        religion: 'Религия', 
+        law: 'Право', 
+        others: 'Прочее'
     },
     EN: {
         byPopularity: 'By popularity',
         byRating: 'By rating',
         byAlphabet: 'By alphabet',
-        all: 'All books',
+        all: 'All',
         
         literature: 'Literature',
         novels: 'Novels',
@@ -84,6 +108,15 @@ export const topicTranslations = {
         lettersAndDocuments: 'Letters and documents',
         sovietHistoriography: 'Soviet historiography',
         historicalWritings: 'Historical writings',
-        outstandingArmenians: 'Outstanding Armenians'
+        outstandingArmenians: 'Outstanding Armenians',
+
+        history: 'History',
+        // culture: 'Culture', is dublicated
+        economy: 'Economy and Finance',
+        politics: 'Politics', 
+        philosophy: 'Philosophy', 
+        religion: 'Religion', 
+        law: 'Law', 
+        others: 'Others'
     }
 }

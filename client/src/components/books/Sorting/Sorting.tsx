@@ -10,7 +10,9 @@ const Sorting = memo(({ currentSort, currentTopic, language, isReversed, setIsRe
     const sortingTopics: sortingTopics[] = ['byPopularity', 'byRating', 'byAlphabet']    
     const topics: topics[] = isLiterature 
         ? ['all', 'literature', 'novels', 'historicalNovels', 'epics', 'poems', 'biographies'] 
-        : isArticle ? [] : ['all', 'culture', 'fromPoliticians', 'lettersAndDocuments', 'sovietHistoriography', 'historicalWritings', 'outstandingArmenians']
+        : isArticle 
+            ? ['all', 'history', 'culture', 'economy', 'politics', 'philosophy', 'religion', 'law', 'others'] 
+            : ['all', 'culture', 'fromPoliticians', 'lettersAndDocuments', 'sovietHistoriography', 'historicalWritings', 'outstandingArmenians']
     const url = isLiterature 
         ? CATALOG_LITERATURE_URL 
         : isArticle ? CATALOG_ARTICLE_URL : CATALOG_HISTORY_URL
