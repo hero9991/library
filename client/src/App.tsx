@@ -14,7 +14,7 @@ import { toast } from 'react-toastify'
 import { AM, EN, RU, TOKEN, CATALOG_LITERATURE_URL, CATALOG_HISTORY_URL, CATALOG_ARTICLE_URL, TRACKING_ID } from './utility/Constants'
 import { language, user, UserContextInterface } from './utility/commonTypes'
 import CreateBook from './components/createBook/CreateBook'
-import ReactGA from 'react-ga'
+import ReactGA from 'react-ga4'
 
 ReactGA.initialize(TRACKING_ID)
 

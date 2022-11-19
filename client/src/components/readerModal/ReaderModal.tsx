@@ -7,7 +7,7 @@ import { actionTypes, book, bookFormats } from '../../utility/commonTypes'
 import { useState } from 'react'
 import FigureItem from './figureItem/FigureItem'
 import { postAddingOfBookFile, postDeletionOfBookFile } from './ReaderModalService'
-import ReactGA from 'react-ga'
+import ReactGA from 'react-ga4'
 
 const UploadFormModal = ({ setIsUploadFormModal, isUploadFormModal, currentBookId, bookFormat, setCurrentBook }: ChildProps) => {
     const handleSubmit = async (e: any) => {

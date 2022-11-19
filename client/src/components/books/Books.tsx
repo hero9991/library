@@ -10,7 +10,7 @@ import Sorting from './Sorting/Sorting'
 import { getEmptyMyBooksText, getEmptyBooksSearchText, getUnauthorizedMyBooksText, getViewMoreText, getEmptyArticlesText } from './translatedText/translatedText'
 import { ARTICLE, BOOKS, CONTAINER, HISTORY, LITERATURE, SEARCH } from '../../utility/Constants'
 import { book } from '../../utility/commonTypes'
-import ReactGA from 'react-ga'
+import ReactGA from 'react-ga4'
 
 function Books() {
     const { user, language } = useContext(UserContext)
@@ -45,7 +45,7 @@ function Books() {
     }, [])
 
     useEffect(() => {
-        ReactGA.pageview(location.pathname + location.search);
+        ReactGA.send({ hitType: "pageview", page: location.pathname + location.search });
         (async function () {
             try {
                 if (user?.books && user?.books.length !== prevBooksCount.current) return

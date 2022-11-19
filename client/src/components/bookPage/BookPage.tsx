@@ -12,7 +12,7 @@ import { actionTypes, book, bookFormats, UserContextInterface } from '../../util
 import UpdateBook from '../updateBook/UpdateBook'
 import { getDeleteBookText, getDownloadText, getReadNowText, getShowFullDescriptionText, getUploadBookText } from './translatedText/translatedText'
 import CommentSection from '../commentSection/CommentSection'
-import ReactGA from 'react-ga'
+import ReactGA from 'react-ga4'
 
 function BookPage() {
     const descriptionRef: any = useRef(null);
@@ -32,7 +32,7 @@ function BookPage() {
     const isOpen = actionType === OPEN
 
     useEffect(() => {
-        ReactGA.pageview(window.location.pathname + window.location.search);
+        ReactGA.send({ hitType: "pageview", page: window.location.pathname + window.location.search });
         (async function () {
             try {
                 setIsLoading(true)

@@ -12,7 +12,7 @@ import { getComments } from "../../utility/AxiosService"
 import Comment from "./comment/Comment"
 import { getPostsUpperText, getShareText } from "./translatedText/translatedText"
 import { getUnauthorizedWarningText } from "../../utility/Constants"
-import ReactGA from 'react-ga'
+import ReactGA from 'react-ga4'
 
 const CommentSection = ({ bookId }: Props) => {
     const { user, language } = useContext<UserContextInterface>(UserContext)

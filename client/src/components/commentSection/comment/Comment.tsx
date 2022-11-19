@@ -13,7 +13,7 @@ import { getComments } from "../../../utility/AxiosService"
 import { getTimeSince } from "../../../utility/Utility"
 import { getCancelText, getChangeText, getDeleteText, getHideCommentsText, getReplayText, getShowCommentsText, getUpdatedText } from "../translatedText/translatedText"
 import { getUnauthorizedWarningText } from "../../../utility/Constants"
-import ReactGA from 'react-ga'
+import ReactGA from 'react-ga4'
 
 const Comment = ({ comment, comments, setComments, isSubcomment }: Props) => {
     const { user, language } = useContext<UserContextInterface>(UserContext)

@@ -9,7 +9,7 @@ import { toolbar } from "../ToolbarConfig"
 import { toast } from "react-toastify"
 import { getReplayText } from "../translatedText/translatedText"
 import { getUnauthorizedWarningText } from "../../../utility/Constants"
-import ReactGA from 'react-ga'
+import ReactGA from 'react-ga4'
 
 const ReplayEditor = ({ comments, setComments, setIsReplaying, parentId, targetName, setIsCollapsed }: Props) => {
     const { user, language } = useContext<UserContextInterface>(UserContext)
