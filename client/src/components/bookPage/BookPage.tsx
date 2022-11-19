@@ -5,13 +5,15 @@ import { useLocation } from 'react-router'
 import { toast } from 'react-toastify'
 import { Triangle } from 'react-loader-spinner'
 import { getBook, incrementBookView } from '../../utility/AxiosService'
-import { AUTHOR, CONTAINER, DELETE, DESCRIPTION, DOWNLOAD, OPEN, PROTOCOL_HOSTNAME_PORT, TITLE, UPLOAD } from '../../utility/Constants'
+import { AUTHOR, CONTAINER, DELETE, DESCRIPTION, DOWNLOAD, OPEN, PROTOCOL_HOSTNAME_PORT, SUBMIT, TITLE, UPLOAD } from '../../utility/Constants'
 import { UserContext } from '../../App'
 import ReaderModal from '../readerModal/ReaderModal'
 import { actionTypes, book, bookFormats, UserContextInterface } from '../../utility/commonTypes'
 import UpdateBook from '../updateBook/UpdateBook'
 import { getDeleteBookText, getDownloadText, getReadNowText, getShowFullDescriptionText, getUploadBookText } from './translatedText/translatedText'
 import CommentSection from '../commentSection/CommentSection'
+import { AiOutlineDelete } from 'react-icons/ai';
+import { postAddingOfBookImage, postDeletionOfBookImage } from './BookPageService'
 import ReactGA from 'react-ga4'
 
 function BookPage() {
@@ -63,6 +65,24 @@ function BookPage() {
         setIsEclipseApplied(false)
     }
 
+    const handleSubmit = async (e: any) => {
+        e.preventDefault()
+        if (!e.target[0].files[0]) return toast.error('You should choose some image')
+
+        const formData = new FormData()
+        formData.append('book', e.target[0].files[0])
+        formData.append('bookId', bookId)
+
+        const book = await postAddingOfBookImage(formData)
+
+        setCurrentBook(book.data.updatedBook);
+    }
+
+    const deleteImage = async () => {
+        const book = await postDeletionOfBookImage(bookId)
+        setCurrentBook(book.data.updatedBook)
+    }
+
     return (
         <section className={s.bookPage}>
             <div className={CONTAINER}>
@@ -71,6 +91,13 @@ function BookPage() {
                     {currentBook && <div className={s.mainContent}>
                         <div className={s.image}>
                             <img src={PROTOCOL_HOSTNAME_PORT + currentBook.linkImage} alt=''></img>
+                            {user?.isAdmin && (currentBook.linkImage 
+                                    ? <AiOutlineDelete className={s.deleteImage} onClick={deleteImage} />
+                                    : <form onSubmit={handleSubmit}>
+                                        <input className={s.uploadImageInput} type='file' accept='image/png, image/gif, image/jpeg' />
+                                        <input className={s.uploadImage} type={SUBMIT} value='Upload the image' placeholder='image'/>
+                                    </form>
+                            )}
                         </div>
                         <div className={s.text}>
                             <div className={s.blackBand}>

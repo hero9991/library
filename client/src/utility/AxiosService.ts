@@ -59,6 +59,8 @@ export const uploadBook = (data: any) => $api.post('/upload', data)
 export const updateBookInfo = (data: any) => $api.post('/updateBookInfo', data)
 export const addBookFile = (data: any) => $api.post('/addBookFile', data)
 export const deleteBookFile = (bookId: string, bookFormat: bookFormats) => $api.post('/deleteBookFile', { bookId, bookFormat })
+export const addBookImage = (data: any) => $api.post('/addBookImage', data)
+export const deleteBookImage = (bookId: string) => $api.post('/deleteBookImage', { bookId })
 
 // Comments
 export const getComments = (parentId: string) => $api.get('/comments', { params: { parentId } })

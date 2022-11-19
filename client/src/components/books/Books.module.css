@@ -175,6 +175,9 @@
   .topics a {
     color: #313131;
   }
+  .emptyBooks {
+    padding-top:10px;
+  }
 }
 @media (max-width: 991px) {
   .sorting > a {
@@ -193,10 +196,22 @@
     font-weight: 800;
   }
 }
+@media (max-width: 545px) {
+  .books {
+    padding-bottom: 25px
+  }
+  .emptyBooks {
+    padding-top: 0;
+    font-size: 28px;
+  }
+}
 @media (max-width: 478px) {
   .viewMoreButton {
     font-size: 17px;
     width: 80%;
     height: 45px;
+  }
+  .sortingWrapper {
+    margin-bottom: 10px;
   }
 }
