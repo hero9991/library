@@ -1,6 +1,6 @@
 import express from 'express'
 
-import { addBook, getBookById, getBooks, getSliderBooks, getBooksBySearch, getMyBooks, uploadBook, deleteBookFile, addBookFile, updateBookInfo } from '../controllers/books.js'
+import { addBook, getBookById, getBooks, getSliderBooks, getBooksBySearch, getMyBooks, uploadBook, deleteBookFile, addBookFile, updateBookInfo, addBookImage, deleteBookImage } from '../controllers/books.js'
 import { getUserRatings, incrementView, setRating } from '../controllers/bookInteraction.js'
 import auth from '../middleware/auth.js'
 import adminAuth from '../middleware/adminAuth.js'
@@ -22,5 +22,7 @@ router.post('/upload', adminAuth, cpUpload, uploadBook)
 router.post('/updateBookInfo', adminAuth, uploadNone.none(), updateBookInfo)
 router.post('/deleteBookFile', adminAuth, deleteBookFile)
 router.post('/addBookFile', adminAuth, cbUploadSingle, addBookFile)
+router.post('/deleteBookImage', adminAuth, deleteBookImage)
+router.post('/addBookImage', adminAuth, cbUploadSingle, addBookImage)
 
 export default router

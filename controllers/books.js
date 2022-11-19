@@ -202,3 +202,39 @@ export const deleteBookFile = async (req, res) => {
         res.status(500).json({ message: error || 'signUp catch block' })
     }
 }
+
+export const addBookImage = async (req, res) => {
+    const { bookId } = req.body
+
+    try {
+        const filePath = '/uploads/'
+        await Book.findByIdAndUpdate(bookId, { linkImage: `${filePath}${req.file.filename}` });
+
+        const updatedBook = await Book.findById(bookId)
+
+        res.status(201).json({ updatedBook })
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ message: error || 'signUp catch block' })
+    }
+}
+
+export const deleteBookImage = async (req, res) => {
+    const { bookId } = req.body
+
+    try {
+        const book = await Book.findById(bookId);
+        unlink(book.linkImage.substring(1), async (err) => {
+            if (err) throw err;
+            console.log('path/file.txt was deleted');
+        })
+
+        await Book.findByIdAndUpdate(bookId, {linkImage: ''})
+        const updatedBook = await Book.findById(bookId)
+
+        res.status(201).json({ updatedBook })
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ message: error || 'signUp catch block' })
+    }
+}
