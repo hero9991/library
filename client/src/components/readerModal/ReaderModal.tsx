@@ -1,5 +1,5 @@
-import ReactCountryFlag from 'react-country-flag'
-import emojiSupport from 'detect-emoji-support'
+// import ReactCountryFlag from 'react-country-flag'
+// import emojiSupport from 'detect-emoji-support'
 import { RU as RU_FLAG, AM as AM_FLAG, GB as GB_FLAG } from 'country-flag-icons/react/3x2'
 import { AM, GB, RU, DOWNLOAD, OPEN, UPLOAD, DELETE, SUBMIT } from '../../utility/Constants'
 import s from './ReaderModal.module.css'
@@ -7,6 +7,7 @@ import { actionTypes, book, bookFormats } from '../../utility/commonTypes'
 import { useState } from 'react'
 import FigureItem from './figureItem/FigureItem'
 import { postAddingOfBookFile, postDeletionOfBookFile } from './ReaderModalService'
+import ReactGA from 'react-ga'
 
 const UploadFormModal = ({ setIsUploadFormModal, isUploadFormModal, currentBookId, bookFormat, setCurrentBook }: ChildProps) => {
     const handleSubmit = async (e: any) => {
@@ -53,6 +54,11 @@ const ReaderModal = ({ isReaderModal, setIsReaderModal, setBookFormat, currentBo
     const items = ['epubRU', 'epubAM', 'epubEN', 'pdfRU', 'pdfAM', 'pdfEN']
     
     const handleBook = (e: any) => {
+        ReactGA.event({
+            category: 'Book',
+            action: isDownload ? 'Downloaded' : isOpen ? 'Opened' : 'Admin interaction',
+            label: `Format: ${e.currentTarget.dataset.format}, Id: ${currentBook._id}`
+        })
         if (isDownload) return
         setCurrentBookFormat(e.currentTarget.dataset.format)
 
@@ -74,7 +80,7 @@ const ReaderModal = ({ isReaderModal, setIsReaderModal, setBookFormat, currentBo
     const addBook = async () => {
         setIsUploadFormModal(true)
     }
-    const isEmojiSupported = emojiSupport();
+    // const isEmojiSupported = emojiSupport();
 
     return (
         <div onClick={() => setIsReaderModal(false)} className={isReaderModal ? `${s.readerModal} ${s.active}` : s.readerModal}>

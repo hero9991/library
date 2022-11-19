@@ -9,6 +9,7 @@ import { toolbar } from "../ToolbarConfig"
 import { toast } from "react-toastify"
 import { getReplayText } from "../translatedText/translatedText"
 import { getUnauthorizedWarningText } from "../../../utility/Constants"
+import ReactGA from 'react-ga'
 
 const ReplayEditor = ({ comments, setComments, setIsReplaying, parentId, targetName, setIsCollapsed }: Props) => {
     const { user, language } = useContext<UserContextInterface>(UserContext)
@@ -29,6 +30,10 @@ const ReplayEditor = ({ comments, setComments, setIsReplaying, parentId, targetN
         setComments([...comments, response.data.createdComment])
         setIsReplaying(false)
         setIsCollapsed(true)
+        ReactGA.event({
+            category: 'Comment',
+            action: 'Created a subcoment'
+        })
     }
 
     return (

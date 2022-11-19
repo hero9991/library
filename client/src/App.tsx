@@ -11,9 +11,12 @@ import AuthorizationModal from './components/authorizationModal/AuthorizationMod
 import { createContext, useEffect, useState, useMemo } from 'react'
 import { checkAuth, getCurrentCountryAddress, getUserRatings } from './utility/AxiosService'
 import { toast } from 'react-toastify'
-import { AM, EN, RU, TOKEN, CATALOG_LITERATURE_URL, CATALOG_HISTORY_URL, CATALOG_ARTICLE_URL } from './utility/Constants'
+import { AM, EN, RU, TOKEN, CATALOG_LITERATURE_URL, CATALOG_HISTORY_URL, CATALOG_ARTICLE_URL, TRACKING_ID } from './utility/Constants'
 import { language, user, UserContextInterface } from './utility/commonTypes'
 import CreateBook from './components/createBook/CreateBook'
+import ReactGA from 'react-ga'
+
+ReactGA.initialize(TRACKING_ID)
 
 export const UserContext = createContext({} as UserContextInterface)
 

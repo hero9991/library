@@ -13,6 +13,7 @@ import { getComments } from "../../../utility/AxiosService"
 import { getTimeSince } from "../../../utility/Utility"
 import { getCancelText, getChangeText, getDeleteText, getHideCommentsText, getReplayText, getShowCommentsText, getUpdatedText } from "../translatedText/translatedText"
 import { getUnauthorizedWarningText } from "../../../utility/Constants"
+import ReactGA from 'react-ga'
 
 const Comment = ({ comment, comments, setComments, isSubcomment }: Props) => {
     const { user, language } = useContext<UserContextInterface>(UserContext)
@@ -59,6 +60,11 @@ const Comment = ({ comment, comments, setComments, isSubcomment }: Props) => {
             toast.error(`Error ${error}`)
         } finally {
             isLike ? setIsLiking(false) : setIsDisliking(false)
+            ReactGA.event({
+                category: 'Comment',
+                action: isLike ? 'Liked' : 'Disliked',
+                label: comment._id
+            })
         }
     }
 
@@ -66,11 +72,20 @@ const Comment = ({ comment, comments, setComments, isSubcomment }: Props) => {
         setIsReplaying(!isReplaying)
     }
     const deleteComment = async () => {
-        await postDeleteComment(comment._id, comment.userId, language);
+        ReactGA.event({
+            category: 'Comment',
+            action: 'Deleted',
+            label: `User name: ${comment.userName}. Comment body: ${comment.body}`
+        })
+        await postDeleteComment(comment._id, comment.userId, language)
         setComments(comments.filter(commentItem => commentItem._id !== comment._id))
     }
     const changeComment = async () => {
         setIsEditing(!isEditing)
+        ReactGA.event({
+            category: 'Comment',
+            action: 'Changed'
+        })
     }
     const collapseSubcomments = () => {
         setIsCollapsed(!isCollapsed)

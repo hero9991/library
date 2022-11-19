@@ -12,6 +12,7 @@ import { getComments } from "../../utility/AxiosService"
 import Comment from "./comment/Comment"
 import { getPostsUpperText, getShareText } from "./translatedText/translatedText"
 import { getUnauthorizedWarningText } from "../../utility/Constants"
+import ReactGA from 'react-ga'
 
 const CommentSection = ({ bookId }: Props) => {
     const { user, language } = useContext<UserContextInterface>(UserContext)
@@ -43,6 +44,10 @@ const CommentSection = ({ bookId }: Props) => {
         const response = await postCreateComment(user._id, user.name, bookId, commentBody, language)
         setComments([...comments, response.data.createdComment])
         setEditorState(EditorState.push(editorState, ContentState.createFromText('')))
+        ReactGA.event({
+            category: 'Comment',
+            action: 'Created a parent comment'
+        })
     }
 
     return (
