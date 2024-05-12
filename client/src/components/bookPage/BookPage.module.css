@@ -1,6 +1,6 @@
 .bookPage {
   /* height: 90vh; */
-  min-height: calc(100vh - 96px - 70px);
+  min-height: calc(100svh - 96px - 70px);
   position: relative;
 }
 .bookPage:before {
@@ -49,7 +49,7 @@
 .description > .showDescriptionButton {
   font-family: "Tinos";
   font-size: 16px;
-  font-weight: 800;
+  font-weight: 700;
   border-radius: 5px;
   position: absolute;
   right: 10px;
@@ -62,7 +62,7 @@
 .blackBand {
   height: 150px;
   color: #fff;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 37px;
   padding-left: 30px;
 }
@@ -87,7 +87,7 @@
 }
 .buttons button {
   font-family: "Playfair Display";
-  font-weight: 500;
+  font-weight: 400;
   width: 30%;
   font-size: 24px;
   padding: 10px 0;
@@ -160,7 +160,7 @@
     padding: 40px 100px 10px;
   }
   .bookPage {
-    min-height: calc(100vh - 66px - 70px);
+    min-height: calc(100svh - 66px - 70px);
   }
 }
 @media (max-width: 1350px) {

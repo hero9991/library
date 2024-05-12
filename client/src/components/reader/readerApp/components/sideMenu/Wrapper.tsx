@@ -25,7 +25,7 @@ const Container = styled.div`
   position: fixed;
   width: 340px;
   max-width: 95vw;
-  height: 100vh;
+  height: 100svh;
   top: 0;
   right: 0;
   z-index: ${zIndex.menu};

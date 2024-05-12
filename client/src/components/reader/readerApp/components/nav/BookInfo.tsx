@@ -31,7 +31,7 @@ const BookContent = styled.div`
 `;
 
 const Title = styled.div`
-  font-weight: 500;
+  font-weight: 400;
   margin-bottom: 4px;
 `;
 

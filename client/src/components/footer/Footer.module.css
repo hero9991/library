@@ -5,7 +5,7 @@
 .footerWrapper {
     display: flex;
     justify-content: space-between;
-    font-weight: 800;
+    font-weight: 700;
     height: 70px;
     align-items: center;
 }

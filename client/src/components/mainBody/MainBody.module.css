@@ -1,5 +1,5 @@
 .mainBody {
-    height: calc(100vh - 96px);
+    height: calc(100svh - 96px);
     position: relative;
 }
 .mainBody:after {
@@ -15,7 +15,7 @@
 .topContent {
     display: flex;
     align-items: center;
-    height: calc(100vh - 40vh - 96px);
+    height: calc(100svh - 40vh - 96px);
 }
 
 .topText {
@@ -91,10 +91,10 @@
 }
 @media (max-width: 1500px) {
     .mainBody {
-        height: calc(100vh - 76px);
+        height: calc(100svh - 76px);
     }
     .topContent {
-        height: calc(100vh - 40vh - 76px);
+        height: calc(100svh - 40vh - 76px);
     }
 }
 @media (max-width: 1350px) {
@@ -132,10 +132,10 @@
 
 @media (max-width: 767px) {
     .mainBody {
-        height: calc(100vh - 66px);
+        height: calc(100svh - 66px);
     }
     .topContent {
-        height: calc(100vh - 40vh - 66px);
+        height: calc(100svh - 40vh - 66px);
     }
     .topText {
         max-width: 100%;

@@ -1,11 +1,9 @@
 import { memo, useContext, useState } from 'react'
 import s from './Footer.module.css'
-import ReactCountryFlag from "react-country-flag"
-import emojiSupport from 'detect-emoji-support'
 import { RU as RU_FLAG, AM as AM_FLAG, GB as GB_FLAG } from 'country-flag-icons/react/3x2'
 import { UserContext } from '../../App'
 import { getChooseLanguageText, getSupportText, getRulesText } from './translatedText/translatedText'
-import Rules from './rules/Rules'
+import Rules from './Rules/Rules'
 import { AM, CONTAINER, EN, GB, RU } from '../../utility/Constants'
 import { language, UserContextInterface } from '../../utility/commonTypes'
 import { postUserLanguage } from './FooterService'
@@ -37,19 +35,6 @@ const Footer = memo(({ setLanguage }: Props) => {
             <div className={`${CONTAINER} ${s.footerWrapper}`}>
                 <div onClick={openPopup}>{getRulesText(language)}</div>
                 <div><a href='https://vk.com/id171718509' target='_blank' rel='noreferrer'>{getSupportText(language)}</a></div>
-                {/* {emojiSupport() 
-                ? <div className={s.countryIcons}>
-                    <span>{getChooseLanguageText(language)}</span>
-                    <ReactCountryFlag className={s.emojiFlag} onClick={handleLanguage} data-value={AM} countryCode={AM} style={{ fontSize: '2.5em' }} />
-                    <ReactCountryFlag className={s.emojiFlag} onClick={handleLanguage} data-value={RU} countryCode={RU} style={{ fontSize: '2.5em' }} />
-                    <ReactCountryFlag className={s.emojiFlag} onClick={handleLanguage} data-value={EN} countryCode={GB} style={{ fontSize: '2.5em' }} />
-                </div>
-                : <div className={s.countryIcons}>
-                    <span>{getChooseLanguageText(language)}</span>
-                    <AM_FLAG className={s.commonFlag} onClick={handleLanguage} data-value={AM} />
-                    <RU_FLAG className={s.commonFlag} onClick={handleLanguage} data-value={RU}/>
-                    <GB_FLAG className={s.commonFlag} onClick={handleLanguage} data-value={EN} />
-                </div>} */}
                 <div className={s.countryIcons}>
                     <span>{getChooseLanguageText(language)}</span>
                     <AM_FLAG className={s.commonFlag} onClick={handleLanguage} data-value={AM} />

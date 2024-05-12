@@ -1,6 +1,6 @@
 import { useState } from "react"
 import UploadBookModal from "../uploadBookModal/UploadBookModal"
-import s from './CreateBook.module.css'
+import s from './createBook.module.css'
 
 const CreateBook = () => {
     const [isUploadModal, setIsUploadModal] = useState(false)

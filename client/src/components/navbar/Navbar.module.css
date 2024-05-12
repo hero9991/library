@@ -324,7 +324,7 @@ header {
         transition: all linear .1s;
         display: inline-block;
         overflow: scroll;
-        height: 100vh;
+        height: 100svh;
         background-color: #fff;
     }
     .menu > ul > li {

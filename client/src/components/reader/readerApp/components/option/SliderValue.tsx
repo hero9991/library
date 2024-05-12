@@ -118,7 +118,7 @@ const Slider = styled.input<{ active: boolean }>`
 
 const Icon = styled.span`
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 400;
   color: ${palette.gray4};
   margin: 0 8px;
   line-height: 20px;

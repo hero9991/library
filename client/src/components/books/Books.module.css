@@ -6,12 +6,12 @@
   background-attachment: fixed;
   background-position: right bottom;
   background-repeat: no-repeat;
-  background-size: auto 100vh;
-  min-height: calc(100vh - 96px);
+  background-size: auto 100svh;
+  min-height: calc(100svh - 96px);
   box-sizing: border-box;
 }
 .emptyBooks {
-  font-weight: 800;
+  font-weight: 700;
   font-size: 40px;
   color: rgb(168, 168, 168);
   padding-top: 100px;
@@ -138,7 +138,7 @@
 
 @media (max-width: 1560px) {
   .books {
-    min-height: calc(100vh - 76px);
+    min-height: calc(100svh - 76px);
   }
   .sortingWrapper:after {
     right: 9vw;
@@ -193,7 +193,7 @@
   }
   .viewMoreButton {
     color: #fff;
-    font-weight: 800;
+    font-weight: 700;
   }
 }
 @media (max-width: 545px) {
