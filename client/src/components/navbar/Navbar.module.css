@@ -46,7 +46,6 @@ header {
     width: 250px;
     height: 2em;
     border: 2px solid rgb(223, 223, 223);
-    font-family: 'Tinos', serif;
     font-size: 16px;
     font-weight: 700;
     text-align: center;
@@ -183,7 +182,6 @@ header {
 }
 .authorization button {
     background-color: transparent;
-    font-family: 'Tinos', serif;
     font-weight: 700;
     font-size: 16px;
     cursor: pointer;
@@ -213,6 +211,9 @@ header {
     padding-left: 3vh !important;
 }
 
+.input {
+    font-family: inherit;
+}
 
 @media (max-width: 1500px) {
     header {

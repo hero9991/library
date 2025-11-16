@@ -33,7 +33,6 @@
   width: 70%;
 }
 .text > p {
-  font-family: "Tinos";
   padding-left: 50px;
   padding-top: 50px;
   font-size: 18px;
@@ -47,7 +46,6 @@
   position: relative;
 }
 .description > .showDescriptionButton {
-  font-family: "Tinos";
   font-size: 16px;
   font-weight: 700;
   border-radius: 5px;

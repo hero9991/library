@@ -179,6 +179,12 @@ button {
   }
 }
 
+html[lang="hy"] body {
+  font-family: 'Noto Sans Armenian', -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 .Toastify__toast-container--top-center {
   margin-left: 0;
 }

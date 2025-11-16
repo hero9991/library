@@ -95,7 +95,7 @@ const Navbar = ({ setIsLoginModal, setIsSignUpModal }: Props) => {
                         </div>
 
                         <form className={`${s.form} ${isInputActive ? s.activeForm : undefined}`} onSubmit={e => e.preventDefault()}>
-                            <input onChange={searchBooks} onKeyDown={immidiateSearch} onBlur={resetInput} type={TEXT} placeholder={getSearchPlaceholderText(language)} />
+                            <input className={s.input} onChange={searchBooks} onKeyDown={immidiateSearch} onBlur={resetInput} type={TEXT} placeholder={getSearchPlaceholderText(language)} />
                             <FaSearch />
                         </form>
 

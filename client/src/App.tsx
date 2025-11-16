@@ -54,6 +54,11 @@ function App() {
       if (currentlanguage === RU || currentlanguage === AM) setLanguage(currentlanguage)
   }
 
+  useEffect(() => {
+    const langMap = { EN: 'en', RU: 'ru', AM: 'hy' };
+    document.documentElement.lang = langMap[language] || 'en';
+  }, [language]);
+
   const userValue = useMemo(() => ({ user, setUser, language }), [user, language]);
 
   return (
