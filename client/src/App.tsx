@@ -1,7 +1,7 @@
 import Navbar from './components/navbar/Navbar'
 import HomeBody from './components/homeBody/HomeBody'
 import Footer from './components/footer/Footer'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Books from './components/books/Books'
@@ -60,29 +60,15 @@ function App() {
         <div className="App">
           <ToastContainer autoClose={2000} position='top-center' />
           <Navbar setIsLoginModal={setIsLoginModal} setIsSignUpModal={setIsSignUpModal} />
-          <Switch>
-            <Route path="/" exact>
-              <HomeBody />
-            </Route>
-            <Route path={CATALOG_LITERATURE_URL}>
-              <Books />
-            </Route>
-            <Route path={CATALOG_HISTORY_URL}>
-              <Books />
-            </Route>
-            <Route path={CATALOG_ARTICLE_URL}>
-              <Books />
-            </Route>
-            <Route path="/catalog/search">
-              <Books />
-            </Route>
-            <Route path="/catalog/books">
-              <Books />
-            </Route>
-            <Route path="/book">
-              <BookPage />
-            </Route>
-          </Switch>
+          <Routes>
+            <Route path="/" element={<HomeBody />} />
+            <Route path={CATALOG_LITERATURE_URL} element={<Books />} />
+            <Route path={CATALOG_HISTORY_URL} element={<Books />} />
+            <Route path={CATALOG_ARTICLE_URL} element={<Books />} />
+            <Route path="/catalog/search" element={<Books />} />
+            <Route path="/catalog/books" element={<Books />} />
+            <Route path="/book" element={<BookPage />} />
+          </Routes>
           {user?.isAdmin && <CreateBook />}
           <AuthorizationModal isLoginModal={isLoginModal} isSignUpModal={isSignUpModal} setIsLoginModal={setIsLoginModal} setIsSignUpModal={setIsSignUpModal} />
           <Footer setLanguage={setLanguage} />

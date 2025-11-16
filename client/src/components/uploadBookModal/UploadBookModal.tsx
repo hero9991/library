@@ -89,6 +89,8 @@ const UploadBookModal = ({ isUploadModal, setIsUploadModal, bookId, setCurrentBo
 
     const hidePopup = () => setIsUploadModal(false)
 
+    const commonErrorMessage = typeof errors.common?.message === 'string' ? errors.common.message : undefined
+
     return (
         <div onClick={hidePopup} className={isUploadModal ? `${s.uploadBookModal} ${s.active}` : s.uploadBookModal}>
             <div onClick={e => e.stopPropagation()} className={isUploadModal ? `${s.uploadBookModalContent} ${s.active}` : s.uploadBookModalContent}>
@@ -106,7 +108,7 @@ const UploadBookModal = ({ isUploadModal, setIsUploadModal, bookId, setCurrentBo
                         </div>)}
                     </div>}
                     <input className={isDisabledButton ? s.disabledButton : s.uploadButton} type={SUBMIT} value={bookId ? 'Update the book' : 'Upload the book'} />
-                    {errors.common && <p className={s.errorText}>{errors.common.message}</p>}
+                    {errors.common && <p className={s.errorText}>{commonErrorMessage}</p>}
                 </form>
             </div>
         </div>

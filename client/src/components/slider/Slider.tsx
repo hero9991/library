@@ -1,7 +1,9 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState, useRef } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import SwiperCore, { Navigation, Pagination, Autoplay } from 'swiper'
-import 'swiper/swiper-bundle.min.css'
+import { Navigation, Pagination, Autoplay } from 'swiper/modules'
+import { Swiper as SwiperType } from 'swiper'
+import 'swiper/css'
+import 'swiper/css/pagination'
 import s from './Slider.module.css'
 import StarRating from '../starRating/StarRating'
 import { NavLink } from 'react-router-dom'
@@ -11,10 +13,6 @@ import { getHistoryTitleText, getLiteratureTitleText } from './translatedText/tr
 import { UserContext } from '../../App'
 import { AUTHOR, PROTOCOL_HOSTNAME_PORT, TITLE } from '../../utility/Constants'
 import { book, UserContextInterface } from '../../utility/commonTypes'
-
-SwiperCore.use([Navigation, Pagination, Autoplay])
-
-
 function Slider({ isBlackFont }: Props) {
     const initialBook = {
         titleRU: '-------',
@@ -26,10 +24,21 @@ function Slider({ isBlackFont }: Props) {
         _id: '1'
     } as book
 
-    const initialBooks: book[] = [initialBook, {...initialBook, _id: '2'}, {...initialBook, _id: '3'}, {...initialBook, _id: '4'}, {...initialBook, _id: '5'}, {...initialBook, _id: '6'}]
+    const initialBooks: book[] = [
+        initialBook, 
+        {...initialBook, _id: '2'}, 
+        {...initialBook, _id: '3'}, 
+        {...initialBook, _id: '4'}, 
+        {...initialBook, _id: '5'}, 
+        {...initialBook, _id: '6'}
+    ]
 
     const { language } = useContext<UserContextInterface>(UserContext)
     const [books, setBooks] = useState<book[]>(initialBooks)
+    
+    const prevRef = useRef<HTMLButtonElement>(null)
+    const nextRef = useRef<HTMLButtonElement>(null)
+    const swiperRef = useRef<SwiperType | null>(null)
 
     const authorKey = (AUTHOR + language) as keyof book
     const titleKey = (TITLE + language) as keyof book
@@ -47,85 +56,158 @@ function Slider({ isBlackFont }: Props) {
         })()
     }, [isBlackFont])
 
-    const params = {
-        loop: true,
-        autoplay: {
-            delay: 5000,
-            disableOnInteraction: true,
-            pauseOnMouseEnter: true
-        },
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev'
-        },
-        pagination: {
-            clickable: true,
-        },
-        spaceBetween: 10,
-        slidesPerView: 4,
-        slidesPerGroup: 4,
-        allowTouchMove: true,
-        shortSwipes: false,
-        longSwipesRatio: 0.1,
-        longSwipesMs: 1,
-        speed: 500,
-        breakpoints: {
-            320: {
-                slidesPerView: 3,
-                slidesPerGroup: 3,
-                spaceBetween: 10,
-                allowTouchMove: true
-            },
-            482: {
-                slidesPerView: 3,
-                slidesPerGroup: 3,
-            },
-            640: {
-                slidesPerView: 4,
-                slidesPerGroup: 4,
-            },
-            992: {
-                slidesPerView: 4,
-                slidesPerGroup: 4,
-                spaceBetween: 14,
-            },
-            1081: {
-                spaceBetween: 17
-            },
-            1200: {
-                spaceBetween: 21
-            },
-            1271: {
-                spaceBetween: 24
-            },
-            1401: {
-                spaceBetween: 27
-            },
-            1601: {
-                spaceBetween: 30
-            }
+    const handleSwiperInit = (swiper: SwiperType): void => {
+        if (prevRef.current && nextRef.current) {
+            swiper.params.navigation = {
+                prevEl: prevRef.current,
+                nextEl: nextRef.current,
+                enabled: true,
+            } as any
+            swiper.navigation.destroy()
+            swiper.navigation.init()
+            swiper.navigation.update()
         }
     }
 
     return (
-        <div className={`${s.slider} ${isBlackFont ? s.blackFont : s.whiteFont + ' whiteFont'}`}>
-            <h2 className={s.topic}>{isBlackFont ? getHistoryTitleText(language) : getLiteratureTitleText(language)}</h2>
-            <div className={s.books}>
-                <Swiper id='main' wrapperTag='ul' className={s.swiper} {...params}>
-                    {books.map(book => <SwiperSlide key={book._id} tag='li'>
-                        <NavLink exact to={`/book/${book._id}`} title={book[titleKey]}>
-                            {book.linkImage ? <img className={s.bookItem} src={PROTOCOL_HOSTNAME_PORT + book.linkImage} alt='no img' /> : <div className={s.bookItem}></div>}
-                        </NavLink>
-                        <StarRating book={book} books={books} setBooks={setBooks} />
-                        <p className={s.title} title={book[titleKey] as string}><NavLink exact to={`/book/${book._id}`}>{book[titleKey]}</NavLink></p>
-                        <p className={s.author}>{book[authorKey]}</p>
-                    </SwiperSlide>
-                    )}
-                    <div className={`swiper-button-prev ${s.prevButton}`}></div>
-                    <div className={`swiper-button-next ${s.nextButton}`}></div>
-                </Swiper>
+        <section className={`${s.sliderSection} ${!isBlackFont ? s.darkTheme : ''}`}>
+            <div className={s.container}>
+                <h2 className={s.sectionTitle}>
+                    {isBlackFont ? getHistoryTitleText(language) : getLiteratureTitleText(language)}
+                </h2>
+
+                <div className={s.sliderWrapper}>
+                    <button 
+                        ref={prevRef} 
+                        className={`${s.navigationButton} ${s.prevButton}`}
+                        aria-label="Previous slide"
+                    >
+                        <svg 
+                            width="32" 
+                            height="32" 
+                            viewBox="0 0 24 24" 
+                            fill="none" 
+                            stroke="currentColor" 
+                            strokeWidth="2" 
+                            strokeLinecap="round" 
+                            strokeLinejoin="round"
+                        >
+                            <path d="m15 18-6-6 6-6"/>
+                        </svg>
+                    </button>
+
+                    <Swiper
+                        className={s.swiper}
+                        modules={[Navigation, Pagination, Autoplay]}
+                        loop={true}
+                        autoplay={{
+                            delay: 5000,
+                            disableOnInteraction: true,
+                            pauseOnMouseEnter: true
+                        }}
+                        navigation={{
+                            prevEl: prevRef.current,
+                            nextEl: nextRef.current,
+                        }}
+                        pagination={{
+                            clickable: true,
+                            dynamicBullets: true,
+                        }}
+                        spaceBetween={20}
+                        slidesPerView={5}
+                        slidesPerGroup={5}
+                        speed={600}
+                        breakpoints={{
+                            320: {
+                                slidesPerView: 2,
+                                slidesPerGroup: 2,
+                                spaceBetween: 12,
+                            },
+                            480: {
+                                slidesPerView: 3,
+                                slidesPerGroup: 3,
+                                spaceBetween: 16,
+                            },
+                            768: {
+                                slidesPerView: 4,
+                                slidesPerGroup: 4,
+                                spaceBetween: 16,
+                            },
+                            1024: {
+                                slidesPerView: 5,
+                                slidesPerGroup: 5,
+                                spaceBetween: 20,
+                            },
+                            1440: {
+                                slidesPerView: 6,
+                                slidesPerGroup: 6,
+                                spaceBetween: 24,
+                            }
+                        }}
+                        onInit={handleSwiperInit}
+                        onSwiper={(swiper) => {
+                            swiperRef.current = swiper
+                        }}
+                    >
+                        {books.map(book => (
+                            <SwiperSlide key={book._id} className={s.slide}>
+                                <div className={s.bookCard}>
+                                    <NavLink 
+                                        to={`/book/${book._id}`} 
+                                        className={s.bookImageLink}
+                                        title={book[titleKey] as string}
+                                    >
+                                        {book.linkImage ? (
+                                            <img 
+                                                className={s.bookImage} 
+                                                src={PROTOCOL_HOSTNAME_PORT + book.linkImage} 
+                                                alt={book[titleKey] as string} 
+                                                loading="lazy"
+                                            />
+                                        ) : (
+                                            <div className={s.bookImagePlaceholder}></div>
+                                        )}
+                                    </NavLink>
+
+                                    <div className={s.bookInfo}>
+                                        <StarRating book={book} books={books} setBooks={setBooks} />
+                                        
+                                        <NavLink 
+                                            to={`/book/${book._id}`} 
+                                            className={s.bookTitle}
+                                            title={book[titleKey] as string}
+                                        >
+                                            {book[titleKey]}
+                                        </NavLink>
+                                        
+                                        <p className={s.bookAuthor}>{book[authorKey]}</p>
+                                    </div>
+                                </div>
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
+
+                    <button 
+                        ref={nextRef} 
+                        className={`${s.navigationButton} ${s.nextButton}`}
+                        aria-label="Next slide"
+                    >
+                        <svg 
+                            width="32" 
+                            height="32" 
+                            viewBox="0 0 24 24" 
+                            fill="none" 
+                            stroke="currentColor" 
+                            strokeWidth="2" 
+                            strokeLinecap="round" 
+                            strokeLinejoin="round"
+                        >
+                            <path d="m9 18 6-6-6-6"/>
+                        </svg>
+                    </button>
+                </div>
             </div>
-        </div>
+        </section>
     )
 }
 

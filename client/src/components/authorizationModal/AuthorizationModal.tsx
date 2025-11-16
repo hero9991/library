@@ -16,6 +16,9 @@ const AuthorizationModal = ({ isLoginModal, isSignUpModal, setIsLoginModal, setI
     const { setUser, language } = useContext<UserContextInterface>(UserContext)
     const { register, handleSubmit, reset, clearErrors, setError, formState: { errors } } = useForm()
 
+    const commonErrorMessage = typeof errors.common?.message === 'string' ? errors.common.message : undefined
+    const googleErrorMessage = typeof errors.google?.message === 'string' ? errors.google.message : undefined
+
     const submitLogin = async (data: any) => {
         try {
             clearErrors(COMMON)
@@ -107,7 +110,7 @@ const AuthorizationModal = ({ isLoginModal, isSignUpModal, setIsLoginModal, setI
                                 validationObject={{ onChange: () => clearErrors(COMMON), required: true }}/>
                             }
                         </div> 
-                        {errors.common && <p className={s.errorText}>{errors.common.message}</p>}
+                        {commonErrorMessage && <p className={s.errorText}>{commonErrorMessage}</p>}
                     </form>
                 </div>
 
@@ -130,7 +133,7 @@ const AuthorizationModal = ({ isLoginModal, isSignUpModal, setIsLoginModal, setI
                     onFailure={googleFailure}
                     cookiePolicy='single_host_origin'
                 />
-                {errors.google && <p className={s.errorText}>{errors.google.message}</p>}
+                {googleErrorMessage && <p className={s.errorText}>{googleErrorMessage}</p>}
             </div>
         </div>
     )

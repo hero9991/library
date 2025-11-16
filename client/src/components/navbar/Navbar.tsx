@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react'
 import s from './Navbar.module.css'
-import { NavLink, useHistory } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { FaYoutube, FaTelegramPlane, FaVk, FaFacebookF, FaSignInAlt, FaSearchPlus, FaSearch, FaHome, FaBook, FaBookReader, FaGlobeEurope, FaRegFileAlt } from 'react-icons/fa'
 import { UserContext } from '../../App'
 import { toast } from 'react-toastify'
@@ -14,7 +14,7 @@ const Navbar = ({ setIsLoginModal, setIsSignUpModal }: Props) => {
     const [isBurgerActive, setIsBurgerActive] = useState<boolean>(false)
     const [delay, setDelay] = useState<any>(null)
     const { user, setUser, language } = useContext<UserContextInterface>(UserContext)
-    const history = useHistory()
+    const navigate = useNavigate()
 
     const toggleBurgerMenu = () => {
         window.scrollTo(0, 0)
@@ -45,7 +45,7 @@ const Navbar = ({ setIsLoginModal, setIsSignUpModal }: Props) => {
 
         setDelay(
             window.setTimeout(() => {
-                history.push(`/catalog/search?value=${e.target.value}`)
+                navigate(`/catalog/search?value=${e.target.value}`)
             }, 1500)
         )
     }
@@ -57,7 +57,7 @@ const Navbar = ({ setIsLoginModal, setIsSignUpModal }: Props) => {
        
         if (!e.target.value) return
         
-        history.push(`/catalog/search?value=${e.target.value}`)
+        navigate(`/catalog/search?value=${e.target.value}`)
     }
 
     const resetInput = (e: any) => {

@@ -19,7 +19,7 @@ const Wrapper = ({ title, show, onClose, children }: Props, ref: any) => {
   )
 }
 
-const Container = styled.div`
+const Container = styled.div<{ show: boolean }>`
   display: flex;
   flex-direction: column;
   position: fixed;
@@ -32,10 +32,7 @@ const Container = styled.div`
   box-shadow: -4px 0 8px 0 rgba(0,0,0,.16);
   background-color: ${palette.white};
   border-radius: 16px 0 0 16px;
-  transform: ${({ show }: { show: boolean }) => show 
-    ? `translateX(0px) scale(1)`
-    : `translateX(420px) scale(.9)`
-  };
+  transform: ({ show }) => (show ? 'translateX(0px) scale(1)' : 'translateX(420px) scale(.9)');
   transition: .4s ${styles.transition};
   overflow-y: auto;
   ${styles.scrollbar(0)};
