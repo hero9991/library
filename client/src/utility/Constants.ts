@@ -37,8 +37,8 @@ export const DELETE = 'DELETE'
 
 export const CONTAINER = 'container'
 
-//export const PROTOCOL_HOSTNAME_PORT = 'https://patmahair.com'
-export const PROTOCOL_HOSTNAME_PORT = 'http://localhost:5001'
+export const PROTOCOL_HOSTNAME_PORT = 'https://patmahair.com'
+//export const PROTOCOL_HOSTNAME_PORT = 'http://localhost:5001'
 
 export const TRACKING_ID = 'G-Z15X45F1E8'
 
