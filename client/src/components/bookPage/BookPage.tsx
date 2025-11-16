@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext, useRef } from 'react'
 import s from './BookPage.module.css'
 import Reader from '../reader/Reader'
-import { useLocation } from 'react-router'
+import { useLocation } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { Triangle } from 'react-loader-spinner'
 import { getBook, incrementBookView } from '../../utility/AxiosService'
