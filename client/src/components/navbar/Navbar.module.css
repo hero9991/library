@@ -62,6 +62,7 @@ header {
 
 .form {
     position: relative;
+    margin: 0 6px;
 }
 
 .searchInputWrapper {
@@ -71,14 +72,14 @@ header {
 }
 
 .form input {
-    width: 250px;
-    height: 2.5em;
+    width: 200px;
+    height: 2.3em;
     border: 2px solid rgb(223, 223, 223);
     border-radius: 24px;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
-    padding-left: 42px;
-    padding-right: 42px;
+    padding-left: 38px;
+    padding-right: 38px;
     transition: all ease .3s;
 }
 .form input:focus {
@@ -89,25 +90,25 @@ header {
 
 .searchIcon {
     position: absolute;
-    left: 14px;
+    left: 12px;
     top: 50%;
     transform: translateY(-50%);
     color: #666;
-    font-size: 18px;
+    font-size: 16px;
     pointer-events: none;
 }
 
 .clearButton {
     position: absolute;
-    right: 8px;
+    right: 6px;
     top: 50%;
     transform: translateY(-50%);
     background: transparent;
     border: none;
     color: #666;
-    font-size: 18px;
+    font-size: 16px;
     cursor: pointer;
-    padding: 6px;
+    padding: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -151,16 +152,18 @@ header {
 }
 
 .menu > ul li {
-    margin-left: 25px; 
+    margin-left: 18px; 
 }
 .menu > ul li:first-child{
     margin-left: 0px;
 }
 .menu > ul li a{
     font-weight: 700;
-    padding: 8px 12px;
+    font-size: 14px;
+    padding: 8px 10px;
     border-radius: 8px;
     transition: all ease .3s;
+    white-space: nowrap;
 }
 .menu > ul li a:hover{
     color: #C21818;
@@ -242,16 +245,26 @@ header {
     color: #C21818;
 }
 
+.links {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin: 0 8px;
+}
+
 .fa {
-    display: inline-block;
-    border-radius: 3333px;
-    /* padding: 7px; */
-    margin: 1.5px;
-    font-size: 27px;
-    transition: all linear .3s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    padding: 6px;
+    font-size: 20px;
+    transition: all ease .2s;
 }
 .fa:hover {
     color: #1c1c1c;
+    background-color: rgba(0, 0, 0, 0.05);
+    transform: scale(1.1);
 }
 .fa > svg{
     display: block;
@@ -280,17 +293,18 @@ header {
 
 .authorization {
     display: flex;
-    gap: 8px;
+    gap: 6px;
+    margin-left: 8px;
 }
 .authorization button {
     background-color: transparent;
     font-weight: 700;
-    font-size: 16px;
+    font-size: 14px;
     cursor: pointer;
     transition: all ease .2s;
     border: 2px solid #1c1c1c;
-    padding: 8px 16px;
-    border-radius: 12px;
+    padding: 7px 12px;
+    border-radius: 10px;
     color: black;
     white-space: nowrap;
 }
@@ -396,9 +410,31 @@ header {
     }
 }
 
+@media (max-width: 1300px) {
+    .links {
+        display: none !important;
+    }
+}
+
+@media (max-width: 1440px) {
+    .menu > ul li {
+        margin-left: 18px;
+    }
+    .menu > ul li:first-child {
+        margin-left: 0px;
+    }
+    .authorization button {
+        padding: 8px 14px;
+        font-size: 15px;
+    }
+    .form input {
+        width: 220px;
+    }
+}
+
 @media (max-width: 1199px) {
     .menu > ul li {
-        margin-left: 25px; 
+        margin-left: 16px; 
     }
     .menu > ul li:first-child{
         margin-left: 0px;
@@ -414,6 +450,11 @@ header {
     }
     .authorization button {
         padding: 4px 12px;
+        font-size: 14px;
+    }
+    .menu > ul li a {
+        font-size: 14px;
+        padding: 6px 10px;
     }
 }
 
