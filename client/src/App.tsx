@@ -8,6 +8,7 @@ import Books from './components/books/Books'
 import BookPage from './components/bookPage/BookPage'
 import AuthorizationModal from './components/authorizationModal/AuthorizationModal'
 import { createContext, useEffect, useState, useMemo } from 'react'
+import { GoogleOAuthProvider } from '@react-oauth/google'
 import { checkAuth, getCurrentCountryAddress, getUserRatings } from './utility/AxiosService'
 import { toast } from 'react-toastify'
 import { AM, EN, RU, TOKEN, CATALOG_LITERATURE_URL, CATALOG_HISTORY_URL, CATALOG_ARTICLE_URL, TRACKING_ID } from './utility/Constants'
@@ -55,26 +56,28 @@ function App() {
   const userValue = useMemo(() => ({ user, setUser, language }), [user, language]);
 
   return (
-    <UserContext.Provider value={userValue}>
-      <Router>
-        <div className="App">
-          <ToastContainer autoClose={2000} position='top-center' />
-          <Navbar setIsLoginModal={setIsLoginModal} setIsSignUpModal={setIsSignUpModal} />
-          <Routes>
-            <Route path="/" element={<HomeBody />} />
-            <Route path={CATALOG_LITERATURE_URL} element={<Books />} />
-            <Route path={CATALOG_HISTORY_URL} element={<Books />} />
-            <Route path={CATALOG_ARTICLE_URL} element={<Books />} />
-            <Route path="/catalog/search" element={<Books />} />
-            <Route path="/catalog/books" element={<Books />} />
-            <Route path="/book" element={<BookPage />} />
-          </Routes>
-          {user?.isAdmin && <CreateBook />}
-          <AuthorizationModal isLoginModal={isLoginModal} isSignUpModal={isSignUpModal} setIsLoginModal={setIsLoginModal} setIsSignUpModal={setIsSignUpModal} />
-          <Footer setLanguage={setLanguage} />
-        </div> 
-      </Router>
-    </UserContext.Provider>
+    <GoogleOAuthProvider clientId='208387666655-60v8vkeqm93jk2fh4torolipcnnu96lv.apps.googleusercontent.com'>
+      <UserContext.Provider value={userValue}>
+        <Router>
+          <div className="App">
+            <ToastContainer autoClose={2000} position='top-center' />
+            <Navbar setIsLoginModal={setIsLoginModal} setIsSignUpModal={setIsSignUpModal} />
+            <Routes>
+              <Route path="/" element={<HomeBody />} />
+              <Route path={CATALOG_LITERATURE_URL} element={<Books />} />
+              <Route path={CATALOG_HISTORY_URL} element={<Books />} />
+              <Route path={CATALOG_ARTICLE_URL} element={<Books />} />
+              <Route path="/catalog/search" element={<Books />} />
+              <Route path="/catalog/books" element={<Books />} />
+              <Route path="/book" element={<BookPage />} />
+            </Routes>
+            {user?.isAdmin && <CreateBook />}
+            <AuthorizationModal isLoginModal={isLoginModal} isSignUpModal={isSignUpModal} setIsLoginModal={setIsLoginModal} setIsSignUpModal={setIsSignUpModal} />
+            <Footer setLanguage={setLanguage} />
+          </div> 
+        </Router>
+      </UserContext.Provider>
+    </GoogleOAuthProvider>
   )
 }
 

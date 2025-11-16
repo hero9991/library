@@ -22,8 +22,8 @@ export const postSignUp = async (data: any) => await toast.promise(
     }
 )
 
-export const postGoogleAccount = async (data: any) => await toast.promise(
-    authorizeGoogleAccount(data?.tokenId),
+export const postGoogleAccount = async (data: { code: string }) => await toast.promise(
+    authorizeGoogleAccount(data.code),
     {
         pending: 'Google authorization',
         success: { render({ data }: any) { return `Hello, ${data.data.user.name}. Please enjoy reading 👌` } },

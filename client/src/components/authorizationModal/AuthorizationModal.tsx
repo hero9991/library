@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import s from './AuthorizationModal.module.css'
 import { TiSocialGooglePlus } from 'react-icons/ti'
-import { GoogleLogin } from 'react-google-login'
+import { useGoogleLogin, CodeResponse } from '@react-oauth/google'
 import { useForm } from 'react-hook-form';
 import { UserContext } from '../../App';
 import { toast } from 'react-toastify'
@@ -38,13 +38,26 @@ const AuthorizationModal = ({ isLoginModal, isSignUpModal, setIsLoginModal, setI
         }
     }
 
-    const googleSuccess = async (data: any) => {
-        await enterUser(true, postGoogleAccount, data)
+    const googleSuccess = async (codeResponse: CodeResponse) => {
+        if (!codeResponse.code) {
+            toast.error('Authorization has failed. Error: missing authorization code')
+            return
+        }
+
+        await enterUser(true, postGoogleAccount, { code: codeResponse.code })
     }
     const googleFailure = (error: any) => {
         if (error?.error === 'popup_closed_by_user') return
         toast.error(`Authorization has failed. Error: ${error?.error}`)
     }
+
+    const googleLogin = useGoogleLogin({
+        flow: 'auth-code',
+        onSuccess: googleSuccess,
+        onError: googleFailure,
+        scope: 'openid email profile',
+        redirect_uri: 'postmessage'
+    });
 
     const enterUser = async (isLogin: boolean, signUser: any, data: any) => {
         const response: any = await signUser(data)
@@ -121,18 +134,10 @@ const AuthorizationModal = ({ isLoginModal, isSignUpModal, setIsLoginModal, setI
                     <span className={s.text}>Register</span>
                 </button>}
 
-                <GoogleLogin
-                    clientId='208387666655-60v8vkeqm93jk2fh4torolipcnnu96lv.apps.googleusercontent.com'
-                    render={renderProps => (
-                        <button className={s.googltButton} onClick={renderProps.onClick} disabled={renderProps.disabled}>
-                            <span className={s.googleText}>Login with Google</span>
-                            <TiSocialGooglePlus className={s.icon} />
-                        </button>
-                    )}
-                    onSuccess={googleSuccess}
-                    onFailure={googleFailure}
-                    cookiePolicy='single_host_origin'
-                />
+                <button className={s.googltButton} onClick={() => googleLogin()}>
+                    <span className={s.googleText}>Login with Google</span>
+                    <TiSocialGooglePlus className={s.icon} />
+                </button>
                 {googleErrorMessage && <p className={s.errorText}>{googleErrorMessage}</p>}
             </div>
         </div>

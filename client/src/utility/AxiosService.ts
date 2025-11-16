@@ -35,7 +35,7 @@ export const signUp = (email: string, password: string, confirmPassword: string,
     $api.post('/signup', { email, password, confirmPassword, firstName, lastName })
 export const signIn = (email: string, password: string) => $api.post('/signin', { email, password })
 export const signOut = () => $api.post('/signout')
-export const authorizeGoogleAccount = (token: string) => $api.post('/authorizegoogleaccount', { token })
+export const authorizeGoogleAccount = (code: string) => $api.post('/authorizegoogleaccount', { code })
 
 export const setUserLanguage = (language: language, userId: string) => $api.post('/setLanguage', { language, userId })
 

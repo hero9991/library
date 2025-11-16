@@ -58,26 +58,40 @@ export const signUp = async (req, res) => {
 }
 
 export const authorizeGoogleAccount = async (req, res) => {
-    const { token } = req.body
+    const { code } = req.body
+    const googleClientId = process.env.GOOGLE_CLIENT_ID
+    const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET
+
+    if (!code) return res.status(400).json({ message: 'Missing authorization code' })
+    if (!googleClientId || !googleClientSecret) return res.status(500).json({ message: 'Google credentials are not configured' })
 
     try {
-        const client = new OAuth2Client()
+        const client = new OAuth2Client(googleClientId, googleClientSecret, 'postmessage')
+        const { tokens } = await client.getToken(code)
+        const idToken = tokens?.id_token
+        if (!idToken) return res.status(400).json({ message: 'Unable to verify Google credentials' })
+
         const decodedData = (await client.verifyIdToken({
-            idToken: token,
-            audience: process.env.GOOGLE_CLIENT_ID,
+            idToken,
+            audience: googleClientId,
         })).getPayload()
 
-        if (decodedData?.iss !== 'accounts.google.com' && decodedData?.aud !== GOOGLE_CLIENT_ID) return res.status(400).json({ message: 'Invalid credentials' })
+        if (!decodedData) return res.status(400).json({ message: 'Invalid credentials' })
+
+        const isIssuerValid = decodedData.iss === 'accounts.google.com' || decodedData.iss === 'https://accounts.google.com'
+        if (!isIssuerValid || decodedData.aud !== googleClientId) return res.status(400).json({ message: 'Invalid credentials' })
 
         let userData = await User.findOne({ email: decodedData.email })
         if (!userData) {
+            console.log(decodedData.sub)
             const hashedPassword = await bcrypt.hash(decodedData.sub, 12) //correct password //unique or not also email
-            userData = await User.create({ email: decodedData.email, name: decodedData.name, password: hashedPassword })
+            const fallbackName = decodedData.name || `${decodedData.given_name || ''} ${decodedData.family_name || ''}`.trim() || decodedData.email
+            userData = await User.create({ email: decodedData.email, name: fallbackName, password: hashedPassword })
         }
 
-        const tokens = await handleTokens(userData, res)
+        const tokensToReturn = await handleTokens(userData, res)
 
-        res.status(200).json(getResponse(userData, tokens))
+        res.status(200).json(getResponse(userData, tokensToReturn))
     } catch (error) {
         res.status(500).json({ message: error || 'signIn catch block' })
     }
