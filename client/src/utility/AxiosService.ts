@@ -26,6 +26,7 @@ $api.interceptors.response.use((config: any) => config,
             localStorage.setItem('token', response.data.accessToken)
             return $api.request(originalRequest)
         } catch (error) {
+            localStorage.removeItem('token')
             throw error
         }
     })

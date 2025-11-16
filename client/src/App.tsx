@@ -43,6 +43,7 @@ function App() {
           setCurrentLanguageByLocation()
         }
       } catch (error: any) {
+        localStorage.removeItem(TOKEN)
         toast.error(`Error ${error}`)
       }
     })()

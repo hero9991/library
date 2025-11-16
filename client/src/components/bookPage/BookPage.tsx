@@ -12,7 +12,7 @@ import { actionTypes, book, bookFormats, UserContextInterface } from '../../util
 import UpdateBook from '../updateBook/UpdateBook'
 import { getDeleteBookText, getDownloadText, getReadNowText, getShowFullDescriptionText, getUploadBookText } from './translatedText/translatedText'
 import CommentSection from '../commentSection/CommentSection'
-import { AiOutlineDelete } from 'react-icons/ai';
+import { AiOutlineDelete, AiOutlineDownload, AiOutlineRead } from 'react-icons/ai';
 import { postAddingOfBookImage, postDeletionOfBookImage } from './BookPageService'
 import ReactGA from 'react-ga4'
 
@@ -112,8 +112,14 @@ function BookPage() {
                         </div>
                     </div>}
                     <div className={s.buttons}>
-                        <button onClick={openReaderModal} data-type={DOWNLOAD}>{getDownloadText(language)}</button>
-                        <button onClick={openReaderModal} data-type={OPEN}>{getReadNowText(language)}</button>
+                        <button onClick={openReaderModal} data-type={DOWNLOAD} className={s.downloadButton}>
+                            <AiOutlineDownload className={s.buttonIcon} />
+                            <span>{getDownloadText(language)}</span>
+                        </button>
+                        <button onClick={openReaderModal} data-type={OPEN} className={s.readButton}>
+                            <AiOutlineRead className={s.buttonIcon} />
+                            <span>{getReadNowText(language)}</span>
+                        </button>
                     </div>    
                     {user?.isAdmin && <div className={`${s.buttons} ${s.adminButtons}`}>
                         <button onClick={openReaderModal} data-type={DELETE}>{getDeleteBookText(language)}</button>

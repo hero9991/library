@@ -11,7 +11,10 @@ export const refresh = async (req, res) => {
         const decodedData = validateRefreshToken(refreshToken)
         const tokenFromDB = await findToken(refreshToken)
 
-        if (!decodedData || !tokenFromDB) return res.status(401).json({ message: 'Invalid credentials' })
+        if (!decodedData || !tokenFromDB) {
+            res.clearCookie('refreshToken')
+            return res.status(401).json({ message: 'Invalid credentials' })
+        }
 
         const userData = await User.findById(decodedData.id);
 

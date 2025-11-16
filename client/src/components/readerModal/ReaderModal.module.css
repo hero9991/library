@@ -5,13 +5,14 @@
     left: 0;
     height: 100svh;
     width: 100vw;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
     display: flex;
     align-items: center;
     justify-content: center;
     opacity: 0;
     pointer-events: none;
-    transition: 0.2s;
+    transition: all 0.3s ease;
 }
 .readerModal.active {
     opacity: 1;
@@ -19,91 +20,481 @@
 }
 
 .readerModalContent {
-    height: 115px;
-    width: 250px;
+    max-width: 700px;
+    width: 90%;
+    max-height: 85vh;
+    overflow-y: auto;
     position: relative;
-    transition: all linear 0.2s;
-    transform: scale(0);
-    padding: 14px;
-    border-radius: 12px;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    background-color: #fff;
-    margin: 0 auto;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    transform: scale(0.7) translateY(-20px);
+    opacity: 0;
+    padding: 32px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
 }
 .readerModalContent.active {
-    transform: scale(1);
+    transform: scale(1) translateY(0);
+    opacity: 1;
 }
 
-.readerModalContent > div {
-    font-weight: 900;
-    margin: auto;
+.modalHeader {
+    margin-bottom: 32px;
     text-align: center;
+    position: relative;
 }
-.figure {
-    transition: all linear .2s;
+
+.modalTitle {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 12px 0;
+    font-family: "Playfair Display", serif;
+}
+
+.modalDescription {
+    font-size: 16px;
+    color: #666;
+    margin: 0;
+    font-family: "Tinos", serif;
+}
+
+.closeButton {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: #1a1a1a;
+    color: white;
+    font-size: 28px;
+    border-radius: 50%;
     cursor: pointer;
-    border: 2px solid red;
-    opacity: 0;
-    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    line-height: 1;
+    padding: 0;
 }
-.figure.active {
-    border: 2px solid #000;
-    opacity: 1;
-    pointer-events: all;
+.closeButton:hover {
+    background: #ff4757;
+    transform: rotate(90deg);
 }
-.figure:hover {
-    background-color: #000;
-    transform: scale(1.2);
+
+.formatsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
 }
-.figure > a,
-.figure > div {
-    display: block;
+
+.formatCard {
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 20px;
+    cursor: not-allowed;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+    overflow: hidden;
+    opacity: 0.5;
+    text-decoration: none;
+    color: inherit;
+}
+
+.downloadCard {
+    text-decoration: none;
+    color: inherit;
+}
+
+.formatCard::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
     width: 100%;
     height: 100%;
-    text-align: center;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.5s ease;
 }
-.figure > a > svg,
-.figure > div > svg{
-    font-size: 20px;
+
+.formatCard.active {
+    cursor: pointer;
+    opacity: 1;
+    border-color: #4a5568;
 }
-.figure > a > svg:hover,
-.figure > div > svg:hover {
-    color: #fff;
-    transform: scale(1.2)
+
+.formatCard.active:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(74, 85, 104, 0.25);
+    border-color: #2d3748;
+    background: #f8f9fa;
 }
-.figure > a > svg > path,
-.figure > div > svg > path {
+
+.formatCard.active:hover::before {
+    left: 100%;
+}
+
+.formatCard.disabled {
+    background: #f5f5f5;
+    cursor: not-allowed;
+    opacity: 0.4;
+}
+
+.formatFlag {
+    width: 60px;
+    height: 40px;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.formatFlag svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.formatInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.formatType {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a1a1a;
+    font-family: "Playfair Display", serif;
+}
+
+.formatLang {
+    font-size: 14px;
+    color: #666;
+    font-family: "Tinos", serif;
+}
+
+.actionIcon {
+    font-size: 28px;
+    color: #4a5568;
+    transition: all 0.3s ease;
     pointer-events: none;
 }
 
-.circle {
-    width: 22px;
-    height: 22px;
-    border-radius: 1000px;
+.formatCard.active:hover .actionIcon {
+    transform: scale(1.1);
+    color: #2d3748;
 }
-.square {
-    width: 20px;
-    height: 20px;
+
+.actionIconWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-.rhombus {
-    width: 20px;
-    height: 20px;
-    transform: rotate(45deg)
+
+.downloadLink {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: inherit;
+    text-decoration: none;
+}
+
+.notAvailable {
+    font-size: 12px;
+    color: #999;
+    font-style: italic;
+    margin-top: 4px;
 }
 
 .uploadButton {
-    height: 31px;
-    position: absolute;
-    bottom: 10%;
-    left: 50%;
-    transform: translateX(-50%);
-    border-radius: 5px;
-    border: 2px #000 solid;
+    height: 44px;
+    width: 100%;
+    max-width: 200px;
+    margin-top: 20px;
+    border-radius: 8px;
+    border: 2px solid #2d3748;
+    background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
     cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: "Playfair Display", serif;
 }
 
+.uploadButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(45, 55, 72, 0.3);
+    background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+}
+
+.readerModalContent input[type="file"] {
+    width: 100%;
+    padding: 12px;
+    border: 2px dashed #4a5568;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.readerModalContent input[type="file"]:hover {
+    border-color: #2d3748;
+    background: #f8f9fa;
+}
+
+.readerModalContent form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .readerModalContent {
+        width: 85%;
+        padding: 24px 20px;
+        max-height: 80vh;
+        border-radius: 16px;
+    }
+    
+    .modalHeader {
+        margin-bottom: 24px;
+    }
+    
+    .modalTitle {
+        font-size: 22px;
+        margin-bottom: 8px;
+    }
+    
+    .modalDescription {
+        font-size: 14px;
+    }
+    
+    .formatsGrid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    
+    .formatCard {
+        padding: 16px 12px;
+        gap: 10px;
+    }
+    
+    .formatFlag {
+        width: 50px;
+        height: 33px;
+    }
+    
+    .formatType {
+        font-size: 16px;
+    }
+    
+    .formatLang {
+        font-size: 12px;
+    }
+    
+    .actionIcon {
+        font-size: 24px;
+    }
+    
+    .closeButton {
+        width: 32px;
+        height: 32px;
+        font-size: 24px;
+        top: -4px;
+        right: -4px;
+    }
+}
+
+@media (max-width: 600px) {
+    .readerModalContent {
+        width: 88%;
+        padding: 20px 16px;
+        max-height: 75vh;
+    }
+    
+    .modalHeader {
+        margin-bottom: 20px;
+    }
+    
+    .modalTitle {
+        font-size: 20px;
+    }
+    
+    .modalDescription {
+        font-size: 13px;
+    }
+    
+    .formatsGrid {
+        gap: 8px;
+    }
+    
+    .formatCard {
+        padding: 14px 10px;
+        gap: 8px;
+    }
+    
+    .formatFlag {
+        width: 45px;
+        height: 30px;
+    }
+    
+    .formatType {
+        font-size: 15px;
+    }
+    
+    .formatLang {
+        font-size: 11px;
+    }
+    
+    .actionIcon {
+        font-size: 22px;
+    }
+}
+
+@media (max-width: 480px) {
+    .readerModalContent {
+        width: 90%;
+        padding: 18px 14px;
+        max-height: 70vh;
+        border-radius: 14px;
+    }
+    
+    .modalHeader {
+        margin-bottom: 16px;
+    }
+    
+    .modalTitle {
+        font-size: 18px;
+    }
+    
+    .modalDescription {
+        font-size: 12px;
+    }
+    
+    .formatsGrid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+    
+    .formatCard {
+        padding: 12px 8px;
+        gap: 6px;
+        border-radius: 10px;
+    }
+    
+    .formatFlag {
+        width: 40px;
+        height: 27px;
+        border-radius: 4px;
+    }
+    
+    .formatType {
+        font-size: 14px;
+    }
+    
+    .formatLang {
+        font-size: 10px;
+    }
+    
+    .actionIcon {
+        font-size: 20px;
+    }
+    
+    .notAvailable {
+        font-size: 10px;
+    }
+    
+    .closeButton {
+        width: 28px;
+        height: 28px;
+        font-size: 20px;
+        top: -2px;
+        right: -2px;
+    }
+    
+    .uploadButton {
+        height: 40px;
+        font-size: 14px;
+        max-width: 160px;
+        margin-top: 16px;
+    }
+    
+    .readerModalContent input[type="file"] {
+        padding: 10px;
+        font-size: 12px;
+        margin-bottom: 12px;
+    }
+}
+
+@media (max-width: 380px) {
+    .readerModalContent {
+        width: 92%;
+        padding: 16px 12px;
+    }
+    
+    .modalTitle {
+        font-size: 17px;
+    }
+    
+    .formatsGrid {
+        gap: 6px;
+    }
+    
+    .formatCard {
+        padding: 10px 6px;
+        gap: 5px;
+    }
+    
+    .formatFlag {
+        width: 36px;
+        height: 24px;
+    }
+    
+    .formatType {
+        font-size: 13px;
+    }
+    
+    .formatLang {
+        font-size: 9px;
+    }
+    
+    .actionIcon {
+        font-size: 18px;
+    }
+}
+
+/* Legacy styles for backward compatibility */
 .commonFlag {
-    width: 50%;
-    box-shadow: 0px -5px 9px 3px rgb(99 99 99 / 20%);
+    width: 100%;
+    height: 100%;
+}
+
+/* Scrollbar styling */
+.readerModalContent::-webkit-scrollbar {
+    width: 8px;
+}
+
+.readerModalContent::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.readerModalContent::-webkit-scrollbar-thumb {
+    background: #4a5568;
+    border-radius: 10px;
+}
+
+.readerModalContent::-webkit-scrollbar-thumb:hover {
+    background: #2d3748;
 }
