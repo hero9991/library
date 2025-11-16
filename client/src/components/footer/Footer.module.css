@@ -1,67 +1,145 @@
 .footer {
-    background-color: #fef1f3;
+    background: linear-gradient(to bottom, #ffffff 0%, #f9fafb 100%);
+    border-top: 1px solid #e5e7eb;
+    padding: 24px 0;
+    margin-top: auto;
 }
 
 .footerWrapper {
     display: flex;
     justify-content: space-between;
-    font-weight: 700;
-    height: 70px;
     align-items: center;
+    gap: 24px;
+    min-height: 60px;
+    flex-wrap: wrap;
 }
+
+.footerWrapper > div {
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 500;
+    color: #4b5563;
+    transition: color 0.2s ease;
+}
+
 .footerWrapper > div:first-child {
     cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.footerWrapper > div:first-child:hover {
+    background-color: #f3f4f6;
+    color: #1f2937;
+}
+
+.footerWrapper > div:nth-child(2) a {
+    color: #4b5563;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.footerWrapper > div:nth-child(2) a:hover {
+    background-color: #f3f4f6;
+    color: #1f2937;
 }
 
 .countryIcons {
     display: flex;
     align-items: center;
+    gap: 8px;
+}
+
+.countryIcons span {
+    margin-right: 4px;
+    font-weight: 500;
+    color: #6b7280;
 }
 
 .emojiFlag {
     cursor: pointer;
-    padding-left: 6px;
-    transition: all linear .2s;
+    transition: all 0.2s ease;
     vertical-align: middle;
 }
+
 .commonFlag {
     cursor: pointer;
-    width: 35px;
-    margin-left: 8px;
-    margin-top: 6px;
-    transition: all linear .2s;
-    box-shadow: 0px -5px 9px 3px rgb(99 99 99 / 20%);
+    width: 32px;
+    height: 22px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e5e7eb;
+    object-fit: cover;
 }
-.emojiFlag:hover, .commonFlag:hover {
-    transform: scale(1.1);
+
+.commonFlag:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    border-color: #d1d5db;
+}
+
+.commonFlag:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 @media (max-width: 991px) {
     .footer.AM {
-       font-size: 13px;
+       font-size: 14px;
     }
     .footer.RU {
         font-size: 14.5px;
-     }
+    }
 }
-@media (max-width: 666px) {
+
+@media (max-width: 768px) {
+    .footer {
+        padding: 20px 0;
+    }
+    
     .footerWrapper {
-        display: block;
-        margin: 0 auto;
+        flex-direction: column;
         text-align: center;
-        font-size: 14px;
-        height: 96px;
+        gap: 16px;
+        min-height: auto;
     }
+    
     .footerWrapper > div {
-        padding: 3px 0;
-    }
-    .footerWrapper > div:last-child {
-        padding: 0px;
-    }
-    .footerWrapper > div:first-child {
-        padding: 12px 0px 7px;
-    }
-    .countryIcons {
         justify-content: center;
+        font-size: 14px;
+    }
+    
+    .footerWrapper > div:first-child {
+        order: 1;
+    }
+    
+    .footerWrapper > div:nth-child(2) {
+        order: 2;
+    }
+    
+    .countryIcons {
+        order: 3;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+}
+
+@media (max-width: 480px) {
+    .footerWrapper > div {
+        font-size: 13px;
+    }
+    
+    .commonFlag {
+        width: 28px;
+        height: 19px;
+    }
+    
+    .countryIcons span {
+        font-size: 13px;
     }
 }

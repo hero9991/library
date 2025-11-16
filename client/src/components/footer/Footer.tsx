@@ -4,7 +4,7 @@ import { RU as RU_FLAG, AM as AM_FLAG, GB as GB_FLAG } from 'country-flag-icons/
 import { UserContext } from '../../App'
 import { getChooseLanguageText, getSupportText, getRulesText } from './translatedText/translatedText'
 import Rules from './Rules/Rules'
-import { AM, CONTAINER, EN, GB, RU } from '../../utility/Constants'
+import { AM, CONTAINER, EN, RU } from '../../utility/Constants'
 import { language, UserContextInterface } from '../../utility/commonTypes'
 import { postUserLanguage } from './FooterService'
 

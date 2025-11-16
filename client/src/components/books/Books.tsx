@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom'
 import { getBooks, getBooksBySearch, getMyBooks } from '../../utility/AxiosService'
 import { UserContext } from '../../App'
 import { toast } from 'react-toastify'
-import { Triangle } from 'react-loader-spinner'
+import { Spinner } from '../spinner/Spinner'
 import Sorting from './Sorting/Sorting'
 import { getEmptyMyBooksText, getEmptyBooksSearchText, getUnauthorizedMyBooksText, getViewMoreText, getEmptyArticlesText } from './translatedText/translatedText'
 import { ARTICLE, BOOKS, CONTAINER, HISTORY, LITERATURE, SEARCH } from '../../utility/Constants'
@@ -119,7 +119,7 @@ function Books() {
 
                     {currentChunk < numberOfChunk && currentRoute !== BOOKS && <button onClick={getBookChunk} className={s.viewMoreButton}>{getViewMoreText(language)}</button>}
                 </div>
-                : <div className={s.loader}><Triangle height={380} width={300} color='#1c1c1c'/></ div>}
+                : <div className={s.loader}><Spinner size="large" color="#7d0200" /></div>}
         </section>
     )
 }

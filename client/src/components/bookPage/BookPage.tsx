@@ -3,7 +3,6 @@ import s from './BookPage.module.css'
 import Reader from '../reader/Reader'
 import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { Triangle } from 'react-loader-spinner'
 import { getBook, incrementBookView } from '../../utility/AxiosService'
 import { AUTHOR, CONTAINER, DELETE, DESCRIPTION, DOWNLOAD, OPEN, PROTOCOL_HOSTNAME_PORT, SUBMIT, TITLE, UPLOAD } from '../../utility/Constants'
 import { UserContext } from '../../App'
@@ -15,6 +14,7 @@ import CommentSection from '../commentSection/CommentSection'
 import { AiOutlineDelete, AiOutlineDownload, AiOutlineRead } from 'react-icons/ai';
 import { postAddingOfBookImage, postDeletionOfBookImage } from './BookPageService'
 import ReactGA from 'react-ga4'
+import { Spinner } from '../spinner/Spinner'
 
 function BookPage() {
     const descriptionRef: any = useRef(null);
@@ -132,7 +132,9 @@ function BookPage() {
                     {currentBook && isOpen && bookFormatKey && <Reader bookUrl={currentBook[bookFormatKey]} setBookFormat={setBookFormat}/>}
                     {user?.isAdmin && <UpdateBook bookId={bookId} setCurrentBook={setCurrentBook}/>}
                 </div>
-                : <div className={s.loader}><Triangle height={380} width={300} color='#1c1c1c' /></ div>}
+                : <div className={s.loader}>
+                    <Spinner size="large" color="#1c1c1c" />
+                </div>}
             </div>
         </section>
     )

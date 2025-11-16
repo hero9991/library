@@ -313,14 +313,14 @@ header {
 .burgerLinks {
     display: flex;
     justify-content: center;
-    gap: 12px;
-    margin-top: 24px;
-    padding: 20px 0;
+    gap: 16px;
+    margin-top: 16px;
+    padding: 16px 20px;
     border-top: 1px solid rgb(236, 236, 236);
 }
 .burgerLinks > a {
-    font-size: 32px !important;
-    padding: 12px !important;
+    font-size: 24px !important;
+    padding: 8px !important;
     border-radius: 50%;
     transition: all ease .2s;
 }
@@ -334,20 +334,20 @@ header {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    padding: 24px 20px;
+    padding: 16px 20px 20px;
     border-top: 1px solid rgb(236, 236, 236);
 }
 
 .burgerAuthButtons button {
     width: 100%;
     background-color: transparent;
-    font-weight: 700;
-    font-size: 18px;
+    font-weight: 600;
+    font-size: 16px;
     cursor: pointer;
     transition: all ease .2s;
     border: 2px solid #1c1c1c;
-    padding: 14px 24px;
-    border-radius: 12px;
+    padding: 12px 20px;
+    border-radius: 10px;
     color: black;
 }
 
@@ -607,9 +607,18 @@ header {
         font-size: 20px;
     }
     
+    .burgerLinks > a {
+        font-size: 22px !important;
+        padding: 7px !important;
+    }
+    
+    .burgerAuthButtons {
+        padding: 14px 16px 18px;
+    }
+    
     .burgerAuthButtons button {
-        font-size: 16px;
-        padding: 12px 20px;
+        font-size: 15px;
+        padding: 11px 18px;
     }
 }
 
