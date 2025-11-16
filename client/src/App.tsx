@@ -69,7 +69,7 @@ function App() {
               <Route path={CATALOG_ARTICLE_URL} element={<Books />} />
               <Route path="/catalog/search" element={<Books />} />
               <Route path="/catalog/books" element={<Books />} />
-              <Route path="/book" element={<BookPage />} />
+              <Route path="/book/:id" element={<BookPage />} />
             </Routes>
             {user?.isAdmin && <CreateBook />}
             <AuthorizationModal isLoginModal={isLoginModal} isSignUpModal={isSignUpModal} setIsLoginModal={setIsLoginModal} setIsSignUpModal={setIsSignUpModal} />

@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext, useRef } from 'react'
 import s from './BookPage.module.css'
 import Reader from '../reader/Reader'
-import { useLocation } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { Triangle } from 'react-loader-spinner'
 import { getBook, incrementBookView } from '../../utility/AxiosService'
@@ -25,7 +25,8 @@ function BookPage() {
     const [bookFormat, setBookFormat] = useState<bookFormats | ''>('')
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [isEclipseApplied, setIsEclipseApplied] = useState<boolean>(false)
-    const bookId: string = useLocation().pathname.split('/').pop()
+    const { id } = useParams()
+    const bookId: string = id as string
 
     const authorKey = (AUTHOR + language) as keyof book
     const titleKey = (TITLE + language) as keyof book

@@ -1,4 +1,8 @@
 
+.wrapper {
+    position: relative;
+}
+
 .header {
     margin: 40px 0 20px;
     font-weight: 700;
@@ -8,209 +12,221 @@
 .userName {
     font-weight: 700;
 }
+
 .time {
     color: grey;
     font-size: 14px;
 }
 
+.inputWrapper {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.textarea {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #f1f1f1;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1.5;
+    resize: vertical;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+}
+
+.textarea:focus {
+    outline: none;
+    border-color: rgb(129 70 131);
+}
+
 .shareButton {
     background-color: rgb(201, 199, 197); 
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
     color: #fff;
     padding: 8px 36px;
     font-weight: 700;
-    cursor: unset;
+    border: none;
+    border-radius: 8px;
+    cursor: not-allowed;
     transition: all linear .2s;
+    margin-top: 10px;
 }
+
 .shareButton.acitve {
     background-color: rgb(129 70 131);
     cursor: pointer;
 }
 
-.inputWrapper {
-    display: flex;
-    flex-direction: column-reverse;
-    border: #f1f1f1 solid 1px;
-}
-.inputToolbar {
-    margin-bottom: 0 !important;
-    background-color: rgb(247, 247, 247) !important;
-    position: relative;
-}
-.inputToolbarInline > div {
-    margin-right: 0;
-    margin-left: 0;
-}
-.inputToolbarInline > div:last-child {
-    margin-right: 10px;
-}
-
-.inputToolbarList > div {
-    margin-right: 0;
-    margin-left: 0;
-}
-.inputToolbarList > div:last-child {
-    margin-right: 10px;
-}
-
-.inputToolbarPopupEmoji  {
-    bottom: 35px;
-    right: 5px;
-    top: unset !important; 
-    left: unset !important;
-}
-
-.inputEditor {
-    line-height: 1.2;
-}
-.inputEditor > div > div > div {
-    padding: 15px;
-}
-.inputEditor > div > div > div > div > div > div {
-    margin: 5px !important;
-}
-
-.inputComment {
-    line-height: 1.2;
-}
-.inputComment > div > div > div > div > div > div {
-    margin: 5px 0 !important;
-}
-
-.inputComment span {
-    background-color: transparent !important;
-}
-.inputComment {
-    background-color: transparent;
-    border:unset;
-}
-.inputComment.editing {
-    background-color: white;
-    border: solid 1px #f2f0f1;
+.shareButton.acitve:hover {
+    background-color: rgb(109 50 111);
 }
 
 .comments {
-    margin-top: 10px
+    margin-top: 20px;
 }
 
 .commentWrapper {
-    margin: 5px 0;
+    margin: 20px 0;
 }
+
 .subcommentWrapper {
-    margin: 5px 0 5px 40px;
+    margin: 15px 0 15px 40px;
 }
+
 .comment {
     display: inline-block;
     max-width: 100%;
     box-sizing: border-box;
-    padding: 13px 39px;
+    padding: 20px 30px;
     border-bottom: 3px solid #d3d1cf;
     border-right: 3px solid #d3d1cf;
-        border-radius: 33px;
+    border-radius: 24px;
     border-top-left-radius: 0;
     border-bottom-right-radius: 0;
-    /* border-bottom-left-radius: 0; */
-
     background: #fffbfc;
 }
 
 .commentTitle {
-    margin-bottom: 3px;
+    margin-bottom: 10px;
+}
+
+.commentBody {
+    line-height: 1.6;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    margin-bottom: 10px;
 }
 
 .interactionSection {
-    margin-top: 7px;
+    margin-top: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
 }
 
 .likeSection {
-    display: inline-block;
-}
-.editingSection {
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
-.likeButton {
-    /* padding-left: 0; */
-    margin-left: -6px;
+.editingSection {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.likeButton,
+.dislikeButton,
+.editingSection button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    color: #666;
+    font-size: 14px;
+    transition: color 0.2s;
+}
+
+.likeButton:hover,
+.dislikeButton:hover,
+.editingSection button:hover {
+    color: rgb(129 70 131);
+}
+
+.likeButton:disabled,
+.dislikeButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 .reactionIcon {
-    font-size: 16px
+    font-size: 18px;
 }
-.dislikeButton {
-    margin: 0 0px 0 3px
+
+.reactionCount {
+    font-size: 14px;
+    color: #666;
+    min-width: 20px;
 }
 
 .cancelSpan {
     font-weight: 700;
+    color: #d32f2f;
 }
 
-.commentToolbar {
-    box-sizing: border-box;
-    width: max-content;
-    max-width: 100%;
-    transition: opacity 1s ease-out;
-    opacity: 0;
-    height: 0;
-    /* overflow: hidden; */
-    pointer-events: none;
-    margin: 0;
-    padding: 0;
-    background: #fffbfc;
-}
-.commentToolbar.active {
-    margin-top: 10px;
-    opacity: 1;
-    height: auto;
-    pointer-events: unset;
-    padding: 6px 5px 0;
-    margin-bottom: 5px;
-}
 .saveButton {
     background-color: rgb(201, 199, 197); 
     padding: 8px 30px;
-    margin-bottom: 6px;
-    margin-left: 10px;
+    margin-top: 10px;
     color: #fff;
     font-weight: 700;
+    border: none;
+    border-radius: 8px;
     transition: all linear .2s;
-    cursor: unset;
+    cursor: not-allowed;
 } 
+
 .saveButton.acitve {
     background-color: rgb(129 70 131);
     cursor: pointer;
 }
 
+.saveButton.acitve:hover {
+    background-color: rgb(109 50 111);
+}
+
+.collapseButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    color: #666;
+    font-size: 14px;
+    transition: color 0.2s;
+    margin-left: auto;
+}
+
+.collapseButton:hover {
+    color: rgb(129 70 131);
+}
+
 @media (max-width: 562px) {
-    .likeSection {
-        display: block;
-        text-align: center;
-    }
-    .editingSection {
-        display: block;
-        text-align: center;
-        margin-top: 5px;
-    }
-    .collapseButton {
-        margin-top: 5px;
-    }
     .interactionSection {
-        text-align: center;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
     }
+    
+    .likeSection {
+        justify-content: center;
+        width: 100%;
+    }
+    
+    .editingSection {
+        justify-content: center;
+        width: 100%;
+    }
+    
+    .collapseButton {
+        width: 100%;
+        text-align: center;
+        margin-left: 0;
+    }
+    
     .subcommentWrapper {
         margin-left: 25px;
     }
+    
+    .comment {
+        padding: 15px 20px;
+    }
 }
+
 @media (max-width: 485px) {
     .shareButton {
-        position: unset;
-        right: unset;
-        top: unset;
-        transform: unset;
-        margin-left: 10px;
-        margin-bottom: 5px
+        width: 100%;
     }
 }

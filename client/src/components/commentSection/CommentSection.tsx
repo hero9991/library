@@ -1,8 +1,4 @@
-import { Editor } from "react-draft-wysiwyg"
-import { EditorState, ContentState, convertToRaw } from "draft-js"
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css"
 import s from "./CommentSection.module.css"
-import { toolbar } from "./ToolbarConfig"
 import { useContext, useEffect, useState } from "react"
 import { UserContext } from "../../App"
 import { comment, UserContextInterface } from "../../utility/commonTypes"
@@ -16,10 +12,10 @@ import ReactGA from 'react-ga4'
 
 const CommentSection = ({ bookId }: Props) => {
     const { user, language } = useContext<UserContextInterface>(UserContext)
-    const [editorState, setEditorState] = useState(EditorState.createEmpty())
+    const [commentText, setCommentText] = useState("")
     const [comments, setComments] = useState<comment[]>([])
 
-    const isButtonDisabled = !editorState.getCurrentContent().hasText() || !editorState.getCurrentContent().getPlainText().trim()
+    const isButtonDisabled = !commentText.trim()
 
     useEffect(() => {
         (async function () {
@@ -33,17 +29,13 @@ const CommentSection = ({ bookId }: Props) => {
         return () => setComments([])
     }, [bookId])
 
-    const editorStateHandler = (editorState: any) => {
-        setEditorState(editorState)
-    }
-
     const shareComent = async () => {
         if (!user) return toast.warning(getUnauthorizedWarningText(language))
 
-        const commentBody = JSON.stringify(convertToRaw(editorState.getCurrentContent()))
+        const commentBody = commentText
         const response = await postCreateComment(user._id, user.name, bookId, commentBody, language)
         setComments([...comments, response.data.createdComment])
-        setEditorState(EditorState.push(editorState, ContentState.createFromText('')))
+        setCommentText("")
         ReactGA.event({
             category: 'Comment',
             action: 'Created a parent comment'
@@ -53,22 +45,22 @@ const CommentSection = ({ bookId }: Props) => {
     return (
         <div className={s.wrapper}>
             <div className={s.header}>{getPostsUpperText(language)} {comments.length !== 0 && `(${comments.length})`} </div>
-            <Editor
-                editorState={editorState}
-                toolbarClassName={s.inputToolbar}
-                wrapperClassName={s.inputWrapper}
-                editorClassName={s.inputEditor}
-                toolbar={toolbar(s.inputToolbarInline, s.inputToolbarList, s.inputToolbarEmoji, s.inputToolbarPopupEmoji)}
-                toolbarCustomButtons={[
+            <div className={s.inputWrapper}>
+                <textarea
+                    value={commentText}
+                    onChange={(e) => setCommentText(e.target.value)}
+                    placeholder="Share your thoughts..."
+                    className={s.textarea}
+                    rows={3}
+                />
                 <button
                     onClick={shareComent}
                     className={isButtonDisabled ? s.shareButton : `${s.shareButton} ${s.acitve}`}
-                    disabled={isButtonDisabled}>
+                    disabled={isButtonDisabled}
+                >
                     {getShareText(language)}
                 </button>
-                ]}
-                onEditorStateChange={editorStateHandler}
-            />
+            </div>
             <div className={s.comments}>
                 {comments.map(comment => <Comment key={comment._id} comment={comment} comments={comments} setComments={setComments}/>)} 
             </div>

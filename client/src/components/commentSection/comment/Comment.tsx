@@ -1,5 +1,3 @@
-import { Editor } from "react-draft-wysiwyg"
-import { EditorState, convertFromRaw, convertToRaw } from "draft-js"
 import { comment, UserContextInterface } from "../../../utility/commonTypes"
 import s from "../CommentSection.module.css"
 import { useContext, useEffect, useState } from "react"
@@ -7,7 +5,6 @@ import { UserContext } from "../../../App"
 import { AiOutlineLike, AiOutlineDislike, AiFillLike, AiFillDislike } from 'react-icons/ai'
 import { postDeleteComment, postReactComment, postUpdateComment } from "../CommentSectionService"
 import { toast } from "react-toastify"
-import { toolbar } from "../ToolbarConfig"
 import ReplayEditor from "./ReplayEditor"
 import { getComments } from "../../../utility/AxiosService"
 import { getTimeSince } from "../../../utility/Utility"
@@ -17,7 +14,7 @@ import ReactGA from 'react-ga4'
 
 const Comment = ({ comment, comments, setComments, isSubcomment }: Props) => {
     const { user, language } = useContext<UserContextInterface>(UserContext)
-    const [commentState, setCommentState] = useState(EditorState.createWithContent(convertFromRaw(JSON.parse(comment.body))))
+    const [editText, setEditText] = useState("")
     const [subcomments, setSubcomments] = useState<comment[]>([])
     const [isLiking, setIsLiking] = useState(false)
     const [isDisliking, setIsDisliking] = useState(false)
@@ -25,7 +22,7 @@ const Comment = ({ comment, comments, setComments, isSubcomment }: Props) => {
     const [isReplaying, setIsReplaying] = useState(false)
     const [isCollapsed, setIsCollapsed] = useState(false)
 
-    const isButtonDisabled = !commentState.getCurrentContent().hasText() || !commentState.getCurrentContent().getPlainText().trim()
+    const isButtonDisabled = !editText.trim()
 
     useEffect(() => {
         if (isSubcomment) return
@@ -81,6 +78,7 @@ const Comment = ({ comment, comments, setComments, isSubcomment }: Props) => {
         setComments(comments.filter(commentItem => commentItem._id !== comment._id))
     }
     const changeComment = async () => {
+        setEditText(comment.body)
         setIsEditing(!isEditing)
         ReactGA.event({
             category: 'Comment',
@@ -91,15 +89,11 @@ const Comment = ({ comment, comments, setComments, isSubcomment }: Props) => {
         setIsCollapsed(!isCollapsed)
     }
 
-    const commentStateHandler = (commentState: any) => {
-        setCommentState(commentState)
-    }
-
     const saveComent = async (e: any) => {
         if (document.activeElement) (document.activeElement as HTMLElement).blur();
 
         setIsEditing(false)
-        const commentBody = JSON.stringify(convertToRaw(commentState.getCurrentContent()))
+        const commentBody = editText
         if (comment.body === commentBody) return
         
         const updatedCommentData = await postUpdateComment(comment._id, commentBody, comment.userId, language)
@@ -118,22 +112,27 @@ const Comment = ({ comment, comments, setComments, isSubcomment }: Props) => {
                         {getTimeSince(comment.createdDate, language)} {comment.isUpdated && `(${getUpdatedText(language)})`}
                     </span>
                 </p>
-                <Editor
-                    readOnly={!isEditing}
-                    toolbar={toolbar(s.inputToolbarInline, s.inputToolbarList, s.inputToolbarEmoji, s.inputToolbarPopupEmoji)}
-                    toolbarClassName={isEditing ? `${s.commentToolbar} ${s.active}` : s.commentToolbar}
-                    editorClassName={isEditing ? `${s.inputComment} ${s.editing}` : s.inputComment}
-                    editorState={commentState}
-                    onEditorStateChange={commentStateHandler}
-                    toolbarCustomButtons={[
+                {isEditing ? (
+                    <>
+                        <textarea
+                            value={editText}
+                            onChange={(e) => setEditText(e.target.value)}
+                            className={s.textarea}
+                            rows={3}
+                        />
                         <button
                             onClick={saveComent}
                             className={isButtonDisabled ? s.saveButton : `${s.saveButton} ${s.acitve}`}
-                            disabled={isButtonDisabled}>
+                            disabled={isButtonDisabled}
+                        >
                             Save
                         </button>
-                    ]}
-                />
+                    </>
+                ) : (
+                    <div className={s.commentBody}>
+                        {comment.body}
+                    </div>
+                )}
                 <div className={s.interactionSection}>
                     <div className={s.likeSection}>
                         <button onClick={likeComment} className={s.likeButton} disabled={isLiking}>

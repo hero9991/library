@@ -24,7 +24,8 @@ const Sorting = memo(({ currentSort, currentTopic, language, isReversed, setIsRe
                     <BsArrowDownSquare onClick={() => setIsReversed(!isReversed)} className={isReversed ? `${s.sortingDirection} ${s.reverse}` : s.sortingDirection} /> 
                     {
                         sortingTopics.map(topic => 
-                            <NavLink key={topic} isActive={() => currentSort === topic} exact activeClassName={s.activeOrder}
+                            <NavLink key={topic} 
+                                     className={() => currentSort === topic ? s.activeOrder : ''}
                                      to={`${url}?${SORT_PARAMETER}${topic}&${TOPIC_PARAMETER}${currentTopic}`}>
                                         {topicTranslations[language][topic]}
                             </NavLink>)
@@ -33,7 +34,8 @@ const Sorting = memo(({ currentSort, currentTopic, language, isReversed, setIsRe
                 <div className={`${s.sorting} ${s.topics}`}>
                     {
                         topics.map(topic =>
-                            <NavLink key={topic} isActive={() => currentTopic === topic} exact activeClassName={s.activeTopic}
+                            <NavLink key={topic} 
+                                     className={() => currentTopic === topic ? s.activeTopic : ''}
                                      to={`${url}?${SORT_PARAMETER}${currentSort}&${TOPIC_PARAMETER}${topic}`}>
                                         {topicTranslations[language][topic]}
                             </NavLink>)
