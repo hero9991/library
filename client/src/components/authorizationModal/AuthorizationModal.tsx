@@ -80,6 +80,12 @@ const AuthorizationModal = ({ isLoginModal, isSignUpModal, setIsLoginModal, setI
     return (
         <div onClick={hidePopup} className={isLoginModal || isSignUpModal ? `${s.authorizationModal} ${s.active}` : s.authorizationModal}>
             <div onClick={e => e.stopPropagation()} className={isLoginModal || isSignUpModal ? `${s.authorizationModalContent} ${s.active}` : s.authorizationModalContent}>
+                
+                <button onClick={hidePopup} className={s.closeButton} type="button" aria-label="Close">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
 
                 <div className={s.signUpModalContent}>
                     <div className={s.title} >{isSignUpModal && 'SIGN UP'}
@@ -134,9 +140,11 @@ const AuthorizationModal = ({ isLoginModal, isSignUpModal, setIsLoginModal, setI
                     <span className={s.text}>Register</span>
                 </button>}
 
-                <button className={s.googltButton} onClick={() => googleLogin()}>
-                    <span className={s.googleText}>Login with Google</span>
+                <div className={s.divider}>or</div>
+
+                <button className={s.googltButton} onClick={() => googleLogin()} type="button">
                     <TiSocialGooglePlus className={s.icon} />
+                    <span className={s.googleText}>Login with Google</span>
                 </button>
                 {googleErrorMessage && <p className={s.errorText}>{googleErrorMessage}</p>}
             </div>
