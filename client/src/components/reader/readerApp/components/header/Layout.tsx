@@ -29,7 +29,7 @@ export const AutoLayout = styled.div`
     margin-right: 8px;
   }
   & > div > button {
-    font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-family: 'Noto Sans Armenian', "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     font-size: 1rem;
     background: transparent;
   }
