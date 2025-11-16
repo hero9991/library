@@ -12,3 +12,8 @@
 2. Use SSH to access the vps server
 3. pull the changes from git
 4. move the build folder to the var/www folder
+
+
+rm -rf /var/www/patmahair/*
+mkdir /var/www/patmahair/client
+cp -r build/* /var/www/patmahair/client
